@@ -1,22 +1,13 @@
-create database JQ;
+create database IF NOT EXISTS JQ;
 USE JQ;
 
 CREATE TABLE Modules
-{
-module_id INT(10),
-module_name VARCHAR(25),
+(
+	ID INT(10) NOT NULL AUTO_INCREMENT,
+	NAME VARCHAR(255) NOT NULL,
+	PRIMARY KEY(ID)
 
+)AUTO_INCREMENT=1;
 
-
-};
-
-create table UserTable
-{
-
-};
-create table Properties
-{
-
-};
 
 
