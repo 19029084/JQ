@@ -1,6 +1,11 @@
 package com.jq.service;
 
 import com.jq.entity.JQModule;
+import com.jq.entity.JQModuleData;
+import com.jq.entity.JQModuleConfig;
+
+
+
 import com.jq.mapper.JQModuleMapper;
 
 
@@ -19,9 +24,20 @@ public class JQModuleService
 	@Autowired
 	JQModuleMapper jqModuleMapper;
 
-	public List<JQModule> getModules()
+	public List<JQModule> getModules(String pid)
 	{
-		return jqModuleMapper.getModules();
+		return jqModuleMapper.getModules(pid);
 	}	
+
+
+	public List<JQModuleData> getModuleData(String mid)
+	{
+		return jqModuleMapper.getModuleData(mid);
+	}
+	
+	public List<JQModuleConfig> getModuleConfig(String mid)
+	{
+		return jqModuleMapper.getModuleConfig(mid);
+	}
 
 }
