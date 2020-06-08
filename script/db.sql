@@ -23,11 +23,13 @@ CREATE TABLE Property
 	PRIMARY KEY(ID)
 )AUTO_INCREMENT=1;
 
-CREATE TABLE PropertyValue
+CREATE TABLE PropertyOption
 (
-	PropertyID INT(11) NOT NULL,
-	VALUE VARCHAR(255) NOT NULL
-);
+	ID INT(11) NOT NULL AUTO_INCREMENT,
+	PID INT(11) NOT NULL,
+	Options VARCHAR(255) NOT NULL,
+	PRIMARY KEY(ID)
+)AUTO_INCREMENT=1;
 
 CREATE TABLE ModuleConfig
 (
@@ -40,12 +42,13 @@ CREATE TABLE ModuleConfig
 )AUTO_INCREMENT=1;
 
 
-CREATE TABLE ModuleTableValue
+CREATE TABLE ModuleData
 (
 	ID INT(11) NOT NULL AUTO_INCREMENT,
-	RowNumber INT(11) NOT NULL,
-	ModuleTableID INT(11) NOT NULL,
-	Value VARCHAR(255) NOT NULL,
+	RID INT(11) NOT NULL,
+	ModuleID INT(11) NOT NULL,
+	PropertyID INT(11) NOT NULL,
+	Data VARCHAR(255) NOT NULL,
 	PRIMARY KEY(ID)
 	
 )AUTO_INCREMENT=1;
@@ -190,13 +193,22 @@ Insert into ModuleConfig(ModuleId,PropertyId) values (11,16);
 Insert into ModuleConfig(ModuleId,PropertyId) values (11,17);
 
 
+Insert into PropertyOption(PID,Options) values(0,'均桥镇0');
+Insert into PropertyOption(PID,Options) values(0,'均桥镇1');
+Insert into PropertyOption(PID,Options) values(0,'均桥镇2');
+Insert into PropertyOption(PID,Options) values(0,'均桥镇3');
+Insert into PropertyOption(PID,Options) values(0,'均桥镇4');
 
 
 
+Insert into ModuleData(RID,ModuleID,PropertyID,Data) values(1,11,0,'1');
+Insert into ModuleData(RID,ModuleID,PropertyID,Data) values(1,11,2,'2');
+Insert into ModuleData(RID,ModuleID,PropertyID,Data) values(1,11,3,'3');
 
 
-
-
+Insert into ModuleData(RID,ModuleID,PropertyID,Data) values(2,11,0,'2');
+Insert into ModuleData(RID,ModuleID,PropertyID,Data) values(2,11,2,'2');
+Insert into ModuleData(RID,ModuleID,PropertyID,Data) values(2,11,3,'2');
 
 
 

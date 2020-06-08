@@ -3,6 +3,8 @@ package com.jq.mapper;
 import com.jq.entity.JQModule;
 import com.jq.entity.JQModuleData;
 import com.jq.entity.JQModuleConfig;
+import com.jq.entity.JQPropertyOption;
+
 
 import com.jq.entity.JQProperty;
 
@@ -20,7 +22,10 @@ public interface JQModuleMapper{
 	@Select("select id,name from Module where parentid= #{pid}")
 	List<JQModule> getModules(String pid);
 	
-	@Select("select id,name from Module where parentid= #{mid}")
+	@Select("select Options,PID as PropertyId from PropertyOption where PID = #{pid}")
+	List<JQPropertyOption> getProperyOptions(String pid);
+	
+	@Select("select md.rid as rowId, md.data as name, md.propertyid as id from ModuleData md,ModuleConfig mc where mc.moduleid = #{mid} and mc.propertyid = md.propertyid and mc.moduleid=md.moduleid")
 	List<JQModuleData> getModuleData(String mid);
 	
 	@Select("select mc.id as id, p.id as propertyId,p.name as propertyName from ModuleConfig mc ,Property p where mc.propertyid =p.id and mc.moduleid = #{mid}")

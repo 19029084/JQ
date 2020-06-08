@@ -33,6 +33,11 @@ public class JQModuleConfig
 		property.setId(id);
 		
 	}
+	
+	public JQProperty Property()
+	{
+		return property;
+	}	
 
 
 private int id;
