@@ -9,12 +9,14 @@ import com.jq.entity.JQPropertyOption;
 
 
 import com.jq.mapper.JQModuleMapper;
+import com.jq.mapper.JQColumn;
 
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.ArrayList;
 
@@ -40,17 +42,19 @@ public class JQModuleService
 	public List<JQModuleData> getModuleData(String mid)
 	{
 		List<JQModuleConfig> configs = getModuleConfig(mid);
+		Map<Integer,JQModuleData> table = new TreeMap<Integer,JQModuleData>();
 		
+		JQModuleData configRow = new JQModuleData();
+		configRow.setRowId(0);
+		table.put(0,configRow);
+		
+				
 		for(int i=0;i< configs.size();i++)
 		{
-			JQModuleConfig c = configs.get(i);
-			List<JQPropertyOption> options = jqModuleMapper.getProperyOptions(""+c.getPropertyId());
-			c.Property().addOptions(options);
+			configRow.addData(configs.get(i).getProperty());
 		}
 		
-		List<JQModuleData> data = jqModuleMapper.getModuleData(mid);
-		
-		Map<Integer,JQModuleData> table = new TreeMap<Integer,JQModuleData>();
+		List<JQColumn> data = jqModuleMapper.getModuleData(mid);
 		
 		for(int i=0;i< data.size();i++)
 		{
@@ -69,10 +73,9 @@ public class JQModuleService
 				row = table.get(rowID);
 			}
 			
-			System.out.println(data.get(i));	
+			JQProperty property =  data.get(i);
 			
-			
-			row.addData(data.get(i));
+			row.addData(property);
 		}
 		
 		ArrayList<JQModuleData> result = new ArrayList<JQModuleData>();
@@ -91,7 +94,16 @@ public class JQModuleService
 	
 	public List<JQModuleConfig> getModuleConfig(String mid)
 	{
-		return jqModuleMapper.getModuleConfig(mid);
+		List<JQModuleConfig> configs = jqModuleMapper.getModuleConfig(mid);
+		
+		for(int i=0;i< configs.size();i++)
+		{
+			JQModuleConfig c = configs.get(i);
+			List<JQPropertyOption> options = jqModuleMapper.getProperyOptions(""+c.getProperty().getId());
+			c.getProperty().setOptions(options);
+		}
+		
+		return configs;
 	}
 
 }

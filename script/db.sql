@@ -27,7 +27,7 @@ CREATE TABLE PropertyOption
 (
 	ID INT(11) NOT NULL AUTO_INCREMENT,
 	PID INT(11) NOT NULL,
-	Options VARCHAR(255) NOT NULL,
+	VALUE VARCHAR(255) NOT NULL,
 	PRIMARY KEY(ID)
 )AUTO_INCREMENT=1;
 
@@ -193,11 +193,11 @@ Insert into ModuleConfig(ModuleId,PropertyId) values (11,16);
 Insert into ModuleConfig(ModuleId,PropertyId) values (11,17);
 
 
-Insert into PropertyOption(PID,Options) values(0,'均桥镇0');
-Insert into PropertyOption(PID,Options) values(0,'均桥镇1');
-Insert into PropertyOption(PID,Options) values(0,'均桥镇2');
-Insert into PropertyOption(PID,Options) values(0,'均桥镇3');
-Insert into PropertyOption(PID,Options) values(0,'均桥镇4');
+Insert into PropertyOption(PID,VALUE) values(1,'均桥镇0');
+Insert into PropertyOption(PID,VALUE) values(1,'均桥镇1');
+Insert into PropertyOption(PID,VALUE) values(1,'均桥镇2');
+Insert into PropertyOption(PID,VALUE) values(1,'均桥镇3');
+Insert into PropertyOption(PID,VALUE) values(1,'均桥镇4');
 
 
 

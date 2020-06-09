@@ -31,7 +31,26 @@ public class JQProperty
 	{
 		return name;
 	}
-
+	
+	public void setValue(String value)
+	{
+		this.value=value;		
+	}
+	
+	public void setType(int type)
+	{
+		this.type=type;
+	}
+	public String getValue()
+	{
+		return this.value;		
+	}
+	
+	public int getType()
+	{
+		return this.type;
+	}		
+	
 	public void addOption(JQPropertyOption option)
 	{
 		if(options!=null)
@@ -42,7 +61,7 @@ public class JQProperty
 		options.add(option);
 	}	
 
-	public void addOptions(List<JQPropertyOption> options)
+	public void setOptions(List<JQPropertyOption> options)
 	{
 		this.options = options;
 	}
@@ -53,7 +72,9 @@ public class JQProperty
 	}	
 
 	private int id;
+	private int type;
 	private String name;
+	private String value;
 
 	private List<JQPropertyOption> options;
 

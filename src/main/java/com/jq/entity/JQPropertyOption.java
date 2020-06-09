@@ -7,21 +7,21 @@ public class JQPropertyOption
 		this.id=id;
 	}
 	
-	public int getId()
+	//public int getId()
+	//{
+	//	return id;
+	//}
+	
+	public void setValue(String value)
 	{
-		return id;
+		this.value=value;
 	}
 	
-	public void setOption(String option)
+	public String getValue()
 	{
-		this.option=option;
-	}
-	
-	public String getOption()
-	{
-		return option;
+		return value;
 	}
 
 	private int id;
-	private String option;
+	private String value;
 }

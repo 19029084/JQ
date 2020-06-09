@@ -13,7 +13,7 @@ public class JQModuleData
 		this.rowId=rowId;
 	}	
 
-	public void setProperty(JQProperty property)
+	public void addData(JQProperty property)
 	{
 		if(row==null)
 		{
@@ -27,28 +27,14 @@ public class JQModuleData
 	{
 		return rowId;
 	}
+
 	
-	public void addData(JQModuleData data)
-	{
-		if(data!= null && data.getRowId() == rowId)
-		{
-			if(row==null)
-			{
-				row = new HashMap<Integer,JQProperty>();
-			}
-					
-			row.putAll(data.getData());
-			
-		}
+	//public HashMap<Integer,JQProperty> getData()
+	//{
+	//	return row;
+	//}
 	
-	}
-	
-	public HashMap<Integer,JQProperty> getData()
-	{
-		return row;
-	}
-	
-	public List<JQProperty> getPropery()
+	public List<JQProperty> getData()
 	{
 		List<JQProperty> propertyList = new ArrayList<JQProperty>();
 		if(row != null)
@@ -63,6 +49,6 @@ public class JQModuleData
 	
 
 	private int rowId;
-	public HashMap<Integer,JQProperty> row = new HashMap<Integer,JQProperty>();
+	private HashMap<Integer,JQProperty> row = new HashMap<Integer,JQProperty>();
 	
 }

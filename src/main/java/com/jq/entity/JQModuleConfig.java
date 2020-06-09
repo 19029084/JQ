@@ -1,5 +1,6 @@
 package com.jq.entity;
 
+
 public class JQModuleConfig
 {
 
@@ -12,20 +13,10 @@ public class JQModuleConfig
 	{
 		this.id = id;
 	}	
-	public String getPropertyName()
-	{
-		return property.getName();
-	}
 	
 	public void setPropertyName(String name)
 	{
 		property.setName(name);
-	}
-	
-	
-	public int getPropertyId()
-	{
-		return property.getId();
 	}
 	
 	public void setPropertyId(int id)
@@ -34,7 +25,7 @@ public class JQModuleConfig
 		
 	}
 	
-	public JQProperty Property()
+	public JQProperty getProperty()
 	{
 		return property;
 	}	

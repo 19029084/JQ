@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PathVariable;
 
-
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 
 
 import javax.annotation.*;
@@ -22,6 +25,7 @@ import javax.annotation.*;
 import java.util.List;
 
 @RestController
+@Api(tags = "Module Management API")
 @RequestMapping("/api/v1")
 
 class JQModuleController
@@ -31,6 +35,7 @@ class JQModuleController
 JQModuleService m_service;
 
 @GetMapping("/modules")
+@ApiOperation("Get All Modules Information")
 @ResponseBody
 List<JQModule> getModules()
 {
@@ -40,6 +45,8 @@ List<JQModule> getModules()
 }
 
 @GetMapping("/modules/{pid:\\d+}")
+@ApiOperation("Get Submodule Information by Parent ID")
+@ApiImplicitParam(name="pid",value="Parent ID",defaultValue="0",required=true)
 @ResponseBody
 List<JQModule> getSubModules(@PathVariable String pid)
 {
@@ -49,6 +56,9 @@ List<JQModule> getSubModules(@PathVariable String pid)
 }
 
 @GetMapping("/modules/{mid:\\d+}/config")
+@ApiOperation("Get Module Configuration by Module ID")
+//@ApiImplicitParams({...})
+@ApiImplicitParam(name="mid",value="Module ID",defaultValue="0",required=true)
 @ResponseBody
 List<JQModuleConfig> getModuleConfig(@PathVariable String mid)
 {
@@ -58,6 +68,8 @@ List<JQModuleConfig> getModuleConfig(@PathVariable String mid)
 }
 
 @GetMapping("/modules/{mid:\\d+}/data")
+@ApiOperation("Get Module Data by Module ID")
+@ApiImplicitParam(name="mid",value="Module ID",defaultValue="0",required=true)
 @ResponseBody
 List<JQModuleData> getModuleData(@PathVariable String mid)
 {

@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class JQModuleTable
 {
-
+/*
 public void addData(JQModuleData data)
 {
 
@@ -30,5 +30,5 @@ public void addData(JQModuleData data)
 
 }
 
-private HashMap<Integer,JQModuleData> table;
+private HashMap<Integer,JQModuleData> table;*/
 }
