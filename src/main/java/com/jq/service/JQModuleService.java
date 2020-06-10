@@ -36,6 +36,20 @@ public class JQModuleService
 	public List<JQModule> getModules(String pid)
 	{
 		return jqModuleMapper.getModules(pid);
+	}
+	
+	
+	
+	public int createModules(List<JQModule> modules, String pid)
+	{
+		for(int i=0;i<modules.size();i++)
+		{
+			jqModuleMapper.createModule(modules.get(i),pid);
+		
+		}	
+		
+		return 0;
+	
 	}	
 
 

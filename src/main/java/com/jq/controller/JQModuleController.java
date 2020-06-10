@@ -10,7 +10,14 @@ import com.jq.service.JQModuleService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+
+
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -44,6 +51,28 @@ List<JQModule> getModules()
 
 }
 
+
+@PostMapping("/modules")
+@ApiOperation("Create Modules")
+@ResponseBody
+int createModules(@RequestBody List<JQModule> modules)
+{
+	return m_service.createModules(modules,"0");
+}
+
+@DeleteMapping("/modules")
+int deleteModules(@RequestBody List<JQModule> modules)
+{
+return 0;
+}
+
+@PutMapping("/modules")
+int updateModules(@RequestBody List<JQModule> modules)
+{
+return 0;
+
+}
+
 @GetMapping("/modules/{pid:\\d+}")
 @ApiOperation("Get Submodule Information by Parent ID")
 @ApiImplicitParam(name="pid",value="Parent ID",defaultValue="0",required=true)
@@ -53,6 +82,16 @@ List<JQModule> getSubModules(@PathVariable String pid)
 
  return m_service.getModules(pid);
 
+}
+
+
+
+@PostMapping("/modules/{pid:\\d+}")
+@ApiOperation("Create Submodule by Parent ID")
+@ResponseBody
+int createModules(@RequestBody List<JQModule> modules,@PathVariable String pid)
+{
+	return m_service.createModules(modules,pid);
 }
 
 @GetMapping("/modules/{mid:\\d+}/config")

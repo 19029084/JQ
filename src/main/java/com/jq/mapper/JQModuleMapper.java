@@ -31,6 +31,9 @@ public interface JQModuleMapper{
 	@Select("select mc.id as id, p.id as propertyId,p.name as propertyName from ModuleConfig mc ,Property p where mc.propertyid =p.id and mc.moduleid = #{mid}")
 	List<JQModuleConfig> getModuleConfig(String mid);
 	
+	@Insert("insert into Module(name,parentid) value(#{module.name},#{pid})")
+	int createModule(JQModule module,String pid);
+	
 	
 
 }
