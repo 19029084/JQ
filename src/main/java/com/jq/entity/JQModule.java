@@ -6,7 +6,8 @@ public class JQModule
 {
 	private int id;
 	private String name;
-
+	private String path;
+	
 	public JQModule(){
 	}
 
@@ -26,5 +27,17 @@ public class JQModule
 	{
 		return name;
 	}
+	
+	public String getPath()
+	{
+		return path;
+	}
+	
+	public void setPath(String path)
+	{
+		this.path=path;
+	}
+	
+	
 
 }

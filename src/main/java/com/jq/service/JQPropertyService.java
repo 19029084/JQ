@@ -25,6 +25,94 @@ public class JQPropertyService
 		return properties;
 		
 	}
+	
+	public int createProperties(List<JQProperty> properties)
+	{
+	
+		for(int i=0;i<properties.size();i++)
+		{
+			jqPropertyMapper.createProperty(properties.get(i));	
+		
+		}
+		
+		return 0;
+	
+	
+	}
+	
+	public int updateProperties(List<JQProperty> properties)
+	{
+	
+		for(int i=0;i<properties.size();i++)
+		{
+			jqPropertyMapper.updateProperty(properties.get(i));	
+		
+		}
+		
+		return 0;
+	
+	
+	}
+	
+	
+	public int deleteProperties(List<JQProperty> properties)
+	{
+	
+		for(int i=0;i<properties.size();i++)
+		{
+			jqPropertyMapper.deleteProperty(properties.get(i));	
+		
+		}
+		
+		return 0;
+	
+	
+	}
 
+
+	public List<JQPropertyOption> getPropertyOptions(String propertyId)
+	{
+		List<JQPropertyOption> propertyOptions = jqPropertyMapper.getProperyOptions(propertyId);
+		
+		
+		return propertyOptions;
+		
+	}
+	
+	
+	public int addPropertyOptions(String propertyId,List<JQPropertyOption> propertyOptions)
+	{
+		for(int i=0;i<propertyOptions.size();i++)
+		{
+			jqPropertyMapper.addPropertyOption(propertyId,propertyOptions.get(i));
+		}
+		
+		return 0;
+	}
+	
+	
+	public int updatePropertyOptions(String propertyId,List<JQPropertyOption> propertyOptions)
+	{
+		for(int i=0;i<propertyOptions.size();i++)
+		{
+			jqPropertyMapper.updatePropertyOption(propertyId,propertyOptions.get(i));
+		}
+		
+		return 0;
+	}
+	
+	
+	public int deletePropertyOptions(String propertyId,List<JQPropertyOption> propertyOptions)
+	{
+		for(int i=0;i<propertyOptions.size();i++)
+		{
+			jqPropertyMapper.deletePropertyOption(propertyId,propertyOptions.get(i));
+		}
+		
+		return 0;
+	}
+
+	
+	
 
 }

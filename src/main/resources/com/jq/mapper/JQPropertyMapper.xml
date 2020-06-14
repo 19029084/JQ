@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	
+	
+<mapper namespace="com.jq.mapper.JQPropertyMapper">
+
+	<resultMap id="JQProperty" type="com.jq.entity.JQProperty">
+		<id property="id" column="id"/>
+		<result property="name" column="name" />
+		<result property="type" column="type" />
+	</resultMap>
+
+	<select id="getProperties" resultMap="JQProperty">	
+		select * from Property where valid=1
+	</select>
+	
+	<insert id = "createProperty">
+		insert into Property(Name,Type,Valid) values(#{property.name},#{property.type},1)
+	
+	</insert>
+
+	<update id = "updateProperty">
+		update Property set Name=#{property.name}, Type = #{property.type}
+		where id = #{property.id}
+	</update>
+	
+	<update id = "deleteProperty">
+		update Property set valid=0 
+		where id=#{property.id}	
+	</update>
+
+
+
+
+	<resultMap id="JQPropertyOption" type="com.jq.entity.JQPropertyOption">		
+		<result property="value" column="value" />
+		<result property="propertyId" column="propertyId" />			
+	</resultMap>
+		
+	<select id="getProperyOptions" resultMap="JQPropertyOption">	
+		select value,PID as propertyId from PropertyOption where PID = #{pid} and valid=1
+	</select>
+	
+	
+	<insert id="addProperyOption">	
+		insert into PropertyOption(value,PID,Valid) values(#{option.value},#{pid},1)
+	</insert>
+
+	<update id="updateProperyOption">
+		update PropertyOption set value = #{option.value}
+		where PID= #{pid} and id=#{option.id}		
+	</update>
+	
+	<update id="deleteProperyOption">
+		update PropertyOption set Valid =0
+		where PID= #{pid} and value = #{option.value}	
+	</update>	
+
+
+
+
+
+</mapper>	
+
+
+

@@ -2,6 +2,7 @@ package com.jq.mapper;
 
 
 import com.jq.entity.JQProperty;
+import com.jq.entity.JQPropertyOption;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -13,8 +14,19 @@ import java.util.List;
 @Mapper
 public interface JQPropertyMapper
 {
-	@Select("select * from property")
 	List<JQProperty> getProperties();
+	int createProperty(JQProperty property);	
+	int updateProperty(JQProperty property);	
+	int deleteProperty(JQProperty property);
 
+	
+		
+	List<JQPropertyOption> getProperyOptions(String pid);
+	int addPropertyOption(String pid,JQPropertyOption option);
+	int updatePropertyOption(String pid,JQPropertyOption option);
+	int deletePropertyOption(String pid,JQPropertyOption option);
+	
+	
+	
 
 }

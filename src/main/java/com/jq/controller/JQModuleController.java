@@ -60,18 +60,24 @@ int createModules(@RequestBody List<JQModule> modules)
 	return m_service.createModules(modules,"0");
 }
 
-@DeleteMapping("/modules")
-int deleteModules(@RequestBody List<JQModule> modules)
-{
-return 0;
-}
-
 @PutMapping("/modules")
+@ApiOperation("Update Modules' name and path")
+@ResponseBody
 int updateModules(@RequestBody List<JQModule> modules)
 {
-return 0;
+	return m_service.updateModules(modules,"0");
 
 }
+
+@DeleteMapping("/modules")
+@ApiOperation("Delete Modules")
+@ResponseBody
+int deleteModules(@RequestBody List<JQModule> modules)
+{
+	return m_service.deleteModules(modules,"0");
+}
+
+
 
 @GetMapping("/modules/{pid:\\d+}")
 @ApiOperation("Get Submodule Information by Parent ID")
@@ -94,6 +100,28 @@ int createModules(@RequestBody List<JQModule> modules,@PathVariable String pid)
 	return m_service.createModules(modules,pid);
 }
 
+
+@PutMapping("/modules/{pid:\\d+}")
+@ApiOperation("Update Modules' name and path")
+@ResponseBody
+int updateModules(@RequestBody List<JQModule> modules,@PathVariable String pid)
+{
+	return m_service.updateModules(modules,pid);
+
+}
+
+@DeleteMapping("/modules/{pid:\\d+}")
+@ApiOperation("根据模块号删除其部分子模块")
+@ResponseBody
+int deleteModules(@RequestBody List<JQModule> modules,@PathVariable String pid)
+{
+	return m_service.deleteModules(modules,pid);
+}
+
+
+
+
+
 @GetMapping("/modules/{mid:\\d+}/config")
 @ApiOperation("Get Module Configuration by Module ID")
 //@ApiImplicitParams({...})
@@ -103,6 +131,32 @@ List<JQModuleConfig> getModuleConfig(@PathVariable String mid)
 {
 
  return m_service.getModuleConfig(mid);
+
+}
+
+
+@PostMapping("/modules/{mid:\\d+}/config")
+@ApiOperation("根据子模块号添加表格配置")
+//@ApiImplicitParams({...})
+@ApiImplicitParam(name="mid",value="Module ID",defaultValue="0",required=true)
+@ResponseBody
+int addModuleConfig(@PathVariable String mid,List<JQModuleConfig> configs)
+{
+
+ return m_service.addModuleConfig(mid,configs);
+
+}
+
+
+@DeleteMapping("/modules/{mid:\\d+}/config")
+@ApiOperation("根据子模块号删除表格配置")
+//@ApiImplicitParams({...})
+@ApiImplicitParam(name="mid",value="Module ID",defaultValue="0",required=true)
+@ResponseBody
+int deleteModuleConfig(@PathVariable String mid,List<JQModuleConfig> configs)
+{
+
+ return m_service.deleteModuleConfig(mid,configs);
 
 }
 
@@ -117,6 +171,38 @@ List<JQModuleData> getModuleData(@PathVariable String mid)
 
 }
 
+@PostMapping("/modules/{mid:\\d+}/data")
+@ApiOperation("根据子模块号添加表格数据")
+@ApiImplicitParam(name="mid",value="Module ID",defaultValue="0",required=true)
+@ResponseBody
+int addModuleData(@PathVariable String mid,List<JQModuleData> moduleData)
+{
+
+ return m_service.addModuleData(mid,moduleData);
+
+}
+
+@PutMapping("/modules/{mid:\\d+}/data")
+@ApiOperation("根据子模块号修改表格数据")
+@ApiImplicitParam(name="mid",value="Module ID",defaultValue="0",required=true)
+@ResponseBody
+int updateModuleData(@PathVariable String mid,List<JQModuleData> moduleData)
+{
+
+ return m_service.updateModuleData(mid,moduleData);
+
+}
+
+@DeleteMapping("/modules/{mid:\\d+}/data")
+@ApiOperation("根据子模块号删除表格数据")
+@ApiImplicitParam(name="mid",value="Module ID",defaultValue="0",required=true)
+@ResponseBody
+int deleteModuleData(@PathVariable String mid,List<JQModuleData> moduleData)
+{
+
+ return m_service.deleteModuleData(mid,moduleData);
+
+}
 
 
 

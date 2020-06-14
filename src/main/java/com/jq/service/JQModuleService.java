@@ -9,6 +9,8 @@ import com.jq.entity.JQPropertyOption;
 
 
 import com.jq.mapper.JQModuleMapper;
+import com.jq.mapper.JQPropertyMapper;
+
 import com.jq.mapper.JQColumn;
 
 
@@ -32,6 +34,8 @@ public class JQModuleService
 
 	@Autowired
 	JQModuleMapper jqModuleMapper;
+	@Autowired
+	JQPropertyMapper jqPropertyMapper;
 
 	public List<JQModule> getModules(String pid)
 	{
@@ -51,6 +55,35 @@ public class JQModuleService
 		return 0;
 	
 	}	
+
+
+	public int updateModules(List<JQModule> modules, String pid)
+	{
+		for(int i=0;i<modules.size();i++)
+		{
+			jqModuleMapper.updateModule(modules.get(i),pid);
+		
+		}	
+		
+		return 0;
+	
+	}
+	
+	
+	
+	public int deleteModules(List<JQModule> modules, String pid)
+	{
+		for(int i=0;i<modules.size();i++)
+		{
+			jqModuleMapper.deleteModule(modules.get(i),pid);
+		
+		}	
+		
+		return 0;
+	
+	}
+
+
 
 
 	public List<JQModuleData> getModuleData(String mid)
@@ -106,6 +139,66 @@ public class JQModuleService
 		return result;
 	}
 	
+	
+	
+	public int addModuleData(String mid, List<JQModuleData> moduleData)
+	{
+		for(int i=0;i<moduleData.size();i++)
+		{
+		
+			int rowId = moduleData.get(i).getRowId();
+			
+			List<JQProperty> data = moduleData.get(i).getData();
+			
+			for(int j=0;j<data.size();j++)
+			{
+				jqModuleMapper.addModuleData(mid,rowId,data.get(j));			
+			}	
+		}
+		
+		return 0;
+	
+	}
+	
+	public int updateModuleData(String mid, List<JQModuleData> moduleData)
+	{
+		for(int i=0;i<moduleData.size();i++)
+		{
+		
+			int rowId = moduleData.get(i).getRowId();
+			
+			List<JQProperty> data = moduleData.get(i).getData();
+			
+			for(int j=0;j<data.size();j++)
+			{
+				jqModuleMapper.updateModuleData(mid,rowId,data.get(j));			
+			}	
+		}
+		
+		return 0;
+	
+	}
+
+	public int deleteModuleData(String mid, List<JQModuleData> moduleData)
+	{
+		for(int i=0;i<moduleData.size();i++)
+		{
+		
+			int rowId = moduleData.get(i).getRowId();
+			
+			List<JQProperty> data = moduleData.get(i).getData();
+			
+			for(int j=0;j<data.size();j++)
+			{
+				jqModuleMapper.deleteModuleData(mid,rowId,data.get(j));			
+			}	
+		}
+		
+		return 0;
+	
+	}
+	
+	
 	public List<JQModuleConfig> getModuleConfig(String mid)
 	{
 		List<JQModuleConfig> configs = jqModuleMapper.getModuleConfig(mid);
@@ -113,11 +206,31 @@ public class JQModuleService
 		for(int i=0;i< configs.size();i++)
 		{
 			JQModuleConfig c = configs.get(i);
-			List<JQPropertyOption> options = jqModuleMapper.getProperyOptions(""+c.getProperty().getId());
+			List<JQPropertyOption> options = jqPropertyMapper.getProperyOptions(""+c.getProperty().getId());
 			c.getProperty().setOptions(options);
 		}
 		
 		return configs;
 	}
+	
+	
+	public int addModuleConfig(String mid,List<JQModuleConfig> configs)
+	{
+		for(int i=0;i<configs.size();i++)
+		{
+			jqModuleMapper.addModuleConfig(mid,configs.get(i));
+		}
+		return 0;
+	}
+	
+	public int deleteModuleConfig(String mid,List<JQModuleConfig> configs)
+	{
+		for(int i=0;i<configs.size();i++)
+		{
+			jqModuleMapper.deleteModuleConfig(mid,configs.get(i));
+		}	
+		return 0;
+	}
+	
 
 }

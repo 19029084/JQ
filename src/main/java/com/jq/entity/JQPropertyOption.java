@@ -7,6 +7,17 @@ public class JQPropertyOption
 		this.id=id;
 	}
 	
+	
+	public void setPropertyId(int propertyId)
+	{
+		this.propertyId=propertyId;
+	}
+	
+	public int getPropertyId()
+	{
+		return propertyId;
+	}
+	
 	//public int getId()
 	//{
 	//	return id;
@@ -23,5 +34,6 @@ public class JQPropertyOption
 	}
 
 	private int id;
+	private int propertyId;
 	private String value;
 }

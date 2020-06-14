@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	
+	
+<mapper namespace="com.jq.mapper.JQModuleMapper">
+
+	<resultMap id="JQModule" type="com.jq.entity.JQModule">
+	<id property="id" column="id"/>
+	<result property="name" column="name" />
+	<result property="path" column="path" />
+	</resultMap>
+
+	<select id="getModules" resultMap="JQModule">	
+		select id,name,url as path from Module where parentid= #{pid} and Valid = 1
+	</select>
+	
+	
+	<insert id="createModule" >
+		insert into Module(name,parentid,url,valid) value(#{module.name},#{pid},#{module.path},1)
+	</insert>
+	
+	<update id="updateModule">
+		update Module set name=#{module.name},url=#{module.path} where parentid=#{pid} and id=#{module.id}
+	</update>
+	
+	<update id="deleteModule">
+		update Module set Valid = 0 where parentid=#{pid} and id=#{module.id}
+	</update>
+	
+	
+	<select id="getModuleConfig">
+		select mc.id as id, p.id as propertyId,p.name as propertyName 
+		from ModuleConfig mc ,Property p 
+		where mc.propertyid =p.id and mc.moduleid = #{mid} and mc.valid=1
+	</select>
+	
+	<insert id="addModuleConfig">
+		insert into ModuleConfig(ModuleId,PropertyId,Valid) values (mid,config.property.id,1);
+	</insert>
+	
+	<update id="deleteModuleConfig">	
+		update ModuleConfig set valid=0 where ModuleId=#{mid} and PropertyId= #{config.property.id}
+	</update>
+	
+	
+	<select id="getModuleData">
+		select md.rid as rowId, md.data as value, md.propertyid as id,p.name as name, p.type as type 
+		from ModuleData md,ModuleConfig mc,Property p 
+		where mc.moduleid = #{mid} and mc.propertyid = md.propertyid and mc.moduleid=md.moduleid and p.id=md.propertyid	
+	</select>
+	
+	<insert id="addModuleData">
+		Insert into ModuleData(RID,ModuleID,PropertyID,Data) values(#{rowId},#{mid},#{property.id},#{property.value});
+	</insert>
+	
+	
+	<update id="updateModuleData">
+	
+		update ModuleData set Data=#{property.value} 
+		
+		where RID=#{rowId} and ModuleID=#{mid} and PropertyID = #{property.id}
+	
+	</update>
+	
+	
+	<delete id="deleteModuleData">
+		delete from ModuleData
+		where RID=#{rowId} and ModuleID=#{mid} and PropertyID = #{property.id}	
+	</delete>
+	
+	
+	
+	
+	
+
+	
+	
+	
+
+
+
+
+</mapper>	
+
+
+
