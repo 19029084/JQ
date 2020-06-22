@@ -52,7 +52,7 @@ public class JQPropertyController
 	@PostMapping("/properties")
 	@ApiOperation("创建新的字段")
 	@ResponseBody
-	int createProperties(List<JQProperty> properties)
+	int createProperties(@RequestBody List<JQProperty> properties)
 	{
 	
 		return m_service.createProperties(properties);
@@ -63,7 +63,7 @@ public class JQPropertyController
 	@PutMapping("/properties")
 	@ApiOperation("更新字段内容")
 	@ResponseBody
-	int updateProperties(List<JQProperty> properties)
+	int updateProperties(@RequestBody List<JQProperty> properties)
 	{
 	
 		return m_service.updateProperties(properties);
@@ -74,7 +74,7 @@ public class JQPropertyController
 	@DeleteMapping("/properties")
 	@ApiOperation("删除字段")
 	@ResponseBody
-	int deleteProperties(List<JQProperty> properties)
+	int deleteProperties(@RequestBody List<JQProperty> properties)
 	{
 	
 		return m_service.deleteProperties(properties);
@@ -90,7 +90,7 @@ public class JQPropertyController
 	@GetMapping("/properties/{propertyId:\\d+}")
 	@ApiOperation("获取某字段的选项值")
 	@ResponseBody
-	List<JQPropertyOption> getPropertyOptions(String propertyId)
+	List<JQPropertyOption> getPropertyOptions(@PathVariable String propertyId)
 	{
 	
 		return m_service.getPropertyOptions(propertyId);
@@ -100,7 +100,7 @@ public class JQPropertyController
 	@PostMapping("/properties/{propertyId:\\d+}")
 	@ApiOperation("添加某字段的选项值")
 	@ResponseBody
-	int addPropertyOptions(String propertyId,List<JQPropertyOption> propertyOptions)
+	int addPropertyOptions(@PathVariable String propertyId,@RequestBody List<JQPropertyOption> propertyOptions)
 	{
 	
 		return m_service.addPropertyOptions(propertyId,propertyOptions);
@@ -110,7 +110,7 @@ public class JQPropertyController
 	@PutMapping("/properties/{propertyId:\\d+}")
 	@ApiOperation("更新某字段的选项值")
 	@ResponseBody
-	int updatePropertyOptions(String propertyId,List<JQPropertyOption> propertyOptions)
+	int updatePropertyOptions(@PathVariable String propertyId,@RequestBody List<JQPropertyOption> propertyOptions)
 	{
 	
 		return m_service.updatePropertyOptions(propertyId,propertyOptions);
@@ -121,7 +121,7 @@ public class JQPropertyController
 	@DeleteMapping("/properties/{propertyId:\\d+}")
 	@ApiOperation("删除某字段的选项值")
 	@ResponseBody
-	int deletePropertyOptions(String propertyId,List<JQPropertyOption> propertyOptions)
+	int deletePropertyOptions(@PathVariable String propertyId, @RequestBody List<JQPropertyOption> propertyOptions)
 	{
 	
 		return m_service.deletePropertyOptions(propertyId,propertyOptions);

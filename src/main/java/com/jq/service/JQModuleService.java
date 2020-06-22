@@ -26,6 +26,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.Resource;
 
+
+
 @Service
 public class JQModuleService
 {
@@ -34,21 +36,57 @@ public class JQModuleService
 
 	@Autowired
 	JQModuleMapper jqModuleMapper;
-	@Autowired
-	JQPropertyMapper jqPropertyMapper;
+	//@Autowired
+	//JQPropertyMapper jqPropertyMapper;
+	
+	@Resource
+	JQPropertyService propertyService;
 
 	public List<JQModule> getModules(String pid)
-	{
+	{	
+
 		return jqModuleMapper.getModules(pid);
 	}
 	
+	
+	
+	public JQModule getModuleByName(String name,String pid)
+	{
+		return jqModuleMapper.getModuleByName(name,pid);
+	}
 	
 	
 	public int createModules(List<JQModule> modules, String pid)
 	{
 		for(int i=0;i<modules.size();i++)
 		{
-			jqModuleMapper.createModule(modules.get(i),pid);
+			JQModule module = modules.get(i);
+			
+			
+			int moduleId = jqModuleMapper.createModule(module,pid);
+			
+			JQModule newModule = jqModuleMapper.getModuleByName(module.getName(),pid);
+			
+			module.setId(newModule.getId());
+			
+			System.out.println(module.getName()+"Module: " + moduleId);
+			
+			System.out.println(":::"+newModule.getId());
+			
+			List<JQModule> subModules = module.getSubModules();
+			
+			if(subModules !=null)
+			{
+				createModules(subModules,String.valueOf(module.getId()));
+			}
+			
+			List<JQModuleConfig> configs = module.getModuleConfigs();
+			
+			addModuleConfig(String.valueOf(module.getId()),configs);
+			
+			List<JQModuleData> data= module.getModuleData();
+			
+			addModuleData(String.valueOf(module.getId()),data);	
 		
 		}	
 		
@@ -88,53 +126,71 @@ public class JQModuleService
 
 	public List<JQModuleData> getModuleData(String mid)
 	{
-		List<JQModuleConfig> configs = getModuleConfig(mid);
 		Map<Integer,JQModuleData> table = new TreeMap<Integer,JQModuleData>();
 		
-		JQModuleData configRow = new JQModuleData();
-		configRow.setRowId(0);
-		table.put(0,configRow);
+		List<JQModuleData> result = new ArrayList<JQModuleData>();
 		
+		List<JQModuleConfig> configs = getModuleConfig(mid);
+		
+		for(int i=0;i<configs.size();i++)
+		{
+			JQModuleConfig config = configs.get(i);
+			
+			JQModuleData data = new JQModuleData();
+			
+			data.setModuleId(config.getModuleId());
+			
+			data.setConfigId(config.getConfigId());
+			
+			List<JQColumn> columns = jqModuleMapper.getModuleData(mid,String.valueOf(config.getConfigId()));
+			
+			List<JQProperty> properties = new ArrayList<JQProperty>();
+			
+			int rowId=0;
+			
+			for(int j=0;j<columns.size();j++)
+			{
+				JQColumn col = columns.get(j);
+				if(rowId==0)
+				{
+					rowId=col.getRowId();
+					properties.add(col);
+				}
+				else
+				{
+					if(rowId!= col.getRowId())
+					{
+						data.setProperties(properties);
+						data.setParentId(rowId);
+						result.add(data);
+						
+						data= new JQModuleData();
+						data.setModuleId(config.getModuleId());
+						data.setConfigId(config.getConfigId());
+						properties = new ArrayList();
+						rowId=col.getRowId();
+						properties.add(col);
+					
+					}
+					else
+					{
+						properties.add(col);
+
+					}
+				}
 				
-		for(int i=0;i< configs.size();i++)
-		{
-			configRow.addData(configs.get(i).getProperty());
-		}
-		
-		List<JQColumn> data = jqModuleMapper.getModuleData(mid);
-		
-		for(int i=0;i< data.size();i++)
-		{
-			int rowID = data.get(i).getRowId();
+				if(j==(columns.size()-1))
+				{
+					data.setProperties(properties);
+					data.setParentId(rowId);
+					result.add(data);
+				}
+					
 			
-			JQModuleData row = null;
-			
-			if(! table.containsKey(rowID))
-			{
-				row = new JQModuleData();
-				row.setRowId(rowID);
-				table.put(rowID,row);
-			}
-			else
-			{
-				row = table.get(rowID);
 			}
 			
-			JQProperty property =  data.get(i);
-			
-			row.addData(property);
-		}
-		
-		ArrayList<JQModuleData> result = new ArrayList<JQModuleData>();
-		
-		Set<Integer> keys = table.keySet();
-		
-		Iterator<Integer> iter = keys.iterator();
-		
-		while(iter.hasNext())
-		{
-			result.add(table.get(iter.next()));
-		}		
+					
+		}			
 	
 		return result;
 	}
@@ -146,13 +202,15 @@ public class JQModuleService
 		for(int i=0;i<moduleData.size();i++)
 		{
 		
-			int rowId = moduleData.get(i).getRowId();
+			int configId = moduleData.get(i).getConfigId();
 			
-			List<JQProperty> data = moduleData.get(i).getData();
+			int total = jqModuleMapper.getTotalQuantity(String.valueOf(mid),String.valueOf(configId));
+			
+			List<JQProperty> data = moduleData.get(i).getProperties();
 			
 			for(int j=0;j<data.size();j++)
 			{
-				jqModuleMapper.addModuleData(mid,rowId,data.get(j));			
+			jqModuleMapper.addModuleData(String.valueOf(mid),String.valueOf(configId),total+1,data.get(j));			
 			}	
 		}
 		
@@ -165,13 +223,13 @@ public class JQModuleService
 		for(int i=0;i<moduleData.size();i++)
 		{
 		
-			int rowId = moduleData.get(i).getRowId();
+			//int rowId = moduleData.get(i).getRowId();
 			
-			List<JQProperty> data = moduleData.get(i).getData();
+			List<JQProperty> data = moduleData.get(i).getProperties();
 			
 			for(int j=0;j<data.size();j++)
 			{
-				jqModuleMapper.updateModuleData(mid,rowId,data.get(j));			
+			//	jqModuleMapper.updateModuleData(mid,rowId,data.get(j));			
 			}	
 		}
 		
@@ -184,13 +242,13 @@ public class JQModuleService
 		for(int i=0;i<moduleData.size();i++)
 		{
 		
-			int rowId = moduleData.get(i).getRowId();
+			//int rowId = moduleData.get(i).getRowId();
 			
-			List<JQProperty> data = moduleData.get(i).getData();
+			List<JQProperty> data = moduleData.get(i).getProperties();
 			
 			for(int j=0;j<data.size();j++)
 			{
-				jqModuleMapper.deleteModuleData(mid,rowId,data.get(j));			
+			//	jqModuleMapper.deleteModuleData(mid,rowId,data.get(j));			
 			}	
 		}
 		
@@ -206,8 +264,9 @@ public class JQModuleService
 		for(int i=0;i< configs.size();i++)
 		{
 			JQModuleConfig c = configs.get(i);
-			List<JQPropertyOption> options = jqPropertyMapper.getProperyOptions(""+c.getProperty().getId());
-			c.getProperty().setOptions(options);
+			
+			propertyService.loadPropertyByConfig(c);
+
 		}
 		
 		return configs;
@@ -218,7 +277,23 @@ public class JQModuleService
 	{
 		for(int i=0;i<configs.size();i++)
 		{
-			jqModuleMapper.addModuleConfig(mid,configs.get(i));
+			JQModuleConfig config = configs.get(i);
+			
+			List<JQProperty> properties = config.getProperties();
+			
+			
+			propertyService.createProperties(properties);
+			
+			for(int j=0;j<properties.size();j++)
+			{
+				JQProperty property = properties.get(j);
+				
+				jqModuleMapper.addModuleConfig(mid,String.valueOf(property.getId()),String.valueOf(config.getConfigId()));
+				
+			}
+			
+			
+			
 		}
 		return 0;
 	}

@@ -5,50 +5,70 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-public class JQModuleData
+public class JQModuleData extends JQModuleConfig
 {
 
-	public void setRowId(int rowId)
-	{
-		this.rowId=rowId;
-	}	
+	
 
-	public void addData(JQProperty property)
+	public void setData(List<JQProperty> properties)
 	{
 		if(row==null)
 		{
 			row = new HashMap<Integer,JQProperty>();
 		}
 		
-		row.put(property.getId(),property);
-	}
-	
-	public int getRowId()
-	{
-		return rowId;
+		row.clear();
+		
+		for(int i=0;i<properties.size();i++)
+		{
+			JQProperty property = properties.get(i);
+		
+			row.put(property.getId(),property);
+		}
 	}
 
-	
-	//public HashMap<Integer,JQProperty> getData()
+
+	//public void addData(JQProperty property)
 	//{
-	//	return row;
+	//	if(row==null)
+	//	{
+	//		row = new HashMap<Integer,JQProperty>();
+	//	}
+		
+	//	row.put(property.getId(),property);
+	//
+	
+		
+
+	
+	public void setParentId(int parentId)
+	{
+	
+		this.parentId=parentId;
+	}
+	
+	//public List<JQProperty> getData()
+	//{
+	//	List<JQProperty> propertyList = new ArrayList<JQProperty>();
+	//	if(row != null)
+	//	{
+	//		for(JQProperty property : row.values())
+	//		{
+	//			propertyList.add(property);
+	//		}
+	//	}
+	//	return propertyList;
 	//}
 	
-	public List<JQProperty> getData()
-	{
-		List<JQProperty> propertyList = new ArrayList<JQProperty>();
-		if(row != null)
-		{
-			for(JQProperty property : row.values())
-			{
-				propertyList.add(property);
-			}
-		}
-		return propertyList;
-	}
 	
+	public boolean isConfig()
+	{
+		return false;
+	}
 
-	private int rowId;
+	
+	private int parentId;
+	
 	private HashMap<Integer,JQProperty> row = new HashMap<Integer,JQProperty>();
 	
 }

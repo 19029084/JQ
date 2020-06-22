@@ -28,18 +28,23 @@ public interface JQModuleMapper{
 	int createModule(JQModule module,String pid);
 	int updateModule(JQModule module,String pid);
 	int deleteModule(JQModule module,String pid);
+	JQModule getModuleByName(String name,String pid);
+	
 	
 	
 	List<JQModuleConfig> getModuleConfig(String mid);
-	int addModuleConfig(String mid,JQModuleConfig config);
+	//int addModuleConfig(String mid,JQModuleConfig config);
+	int addModuleConfig(String mid, String propertyId,String configId );
 	//int updateModuleConfig(String mid,JQModuleConfig config);
 	int deleteModuleConfig(String mid,JQModuleConfig config);
 	
-	List<JQColumn> getModuleData(String mid);
-	int addModuleData(String mid, int rowId,JQProperty property);
+	List<JQColumn> getModuleData(String mid,String configId);
+	int addModuleData(String mid, String configId, int parentId,JQProperty property);
 	int updateModuleData(String mid, int rowId,JQProperty property);
 	int deleteModuleData(String mid, int rowId, JQProperty property);
 	
+	
+	int getTotalQuantity(String mid,String configId);
 	
 
 }

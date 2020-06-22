@@ -1,0 +1,924 @@
+
+
+<modules>
+	<module name="数据大屏">
+
+	</module> 
+	
+	
+	<module name="数据中心">
+	<module name="扶贫管理">
+		 <config>
+		 	<property name="序号"/>
+		 	<property name="人数"/>
+		 	<property name="与户主关系"/>
+		 	<property name="贫困户姓名"/>
+		 	<property name="民族"/>
+		 	<property name="文化程度"/>
+		 	<property name="在校生状况"/>
+		 	<property name="健康状况"/>
+		 	<property name="劳动技能"/>
+		 	<property name="务工状态"/>
+		 	<property name="务工时间（月）"/>
+		 	<property name="脱贫属性"/>
+		 	<property name="脱贫年度"/>
+		 	<property name="帮扶责任人"/>
+		 	<property name="所属村民小组"/>
+		 	<property name="所属自然村"/>		 	
+		 	<property name="所属行政村"/>		 	
+		 	<property name="所属城镇"/>		 	
+		 	<property name="贫困人员识别时间"/>		 	
+		 	<property name="脱贫时间"/>
+		 	<property name="参加大病医疗"/>
+		 	<property name="致贫原因"/>
+		 	<property name="危房户"/>
+		 	<property name="改房情况"/>
+		 	<property name="改厕情况"/>
+		 	<property name="是否解决安全饮用水"/>
+		 	<property name="改水情况"/>
+		 	<property name="人均纯收入"/>
+		 	<property name="联系电话"/>
+		 	<property name="简介"/>	 
+		 </config>
+		 
+		 <config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+		 		
+	</module>
+		
+	<module name="名人管理">
+		
+		<config>
+			<property name="序号"/>
+			<property name="名人姓名"/>
+			<property name="名人类型"/>
+			<property name="出生地址"/>
+			<property name="安葬地址"/>
+			<property name="所属自然村"/>
+			<property name="所属行政村"/>
+			<property name="所属城镇"/>
+			<property name="联系电话"/>
+			<property name="简介"/>
+			
+		</config>
+		
+		<config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+		
+		
+	</module>
+		
+	<module name="公共设施管理">
+		
+		<config>
+			<property name="序号"/>
+			<property name="公共设施名称"/>
+			<property name="公共设施类型"/>
+			<property name="地址"/>
+			<property name="联系电话"/>
+			<property name="所属自然村"/>
+			<property name="所属行政村"/>
+			<property name="所属城镇"/>
+			<property name="照片"/>
+			<property name="简介"/>
+		
+		
+		
+		</config>
+		
+		
+		
+				
+		<config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+		
+		</module>
+		
+		<module name="交通信息管理">
+		
+		
+		<config>
+			<property name="序号"/>
+			<property name="交通名称"/>
+			<property name="交通类型"/>
+			<property name="建设状态"/>
+			<property name="联系电话"/>
+			<property name="所属自然村"/>
+			<property name="所属行政村"/>
+			<property name="所属城镇"/>
+			<property name="长度"/>
+			<property name="照片"/>
+			<property name="简介"/>
+		
+		
+		
+		</config>
+		
+		<config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+		
+		</module>
+		
+
+		
+		<module name="养老设施管理">
+		
+		
+		<config>
+			<property name="序号"/>
+			<property name="养老设施名称"/>
+			<property name="养老设施类型"/>
+			<property name="建设状态"/>
+			<property name="联系电话"/>
+			<property name="所属自然村"/>
+			<property name="所属行政村"/>
+			<property name="所属城镇"/>
+			<property name="地址"/>
+			<property name="照片"/>
+			<property name="简介"/>
+		
+		
+		
+		</config>		
+		
+		<config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+		
+		</module>
+		
+		
+		<module name="卫生设施管理">
+				
+		<config>
+			<property name="序号"/>
+			<property name="卫生设施名称"/>
+			<property name="医院类型"/>
+			<property name="建设状态"/>
+			<property name="联系电话"/>
+			<property name="所属自然村"/>
+			<property name="所属行政村"/>
+			<property name="所属城镇"/>
+			<property name="地址"/>
+			<property name="照片"/>
+			<property name="简介"/>
+		
+		</config>
+		
+				
+		<config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+		 
+		 <config id="200">
+			<property name="成员"/>
+			<property name="村医类型"/>
+			<property name="联系电话"/>
+			<property name="就业情况"/>
+			<property name="学历"/>
+			<property name="工作性质"/>
+			<property name="操作"/>		
+		</config>
+		 
+		
+		</module>
+		
+		
+		<module name="教育信息管理">
+		
+		<config>
+			<property name="序号"/>
+			<property name="学校名称"/>
+			<property name="学校类型"/>
+			<property name="建设状态"/>
+			<property name="容纳人数"/>
+			<property name="所属自然村"/>
+			<property name="所属行政村"/>
+			<property name="所属城镇"/>
+			<property name="地址"/>
+			<property name="照片"/>
+			<property name="简介"/>
+		
+		</config>
+		
+		<config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+		</module>
+		
+		
+		<module name="文体设施管理">
+		<config>
+			<property name="序号"/>
+			<property name="文体名称"/>
+			<property name="文体类型"/>
+			<property name="建设状态"/>
+			<property name="联系电话"/>
+			<property name="所属自然村"/>
+			<property name="所属行政村"/>
+			<property name="所属城镇"/>
+			<property name="地址"/>
+			<property name="照片"/>
+			<property name="简介"/>
+		
+		</config>
+		
+		<config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+		
+		</module>
+		
+		<module name="集体资产管理">
+		<config>
+			<property name="序号"/>
+			<property name="集体资产名称"/>
+			<property name="集体资产类型"/>
+			<property name="是否登记注册"/>
+			<property name="资产成员数"/>
+			<property name="所属自然村"/>
+			<property name="所属行政村"/>
+			<property name="所属城镇"/>
+			<property name="集体资产收入"/>
+			<property name="资产照片" />
+			<property name="集体资产价值" />
+			<property name="简介"/>
+		
+		</config>
+		
+		<config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+		 
+		 
+		 		
+		<config id="200">
+		 	<property name="资产成员"/>
+			<property name="联系电话"/>
+			<property name="就业情况"/>
+			<property name="学历"/>
+			<property name="工作性质"/>
+			<property name="工作类型"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+		 
+		 
+		 
+		 
+		</module>
+		
+		<module name="土地资源管理">
+		
+		<config>
+			<property name="序号"/>
+			<property name="资源名称"/>
+			<property name="资源类型"/>
+			<property name="资源状态"/>
+			<property name="面积"/>
+			<property name="所属自然村"/>
+			<property name="所属行政村"/>
+			<property name="所属城镇"/>
+			<property name="是否有收益"/>
+			<property name="照片" />
+			<property name="土地承包合同" />
+			<property name="简介"/>
+		
+		</config>
+		
+		<config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+		
+		</module>
+		
+		<module name="农业设施管理">
+		<config>
+			<property name="序号"/>
+			<property name="农业设施名称"/>
+			<property name="设施类型"/>
+			<property name="建设状态"/>
+
+			<property name="所属自然村"/>
+			<property name="所属行政村"/>
+			<property name="所属城镇"/>
+			<property name="是否有收益"/>
+			<property name="照片" />
+
+			<property name="简介"/>
+		
+		</config>
+		
+		<config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>		
+		
+		
+		</module>
+		
+		<module name="工业信息管理">
+		
+		<config>
+			<property name="序号"/>
+			<property name="工业名称"/>
+			<property name="工业类型"/>
+			<property name="规模"/>
+
+			<property name="所属自然村"/>
+			<property name="所属行政村"/>
+			<property name="所属城镇"/>
+			<property name="地址"/>
+			<property name="联系电话"/>
+			
+			<property name="效益"/>
+			<property name="主要销往"/>
+			<property name="年收入"/>
+			<property name="照片" />
+
+			<property name="简介"/>
+		
+		</config>
+		
+		<config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+		
+		
+		</module>
+		
+		<module name="商贸信息管理">
+				
+		<config>
+			<property name="序号"/>
+			<property name="商贸名称"/>
+			<property name="商贸类型"/>
+			<property name="建设状态"/>
+
+			<property name="所属自然村"/>
+			<property name="所属行政村"/>
+			<property name="所属城镇"/>
+			<property name="地址"/>
+			<property name="联系电话"/>
+			
+
+			<property name="照片" />
+
+			<property name="简介"/>
+		
+		</config>
+		
+		<config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+		</module>
+		
+		<module name="旅游景点管理">
+		
+				<config>
+			<property name="序号"/>
+			<property name="景点名称"/>
+			<property name="景点类型"/>
+			<property name="建设状态"/>
+
+			<property name="所属自然村"/>
+			<property name="所属行政村"/>
+			<property name="所属城镇"/>
+			
+			<property name="地址"/>
+			<property name="联系电话"/>
+			
+
+			<property name="照片" />
+
+			<property name="简介"/>
+		
+		</config>
+		
+		<config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+		</module>
+	
+	</module> 
+	
+	<module name="组织与人员">
+	
+		<module name="城镇管理">
+		
+		
+		<config>
+			<property name="序号"/>
+			<property name="城镇名称"/>
+			<property name="管辖面积（亩）"/>
+			<property name="管辖户数"/>
+			
+			<property name="管辖人口"/>
+			
+			<property name="办公室照片"/>
+			<property name="城镇规划"/>
+
+			<property name="简介"/>
+		
+		</config>
+		
+		<config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+		
+		</module>
+		
+		
+		<module name="行政村管理">
+		<config>
+			<property name="序号"/>
+			<property name="行政村名称"/>
+			<property name="景点类型"/>
+			<property name="管辖面积（亩）"/>
+
+			<property name="管辖户数"/>
+			<property name="管辖人口"/>
+			
+			<property name="所属城镇"/>
+			
+			
+			<property name="村部照片"/>
+
+			<property name="简介"/>
+		
+		</config>
+		
+		<config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+		</module>
+		<module name="自然村/村民小组管理">
+		 <config>
+			<property name="序号"/>
+			<property name="自然村名称"/>
+			<property name="村民小组名称"/>
+
+
+
+			<property name="所属城镇"/>
+			
+			<property name="管辖面积（亩）"/>
+
+			<property name="管辖户数"/>
+			<property name="管辖人口"/>
+			
+
+			<property name="村荣照片" />
+			<property name="村貌照片" />
+			<property name="所属行政村"/>
+
+			<property name="简介"/>
+		
+		</config>
+		
+		<config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+				
+		</module>
+		<module name="干部管理">
+		<config>
+			<property name="序号"/>
+			<property name="领导名称"/>
+			<property name="职位"/>
+			<property name="职务"/>
+
+			<property name="所属自然村"/>
+			<property name="所属行政村"/>
+			<property name="所属城镇"/>
+			
+			<property name="所属机构"/>
+			<property name="机构岗位"/>
+			<property name="所属村民小组"/>
+
+			<property name="干部照片" />
+
+			<property name="联系电话"/>
+		
+		</config>
+		
+		<config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+		</module>
+		<module name="工会管理">
+		<config>
+			<property name="序号"/>
+			<property name="工会名称"/>
+			<property name="工会类型"/>
+			<property name="工会人数"/>
+
+			<property name="所属自然村"/>
+			<property name="所属行政村"/>
+			<property name="所属城镇"/>
+			
+			<property name="工会照片"/>
+			<property name="简介"/>
+		
+		</config>
+		
+		<config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+		 
+		<config id="200">
+			<property name="成员"/>
+			<property name="工会任职"/>
+			<property name="联系电话"/>
+			<property name="就业情况"/>
+
+			<property name="学历"/>
+			<property name="工作性质"/>
+			<property name="工作类型"/>
+			
+			<property name="操作"/>
+
+		
+		</config>		 
+		 
+		 
+		 
+		</module>
+		 <module name="村民管理">
+		 <config>
+			<property name="序号"/>
+			<property name="村民姓名"/>
+			<property name="身份证号"/>
+			<property name="性别"/>
+			
+			<property name="年龄"/>
+			<property name="所属村民小组"/>
+
+			<property name="所属自然村"/>
+			<property name="所属行政村"/>
+			<property name="所属城镇"/>
+			
+			<property name="人编号"/>
+			<property name="工作单位"/>
+			
+
+			<property name="手机号"/>
+			<property name="工作类型"/>
+			
+			<property name="身份证反面照"/>
+			<property name="身份证正面照"/>
+			<property name="养老保险情况" />
+
+			<property name="民族"/>
+		<property name="务工状态" />
+
+			<property name="务工时间"/>
+		<property name="参加情况" />
+
+			<property name="文化程度"/>
+		
+			
+			
+			<property name="医疗保险情况" />
+
+			<property name="在校生状况"/>
+			
+			
+			
+			<property name="参加大病医疗" />
+
+			<property name="参加低保情况"/>
+			
+			<property name="劳动技能" />
+
+			<property name="健康状况"/>
+		
+		</config>
+		
+		<config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+		</module>
+		<module name="家庭户管理">
+		  <config>
+			<property name="序号"/>
+			<property name="户主"/>
+			<property name="身份证号"/>
+			<property name="性别"/>
+			
+			<property name="年龄"/>
+			<property name="家庭人数"/>
+			<property name="贫困户"/>
+			<property name="低保户"/>
+			<property name="残疾人"/>
+			<property name="所属村民小组"/>
+
+			<property name="所属自然村"/>
+			<property name="所属行政村"/>
+			<property name="所属城镇"/>
+			
+			
+			
+			
+			<property name="出生年月"/>
+			<property name="家庭户类型"/>
+			<property name="自来水情况"/>
+			
+			<property name="通电情况"/>
+			<property name="户口类型"/>
+			<property name="贫困户类型"/>
+			
+			
+
+			<property name="房屋照片" />
+
+			<property name="是否军人家属"/>
+			
+			
+			<property name="网络情况"/>
+			<property name="年收入"/>
+			<property name="房屋情况"/>
+			
+			
+
+			<property name="户编号" />
+			
+			<property name="人均纯收入" />
+
+
+
+		
+		</config>
+		
+		<config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+		 
+		 
+		 <config id="200">
+			<property name="家庭成员"/>
+			<property name="身份证号"/>
+			<property name="与户主关系"/>
+			<property name="就业情况"/>
+
+			<property name="学历"/>
+			<property name="养老保险"/>
+			<property name="医疗保险"/>
+			<property name="联系电话"/>
+			
+			<property name="操作"/>
+
+		
+		</config>
+		</module>
+		<module name="党支部管理">
+		<config>
+			<property name="序号"/>
+			<property name="党支部名称"/>
+
+			<property name="所属自然村"/>
+			<property name="所属行政村"/>
+			<property name="所属城镇"/>
+			
+			<property name="地址"/>
+			<property name="联系电话"/>
+
+			<property name="简介"/>
+		
+		</config>
+		
+		<config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+		</module>
+		<module name="党员管理">
+		<config>
+			<property name="序号"/>
+			<property name="党员名称"/>
+			<property name="性别"/>
+			<property name="入党时间"/>
+			<property name="入党年限"/>
+			<property name="民族"/>
+			<property name="是否后备干部"/>
+			<property name="所属村民小组"/>
+			<property name="所属自然村"/>
+			<property name="所属行政村"/>
+			<property name="所属城镇"/>
+			
+			<property name="所属党支部"/>
+			<property name="所属党小组"/>
+
+		
+		</config>
+		
+		<config id="100">
+		 	<property name="更新人"/>
+			<property name="更新时间"/>
+			<property name="状态"/>
+			<property name="操作">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</property>
+		 </config>
+		</module>
+		
+		
+	</module>
+	
+	<module name="模块管理">
+		<module name="新增模板"/>
+		
+		</module>
+	<module name="权限管理">
+		<module name="员工管理">
+		</module>
+		<module name="部门管理">
+		</module>
+		<module name="角色管理">
+		</module>
+
+	
+	</module>
+	
+	<module name="系统管理" >
+	
+		<module name="字典管理">
+		</module>
+	
+	</module>
+	
+	<module name="AI机器人管理">
+	
+	</module>
+	<module name="巡查上报-待处理">
+	
+	</module>
+	
+	
+	
+	
+
+
+
+</modules>

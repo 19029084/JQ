@@ -14,9 +14,9 @@
 	<name>jq</name>
 	<description>JQ project using Spring Boot</description>
 
-	<properties>
+	<!--properties>
 		<java.version>14</java.version>
-	</properties>
+	</properties-->
 
 	<dependencies>
 	        <dependency>
@@ -61,6 +61,15 @@
 				</exclusion>
 			</exclusions>
 		 </dependency>
+		 
+		 <dependency>
+		 	<groupId>dom4j</groupId>
+		 	<artifactId>dom4j</artifactId>
+		 	<version>1.6.1</version>		 
+		 </dependency>
+		 
+		 
+		 
 	</dependencies>
 
 	<build>

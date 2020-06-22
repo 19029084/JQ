@@ -3,6 +3,7 @@ package com.jq.mapper;
 
 import com.jq.entity.JQProperty;
 import com.jq.entity.JQPropertyOption;
+import com.jq.entity.JQModuleConfig;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -18,6 +19,9 @@ public interface JQPropertyMapper
 	int createProperty(JQProperty property);	
 	int updateProperty(JQProperty property);	
 	int deleteProperty(JQProperty property);
+	JQProperty findPropertyByName(String name);
+	
+	List<JQProperty> getPropertyByConfig(JQModuleConfig config);
 
 	
 		

@@ -140,7 +140,7 @@ List<JQModuleConfig> getModuleConfig(@PathVariable String mid)
 //@ApiImplicitParams({...})
 @ApiImplicitParam(name="mid",value="Module ID",defaultValue="0",required=true)
 @ResponseBody
-int addModuleConfig(@PathVariable String mid,List<JQModuleConfig> configs)
+int addModuleConfig(@PathVariable String mid,@RequestBody List<JQModuleConfig> configs)
 {
 
  return m_service.addModuleConfig(mid,configs);
@@ -153,7 +153,7 @@ int addModuleConfig(@PathVariable String mid,List<JQModuleConfig> configs)
 //@ApiImplicitParams({...})
 @ApiImplicitParam(name="mid",value="Module ID",defaultValue="0",required=true)
 @ResponseBody
-int deleteModuleConfig(@PathVariable String mid,List<JQModuleConfig> configs)
+int deleteModuleConfig(@PathVariable String mid,@RequestBody List<JQModuleConfig> configs)
 {
 
  return m_service.deleteModuleConfig(mid,configs);
@@ -175,7 +175,7 @@ List<JQModuleData> getModuleData(@PathVariable String mid)
 @ApiOperation("根据子模块号添加表格数据")
 @ApiImplicitParam(name="mid",value="Module ID",defaultValue="0",required=true)
 @ResponseBody
-int addModuleData(@PathVariable String mid,List<JQModuleData> moduleData)
+int addModuleData(@PathVariable String mid,@RequestBody List<JQModuleData> moduleData)
 {
 
  return m_service.addModuleData(mid,moduleData);
@@ -186,7 +186,7 @@ int addModuleData(@PathVariable String mid,List<JQModuleData> moduleData)
 @ApiOperation("根据子模块号修改表格数据")
 @ApiImplicitParam(name="mid",value="Module ID",defaultValue="0",required=true)
 @ResponseBody
-int updateModuleData(@PathVariable String mid,List<JQModuleData> moduleData)
+int updateModuleData(@PathVariable String mid,@RequestBody List<JQModuleData> moduleData)
 {
 
  return m_service.updateModuleData(mid,moduleData);
@@ -197,7 +197,7 @@ int updateModuleData(@PathVariable String mid,List<JQModuleData> moduleData)
 @ApiOperation("根据子模块号删除表格数据")
 @ApiImplicitParam(name="mid",value="Module ID",defaultValue="0",required=true)
 @ResponseBody
-int deleteModuleData(@PathVariable String mid,List<JQModuleData> moduleData)
+int deleteModuleData(@PathVariable String mid,@RequestBody List<JQModuleData> moduleData)
 {
 
  return m_service.deleteModuleData(mid,moduleData);

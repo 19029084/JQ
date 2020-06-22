@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+	<modules>
+
+		<module name="组织与人员">
+			<module name="城镇管理">
+			
+			 	
+				<config id="1">
+					<property key="1" name="序号" value="XXXX">
+						<option>1</option>
+						<option>2</option>
+					</property>
+					<property key="2" name="城镇名称" value="1" >
+						<option id="1" value="V1"/>
+						<option id="2" value="V2"/>					
+					</property> 
+					<property name="管辖面积"/>
+					<property name="管辖人口"/>
+					<property name="管辖户数"/>
+					<property name="状态"/>
+
+				</config>
+
+			</module>	
+		</module>
+
+
+
+	<modules>

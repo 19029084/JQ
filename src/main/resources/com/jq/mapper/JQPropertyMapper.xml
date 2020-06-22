@@ -18,46 +18,68 @@
 		select * from Property where valid=1
 	</select>
 	
-	<insert id = "createProperty">
-		insert into Property(Name,Type,Valid) values(#{property.name},#{property.type},1)
 	
+	<select id="getPropertyByConfig" resultMap="JQProperty">	
+		select prop.* 
+		from Property prop, ModuleConfig mc 
+		where prop.valid=1 and mc.valid=1 and mc.propertyId= prop.Id and mc.configId=#{configId} and mc.moduleId=#{moduleId}
+	</select>
+	
+	
+	
+	<insert id = "createProperty" keyProperty="id" useGeneratedKeys="true">
+		insert into Property(Name,Type,Valid) 
+		select #{name},#{type},1 from dual 
+		where not exists ( select * from Property where Name=#{name})
 	</insert>
 
 	<update id = "updateProperty">
-		update Property set Name=#{property.name}, Type = #{property.type}
-		where id = #{property.id}
+		update Property set Name=#{name}, Type = #{type}
+		where id = #{id}
 	</update>
 	
 	<update id = "deleteProperty">
 		update Property set valid=0 
-		where id=#{property.id}	
+		where id=#{id}	
 	</update>
+	
+	<select id="findPropertyByName" resultMap="JQProperty">
+	
+		select * from Property 
+		where Name=#{name}
+	
+	</select>
 
 
 
 
 	<resultMap id="JQPropertyOption" type="com.jq.entity.JQPropertyOption">		
 		<result property="value" column="value" />
-		<result property="propertyId" column="propertyId" />			
+		<result property="propertyId" column="propertyId" />	
+		<result property="id" column="id" />	
+				
 	</resultMap>
 		
 	<select id="getProperyOptions" resultMap="JQPropertyOption">	
-		select value,PID as propertyId from PropertyOption where PID = #{pid} and valid=1
+		select id, value,PID as propertyId from PropertyOption where PID = #{pid} and valid=1
 	</select>
 	
 	
-	<insert id="addProperyOption">	
-		insert into PropertyOption(value,PID,Valid) values(#{option.value},#{pid},1)
+	<insert id="addPropertyOption">	
+		insert into PropertyOption(value,PID,Valid) 
+		select #{option.value},#{pid},1
+		from dual
+		where not exists ( select * from PropertyOption where value=#{option.value} and PID=#{pid})
 	</insert>
 
-	<update id="updateProperyOption">
+	<update id="updatePropertyOption">
 		update PropertyOption set value = #{option.value}
 		where PID= #{pid} and id=#{option.id}		
 	</update>
 	
-	<update id="deleteProperyOption">
+	<update id="deletePropertyOption">
 		update PropertyOption set Valid =0
-		where PID= #{pid} and value = #{option.value}	
+		where PID= #{pid} and id=#{option.id}	
 	</update>	
 
 

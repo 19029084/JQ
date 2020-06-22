@@ -29,7 +29,8 @@ public class JQProperty
 
 	public String getName()
 	{
-		return name;
+		System.out.println(name+":"+reference);
+		return name==null?reference:name;
 	}
 	
 	public void setValue(String value)
@@ -51,9 +52,15 @@ public class JQProperty
 		return this.type;
 	}		
 	
+	public void setReference(String reference)
+	{
+		this.reference = reference;
+	}
+	
 	public void addOption(JQPropertyOption option)
 	{
-		if(options!=null)
+		
+		if(options==null)
 		{
 			options = new ArrayList<JQPropertyOption>();
 		}
@@ -75,6 +82,8 @@ public class JQProperty
 	private int type;
 	private String name;
 	private String value;
+	
+	private String reference;
 
 	private List<JQPropertyOption> options;
 

@@ -18,9 +18,16 @@
 		select id,name,url as path from Module where parentid= #{pid} and Valid = 1
 	</select>
 	
+	<select id="getModuleByName" resultMap="JQModule">
+		select id,name,url as path from Module where parentid= #{pid} and Valid = 1 and name=#{name}
+	</select>
 	
-	<insert id="createModule" >
-		insert into Module(name,parentid,url,valid) value(#{module.name},#{pid},#{module.path},1)
+	
+	<insert id="createModule" keyProperty="module.id" useGeneratedKeys="true" >
+		insert into Module(name,parentid,url,valid) 
+		select #{module.name},#{pid},#{module.path},1
+		from dual 
+		where not exists(select * from Module where name=#{module.name})
 	</insert>
 	
 	<update id="updateModule">
@@ -31,30 +38,57 @@
 		update Module set Valid = 0 where parentid=#{pid} and id=#{module.id}
 	</update>
 	
+	<resultMap id="JQModuleConfig" type="com.jq.entity.JQModuleConfig">
+		
+		<result property="configId" column="configId" />
+		<result property="moduleId" column="moduleId" />
+		
+		
+	</resultMap>	
 	
-	<select id="getModuleConfig">
-		select mc.id as id, p.id as propertyId,p.name as propertyName 
-		from ModuleConfig mc ,Property p 
-		where mc.propertyid =p.id and mc.moduleid = #{mid} and mc.valid=1
+	
+	
+	<select id="getModuleConfig" resultMap="JQModuleConfig">	
+		select distinct moduleId,configId
+		from ModuleConfig mc
+		where mc.moduleid= #{mid} and mc.valid = 1
 	</select>
 	
 	<insert id="addModuleConfig">
-		insert into ModuleConfig(ModuleId,PropertyId,Valid) values (mid,config.property.id,1);
+		insert into ModuleConfig(ModuleId,PropertyId,ConfigId,Valid) 
+		select #{mid},#{propertyId},#{configId},1
+		from dual
+		where not exists (select * from ModuleConfig 
+				   where ModuleId = #{mid} and PropertyId=#{propertyId} and ConfigId=#{configId})
 	</insert>
 	
 	<update id="deleteModuleConfig">	
-		update ModuleConfig set valid=0 where ModuleId=#{mid} and PropertyId= #{config.property.id}
+		update ModuleConfig set valid=0 where ModuleId=#{mid} and ConfigId= #{config.configId}
 	</update>
 	
+	<resultMap id="JQColumn" type="com.jq.mapper.JQColumn">
+		<id property="id" column="id"/>
+		
+		<result property="rowId" column="rowId" />
+		<result property="propertyId" column="propertyId" />
+		<result property="value" column="value" />
+		<result property="name" column="name" />
+		<result property="type" column="type" />	
+	</resultMap>
 	
-	<select id="getModuleData">
-		select md.rid as rowId, md.data as value, md.propertyid as id,p.name as name, p.type as type 
-		from ModuleData md,ModuleConfig mc,Property p 
-		where mc.moduleid = #{mid} and mc.propertyid = md.propertyid and mc.moduleid=md.moduleid and p.id=md.propertyid	
+	<select id="getModuleData" resultMap="JQColumn">
+		select md.parentId as rowId, md.data as value, mc.propertyid as id,prop.name as name, prop.type as type 
+		from ModuleData md,ModuleConfig mc,Property prop 
+		where mc.moduleid = #{mid} and mc.id = md.fieldId and mc.configId=#{configId} and prop.id=mc.propertyid
+		order by md.parentId	
 	</select>
 	
 	<insert id="addModuleData">
-		Insert into ModuleData(RID,ModuleID,PropertyID,Data) values(#{rowId},#{mid},#{property.id},#{property.value});
+		Insert into ModuleData(FieldID,ParentID,Data) 
+		select mc.ID as fieldID,#{parentId},#{property.value}
+		from ModuleConfig mc,Property prop
+		where configID=#{configId} and moduleID=#{mid} and PropertyID=prop.id and prop.name=#{property.name}
+		
 	</insert>
 	
 	
@@ -72,7 +106,12 @@
 		where RID=#{rowId} and ModuleID=#{mid} and PropertyID = #{property.id}	
 	</delete>
 	
+	<select id="getTotalQuantity" resultType="int">
+		select count(distinct md.parentId)
+		from ModuleConfig mc, ModuleData md
+		where mc.id=md.fieldid and mc.moduleId=#{mid} and mc.configId=#{configId} 
 	
+	</select>
 	
 	
 	

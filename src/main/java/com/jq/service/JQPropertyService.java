@@ -2,6 +2,7 @@ package com.jq.service;
 
 import com.jq.entity.JQProperty;
 import com.jq.entity.JQPropertyOption;
+import com.jq.entity.JQModuleConfig;
 
 import java.util.List;
 
@@ -16,6 +17,14 @@ public class JQPropertyService
 {
 	@Autowired 
 	JQPropertyMapper jqPropertyMapper;
+	
+	public JQProperty findPropertyByName(String name)
+	{	
+		System.out.println("property: "+name);
+		System.out.println("jqPropertyMapper:"+jqPropertyMapper);
+		return jqPropertyMapper.findPropertyByName(name);
+	
+	}
 
 	public List<JQProperty> getProperties()
 	{
@@ -26,12 +35,49 @@ public class JQPropertyService
 		
 	}
 	
+	public void loadPropertyByConfig(JQModuleConfig config)
+	{
+		List<JQProperty> properties = jqPropertyMapper.getPropertyByConfig(config);
+		
+		config.setProperties(properties);
+		
+		loadPropertyOptions(properties);
+	
+	}	
+
+	
 	public int createProperties(List<JQProperty> properties)
 	{
 	
 		for(int i=0;i<properties.size();i++)
 		{
-			jqPropertyMapper.createProperty(properties.get(i));	
+			JQProperty property = properties.get(i);
+			JQProperty oldProperty = null;
+			
+			
+			if((oldProperty=findPropertyByName(property.getName()))!=null)
+			{
+				property.setId(oldProperty.getId());
+				System.out.println("Find Property:"+property.getId()+":"+property.getName());
+			}
+			else
+			{
+			
+				property =properties.get(i);				
+				jqPropertyMapper.createProperty(property);
+				System.out.println("Property:"+property.getId()+":"+property.getName());
+				
+			}
+			
+			List<JQPropertyOption> options = property.getOptions();
+			
+			if(options != null)
+			{
+			
+				addPropertyOptions(String.valueOf(property.getId()),options);
+			
+			}
+				
 		
 		}
 		
@@ -68,7 +114,17 @@ public class JQPropertyService
 	
 	
 	}
-
+	
+	public void loadPropertyOptions(List<JQProperty> properties)
+	{
+		for(int i=0;i<properties.size();i++)
+		{
+			JQProperty property = properties.get(i);
+			List<JQPropertyOption> options = getPropertyOptions(String.valueOf(property.getId()));
+			property.setOptions(options);		
+		}
+	
+	}
 
 	public List<JQPropertyOption> getPropertyOptions(String propertyId)
 	{
