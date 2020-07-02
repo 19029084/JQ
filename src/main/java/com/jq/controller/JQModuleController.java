@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -31,6 +32,14 @@ import javax.annotation.*;
 
 import java.util.List;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+import com.jq.utils.*;
+
+
+@JQBaseResponse
 @RestController
 @Api(tags = "Module Management API")
 @RequestMapping("/api/v1")
@@ -44,10 +53,22 @@ JQModuleService m_service;
 @GetMapping("/modules")
 @ApiOperation("Get All Modules Information")
 @ResponseBody
-List<JQModule> getModules()
+public Object getModules()
 {
+	//PageHelper.startPage(pageNum,pageSize);
+	List<JQModule> modules = m_service.getModules("0");
+	for(int i=0;i<modules.size();i++)
+	{
+		List<JQModule> subModules =  m_service.getModules(String.valueOf(modules.get(i).getId()));
+		
+		modules.get(i).setSubModules(subModules);
+	
+	}
+	
+	
+	//PageInfo<JQModule> pageInfo= new PageInfo<>(modules);
 
- return m_service.getModules("0");
+ return modules;
 
 }
 
@@ -95,7 +116,8 @@ List<JQModule> getSubModules(@PathVariable String pid)
 @PostMapping("/modules/{pid:\\d+}")
 @ApiOperation("Create Submodule by Parent ID")
 @ResponseBody
-int createModules(@RequestBody List<JQModule> modules,@PathVariable String pid)
+int createModules(@RequestBody List<JQModule> modules,
+                  @PathVariable String pid)
 {
 	return m_service.createModules(modules,pid);
 }
@@ -104,7 +126,8 @@ int createModules(@RequestBody List<JQModule> modules,@PathVariable String pid)
 @PutMapping("/modules/{pid:\\d+}")
 @ApiOperation("Update Modules' name and path")
 @ResponseBody
-int updateModules(@RequestBody List<JQModule> modules,@PathVariable String pid)
+int updateModules(@RequestBody List<JQModule> modules,
+                  @PathVariable String pid)
 {
 	return m_service.updateModules(modules,pid);
 
@@ -113,7 +136,8 @@ int updateModules(@RequestBody List<JQModule> modules,@PathVariable String pid)
 @DeleteMapping("/modules/{pid:\\d+}")
 @ApiOperation("根据模块号删除其部分子模块")
 @ResponseBody
-int deleteModules(@RequestBody List<JQModule> modules,@PathVariable String pid)
+int deleteModules(@RequestBody List<JQModule> modules,
+                  @PathVariable String pid)
 {
 	return m_service.deleteModules(modules,pid);
 }
@@ -140,7 +164,8 @@ List<JQModuleConfig> getModuleConfig(@PathVariable String mid)
 //@ApiImplicitParams({...})
 @ApiImplicitParam(name="mid",value="Module ID",defaultValue="0",required=true)
 @ResponseBody
-int addModuleConfig(@PathVariable String mid,@RequestBody List<JQModuleConfig> configs)
+int addModuleConfig(@PathVariable String mid,
+                    @RequestBody List<JQModuleConfig> configs)
 {
 
  return m_service.addModuleConfig(mid,configs);
@@ -153,7 +178,8 @@ int addModuleConfig(@PathVariable String mid,@RequestBody List<JQModuleConfig> c
 //@ApiImplicitParams({...})
 @ApiImplicitParam(name="mid",value="Module ID",defaultValue="0",required=true)
 @ResponseBody
-int deleteModuleConfig(@PathVariable String mid,@RequestBody List<JQModuleConfig> configs)
+int deleteModuleConfig(@PathVariable String mid,
+                       @RequestBody List<JQModuleConfig> configs)
 {
 
  return m_service.deleteModuleConfig(mid,configs);
@@ -164,10 +190,17 @@ int deleteModuleConfig(@PathVariable String mid,@RequestBody List<JQModuleConfig
 @ApiOperation("Get Module Data by Module ID")
 @ApiImplicitParam(name="mid",value="Module ID",defaultValue="0",required=true)
 @ResponseBody
-List<JQModuleData> getModuleData(@PathVariable String mid)
-{
 
- return m_service.getModuleData(mid);
+public Object getModuleData(@PathVariable String mid,
+                            @RequestParam(value="pageNum",defaultValue="1") Integer pageNum,
+			     @RequestParam(value="pageSize",defaultValue="10") Integer pageSize)
+{
+	PageHelper.startPage(pageNum,pageSize);
+	List<JQModuleData> data = m_service.getModuleData(mid);
+	PageInfo<JQModuleData> pageInfo = new PageInfo<>(data);
+	
+	return pageInfo;
+	
 
 }
 
@@ -175,7 +208,8 @@ List<JQModuleData> getModuleData(@PathVariable String mid)
 @ApiOperation("根据子模块号添加表格数据")
 @ApiImplicitParam(name="mid",value="Module ID",defaultValue="0",required=true)
 @ResponseBody
-int addModuleData(@PathVariable String mid,@RequestBody List<JQModuleData> moduleData)
+int addModuleData(@PathVariable String mid,
+                  @RequestBody List<JQModuleData> moduleData)
 {
 
  return m_service.addModuleData(mid,moduleData);
@@ -186,7 +220,8 @@ int addModuleData(@PathVariable String mid,@RequestBody List<JQModuleData> modul
 @ApiOperation("根据子模块号修改表格数据")
 @ApiImplicitParam(name="mid",value="Module ID",defaultValue="0",required=true)
 @ResponseBody
-int updateModuleData(@PathVariable String mid,@RequestBody List<JQModuleData> moduleData)
+int updateModuleData(@PathVariable String mid,
+                     @RequestBody List<JQModuleData> moduleData)
 {
 
  return m_service.updateModuleData(mid,moduleData);
@@ -197,7 +232,8 @@ int updateModuleData(@PathVariable String mid,@RequestBody List<JQModuleData> mo
 @ApiOperation("根据子模块号删除表格数据")
 @ApiImplicitParam(name="mid",value="Module ID",defaultValue="0",required=true)
 @ResponseBody
-int deleteModuleData(@PathVariable String mid,@RequestBody List<JQModuleData> moduleData)
+int deleteModuleData(@PathVariable String mid,
+                     @RequestBody List<JQModuleData> moduleData)
 {
 
  return m_service.deleteModuleData(mid,moduleData);

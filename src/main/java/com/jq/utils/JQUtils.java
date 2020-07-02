@@ -124,6 +124,9 @@ public class JQUtils
 					{
 						case "name":
 							module.setName(attribute.getText());					
+							break;
+						case "path":
+							module.setPath(attribute.getText());
 							break;				
 						default:
 						

@@ -1,0 +1,27 @@
+package com.jq.entity;
+
+
+
+
+
+@Data
+public class JQResult<T> 
+{
+	private Boolean success;
+	private int total;
+	private int pageSize;
+	private int current;
+	
+	public static <T> JQResult returnOK(List<T> data)
+	{
+		JQResult result = new JQResult();
+		result.setSuccess(true);
+		result.setData(data);
+		result.setTotal(data.size());
+		
+		return result;	
+	}
+	
+	
+
+}

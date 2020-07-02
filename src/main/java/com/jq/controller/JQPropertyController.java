@@ -24,10 +24,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.*;
 
+import com.jq.utils.*;
 
+@JQBaseResponse
 @RestController
 @Api(tags = "Property Management API")
 @RequestMapping("/api/v1")
@@ -100,7 +103,8 @@ public class JQPropertyController
 	@PostMapping("/properties/{propertyId:\\d+}")
 	@ApiOperation("添加某字段的选项值")
 	@ResponseBody
-	int addPropertyOptions(@PathVariable String propertyId,@RequestBody List<JQPropertyOption> propertyOptions)
+	int addPropertyOptions(@PathVariable String propertyId,
+	                       @RequestBody List<JQPropertyOption> propertyOptions)
 	{
 	
 		return m_service.addPropertyOptions(propertyId,propertyOptions);
@@ -110,7 +114,8 @@ public class JQPropertyController
 	@PutMapping("/properties/{propertyId:\\d+}")
 	@ApiOperation("更新某字段的选项值")
 	@ResponseBody
-	int updatePropertyOptions(@PathVariable String propertyId,@RequestBody List<JQPropertyOption> propertyOptions)
+	int updatePropertyOptions(@PathVariable String propertyId,
+	                          @RequestBody List<JQPropertyOption> propertyOptions)
 	{
 	
 		return m_service.updatePropertyOptions(propertyId,propertyOptions);
@@ -121,7 +126,8 @@ public class JQPropertyController
 	@DeleteMapping("/properties/{propertyId:\\d+}")
 	@ApiOperation("删除某字段的选项值")
 	@ResponseBody
-	int deletePropertyOptions(@PathVariable String propertyId, @RequestBody List<JQPropertyOption> propertyOptions)
+	int deletePropertyOptions(@PathVariable String propertyId, 
+	                          @RequestBody List<JQPropertyOption> propertyOptions)
 	{
 	
 		return m_service.deletePropertyOptions(propertyId,propertyOptions);

@@ -15,23 +15,27 @@
 	</resultMap>
 
 	<select id="getModules" resultMap="JQModule">	
-		select id,name,url as path from Module where parentid= #{pid} and Valid = 1
+		select m.id as id,m.name as name,u.url as path 
+		from Module m left join sys_url u on (m.urlid=u.id)
+		where m.parentid= #{pid} and m.Valid = 1
 	</select>
 	
 	<select id="getModuleByName" resultMap="JQModule">
-		select id,name,url as path from Module where parentid= #{pid} and Valid = 1 and name=#{name}
+		select m.id as id,m.name as name,u.url as path 
+		from Module m left join sys_url u on (m.urlid=u.id)
+		where m.parentid= #{pid} and m.Valid = 1 and m.name=#{name}
 	</select>
 	
 	
 	<insert id="createModule" keyProperty="module.id" useGeneratedKeys="true" >
-		insert into Module(name,parentid,url,valid) 
-		select #{module.name},#{pid},#{module.path},1
+		insert into Module(name,parentid,urlid,valid) 
+		select #{module.name},#{pid},#{urlId},1
 		from dual 
 		where not exists(select * from Module where name=#{module.name})
 	</insert>
 	
 	<update id="updateModule">
-		update Module set name=#{module.name},url=#{module.path} where parentid=#{pid} and id=#{module.id}
+		update Module set name=#{module.name},urlid=#{urlId} where parentid=#{pid} and id=#{module.id}
 	</update>
 	
 	<update id="deleteModule">

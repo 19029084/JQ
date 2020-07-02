@@ -1,12 +1,12 @@
 
 
 <modules>
-	<module name="数据大屏">
+	<module name="数据大屏" path="/">
 
 	</module> 
 	
 	
-	<module name="数据中心">
+	<module name="数据中心" path="/datacenter">
 	<module name="扶贫管理">
 		 <config>
 		 	<property name="序号"/>

@@ -1,0 +1,20 @@
+package com.jq.repository;
+
+import com.jq.entity.JQUrl;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import com.jq.entity.JQUrl;
+import java.util.List;
+
+@Repository("jqUrlRepository")
+public interface JQUrlRepository extends JpaRepository<JQUrl,String> 
+{
+
+	@Query("select u from JQUrl u where LOWER(u.name)=lower(:name)")
+	JQUrl findByNameCaseInsensitive(@Param("name") String name);
+
+}

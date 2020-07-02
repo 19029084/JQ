@@ -25,8 +25,8 @@ import java.util.List;
 public interface JQModuleMapper{
 	
 	List<JQModule> getModules(String pid);
-	int createModule(JQModule module,String pid);
-	int updateModule(JQModule module,String pid);
+	int createModule(JQModule module,String pid,String urlId);
+	int updateModule(JQModule module,String pid,String urlId);
 	int deleteModule(JQModule module,String pid);
 	JQModule getModuleByName(String name,String pid);
 	

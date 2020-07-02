@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	
+	
+<mapper namespace="com.jq.mapper.JQResourceMapper">
+
+	<resultMap id="JQUrl" type="com.jq.entity.JQUrl">
+		<id property="id" column="id"/>
+		<result property="url" column="url" />
+		<result property="description" column="description" />
+	</resultMap>
+
+	<select id="getUrls" resultMap="JQUrl">	
+		select * from sys_url	
+	</select>
+	
+	
+	<insert id = "createUrl" keyProperty="id" useGeneratedKeys="true">
+		insert into sys_url(url,description) 
+		select #{url},#{description} from dual 
+		where not exists ( select * from sys_url where url=#{url})
+	</insert>
+	
+	
+	<select id="findUrlByName" resultMap="JQUrl">
+	
+		select * from sys_url 
+		where url=#{name}
+	
+	</select>
+	
+	<resultMap id="JQRole" type="com.jq.entity.JQRole">
+		<id property="id" column="id"/>
+		<result property="name" column="name" />
+		<result property="nameCN" column="name_cn" />
+	</resultMap>
+
+	<select id="getRoles" resultMap="JQRole">	
+		select * from sys_role	
+	</select>
+	
+
+
+
+
+
+</mapper>	
+
+
+

@@ -5,6 +5,7 @@ import com.jq.entity.JQModuleData;
 import com.jq.entity.JQModuleConfig;
 import com.jq.entity.JQProperty;
 import com.jq.entity.JQPropertyOption;
+import com.jq.entity.JQUrl;
 
 
 
@@ -26,7 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.Resource;
 
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
 public class JQModuleService
@@ -41,11 +42,19 @@ public class JQModuleService
 	
 	@Resource
 	JQPropertyService propertyService;
+	
+	@Resource 
+	JQResourceService resourceService;
 
 	public List<JQModule> getModules(String pid)
 	{	
 
-		return jqModuleMapper.getModules(pid);
+		String pass= "admin";
+		BCryptPasswordEncoder bcryptPasswordEncoder = new BCryptPasswordEncoder();
+		String hashPass = bcryptPasswordEncoder.encode(pass);
+		System.out.println(hashPass);
+
+		return jqModuleMapper.getModules(pid);                
 	}
 	
 	
@@ -62,8 +71,20 @@ public class JQModuleService
 		{
 			JQModule module = modules.get(i);
 			
+			if(module == null)
+			{
+				continue;
+			}
+			System.out.println("Module:"+module.getName());
 			
-			int moduleId = jqModuleMapper.createModule(module,pid);
+			String urlId = null;
+			
+			if(module.getPath() != null)
+			{
+				urlId = String.valueOf(resourceService.createUrl(new JQUrl(module.getPath())));
+			}
+			
+			int moduleId = jqModuleMapper.createModule(module,pid,urlId);
 			
 			JQModule newModule = jqModuleMapper.getModuleByName(module.getName(),pid);
 			
@@ -99,7 +120,21 @@ public class JQModuleService
 	{
 		for(int i=0;i<modules.size();i++)
 		{
-			jqModuleMapper.updateModule(modules.get(i),pid);
+			
+			JQModule module = modules.get(i);
+			
+			String urlId = null;
+			
+			if(module.getPath() != null)
+			{
+				JQUrl url = resourceService.findUrlByName(module.getPath());
+				if(url !=null)
+				{
+					urlId = String.valueOf(url.getId());
+				}
+			}			
+			
+			jqModuleMapper.updateModule(module,pid,urlId);
 		
 		}	
 		

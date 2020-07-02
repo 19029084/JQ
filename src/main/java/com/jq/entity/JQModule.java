@@ -74,10 +74,18 @@ public class JQModule
 		return subModules;	
 	}
 	
+	public void setSubModules(List<JQModule> subModules)
+	{
+	
+		this.subModules = subModules;
+	}
+	
 	public List<JQModuleConfig> getModuleConfigs()
 	{
 		return configList;
 	}
+	
+	
 	
 	public List<JQModuleData> getModuleData()
 	{

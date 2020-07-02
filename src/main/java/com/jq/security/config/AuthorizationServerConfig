@@ -1,0 +1,55 @@
+
+
+@Configuration
+
+public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter
+{
+
+@Autowired
+RedisConnectionFactory connectionFactory;
+@Autowired 
+JQUserDetailService userDetailService;
+@Autowired
+AuthenticationManager authenticationManager;
+
+@Bean
+public TokenStore tokenStore()
+{
+	return new RedisTokenStore(connectionFactory);
+}
+
+@Bean
+public PasswordEncoder passwordEncoder()
+{
+	return new BCryptPasswordEncoder();
+}
+
+
+@Override 
+public void configure(AuthorizationServerSecurityConfigurer security) throws Exception
+{
+	security.allowFormAuthenticationForClients();
+	security.passwordEncoder(passwordEncoder());
+	security.checkTokenAccess("permitAll()");
+
+}
+
+
+@Override
+public void configure(ClientDetailsServiceConfigurer clients) throws Exception
+{
+	clients.jdbc(dsOauth);
+}
+
+@Override
+public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception
+{
+	endpoints.authenticationMananger(authenticationManager)
+		 .tokenStore(tokenStore())
+		 .userDetailsService(userDetailService)
+		 .reuseRefreshTokens(false);
+
+
+}
+
+}

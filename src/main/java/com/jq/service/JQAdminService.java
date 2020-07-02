@@ -17,7 +17,7 @@ public class JQAdminService{
 JQModuleService moduleService;
 
 
-	public void Initialize()
+	public void resetData()
 	{
 		com.jq.utils.JQUtils utils = new com.jq.utils.JQUtils();
 		try{
@@ -29,7 +29,7 @@ JQModuleService moduleService;
 			List<JQModule> modules = utils.getModules();
 			
 			moduleService.createModules(modules,"0");
-	
+			
 			System.out.println("END");
 		}
 		catch(Exception e)
