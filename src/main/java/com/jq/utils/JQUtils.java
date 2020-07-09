@@ -6,6 +6,10 @@ import com.jq.entity.JQModuleData;
 import com.jq.entity.JQProperty;
 import com.jq.entity.JQPropertyOption;
 
+import com.jq.entity.JQColumn;
+
+import com.jq.entity.JQConfig;
+
 
 
 import java.io.InputStream;
@@ -185,7 +189,11 @@ public class JQUtils
 			}
 			else if(PROPERTY.equalsIgnoreCase(rootElement.getName()))
 			{
+				JQColumn column = new JQColumn();
+				
 				JQProperty property = new JQProperty();
+				
+				column.setProperty(property);
 			
 				JQModuleConfig config = configStack.peek();
 				
@@ -202,19 +210,28 @@ public class JQUtils
 						case "name":
 							property.setName(attribute.getText());					
 							break;
+							
 						case "value":
 							property.setValue(attribute.getText());
 							break;
+							
 						case "ref":
 							property.setReference(attribute.getText());
-							break;			
+							break;
+							
+						case "type":
+							property.getPropertyType().setType(attribute.getText());						
+							break;
+						case "order":
+							column.setSortKey(Integer.parseInt(attribute.getText()));
+										
 						default:
 						
 							System.out.println("UNKNOW ATTRIBUTE:"+attribute.getName());
 					}
 				}
 				
-				config.push(property);
+				config.push(column);
 		
 			}
 			else if(OPTION.equalsIgnoreCase(rootElement.getName()))
@@ -226,7 +243,7 @@ public class JQUtils
 				
 				System.out.println("Config:"+config.getConfigId());
 				
-				config.peek().addOption(option);
+				config.peek().getProperty().addOption(option);
 			
 				List<Attribute> attributes = rootElement.attributes();
 				for(Attribute attribute: attributes)
@@ -308,6 +325,8 @@ public class JQUtils
 	
 	private List<JQModule> modules;
 	private Stack<JQModule> moduleStack;
+	
+	private List<JQConfig> configs;
 	
 	private Stack<JQModuleConfig> configStack;
 	

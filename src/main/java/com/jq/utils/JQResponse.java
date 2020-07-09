@@ -21,6 +21,13 @@ public class JQResponse implements Serializable {
      * 数据
      */
     private Object data;
+    
+    //public JQResponse(Integer code,String msg,Object data)
+    //{
+    //	this.code = code;
+    //	this.msg = msg;
+    //	this.data = data;
+    //}
 
 }
 

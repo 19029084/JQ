@@ -4,6 +4,10 @@ import com.jq.entity.JQModuleData;
 import java.util.HashMap;
 
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
 public class JQModuleTable
 {
 /*
@@ -30,5 +34,20 @@ public void addData(JQModuleData data)
 
 }
 
+
+
 private HashMap<Integer,JQModuleData> table;*/
+	public void setModuleConfig(JQModuleConfig config)
+	{
+		this.config=config;
+	
+	}
+
+	public void setModuleData(PageInfo<JQModuleData> data)
+	{
+		this.data=data;
+	}
+
+private JQModuleConfig config;
+private PageInfo<JQModuleData> data;
 }

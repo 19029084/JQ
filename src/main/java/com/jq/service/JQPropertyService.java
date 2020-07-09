@@ -3,6 +3,9 @@ package com.jq.service;
 import com.jq.entity.JQProperty;
 import com.jq.entity.JQPropertyOption;
 import com.jq.entity.JQModuleConfig;
+import com.jq.entity.JQPropertyType;
+
+import com.jq.entity.JQColumn;
 
 import java.util.List;
 
@@ -37,21 +40,40 @@ public class JQPropertyService
 	
 	public void loadPropertyByConfig(JQModuleConfig config)
 	{
-		List<JQProperty> properties = jqPropertyMapper.getPropertyByConfig(config);
+		//List<JQProperty> properties = jqPropertyMapper.getPropertyByConfig(config);
 		
-		config.setProperties(properties);
 		
-		loadPropertyOptions(properties);
+		//config.setProperties(properties);
+		
+		//loadPropertyOptions(properties);
+		
+		List<JQColumn> columns = jqPropertyMapper.getColumnByConfig(config);
+		
+		config.setProperties(columns);
+		
+		loadPropertyOptions(columns);
 	
 	}	
 
-	
+
 	public int createProperties(List<JQProperty> properties)
 	{
-	
 		for(int i=0;i<properties.size();i++)
 		{
+		
 			JQProperty property = properties.get(i);
+			
+			createProperty(property);	
+		
+		}
+		return 0;
+	}
+	public int createProperty(JQProperty property)
+	{
+	
+		//for(int i=0;i<properties.size();i++)
+		{
+			//JQProperty property = properties.get(i);
 			JQProperty oldProperty = null;
 			
 			
@@ -63,8 +85,20 @@ public class JQPropertyService
 			else
 			{
 			
-				property =properties.get(i);				
+				//property =properties.get(i);
+				
+				JQPropertyType type = property.getPropertyType();//new JQPropertyType();
+				
+				//type.setType(property.getPropertyType().getType());
+				
+				jqPropertyMapper.createPropertyType(type);
+				
+				type = jqPropertyMapper.findPropertyType(type.getType());
+				
+				property.setPropertyType(type);//setTypeId(type.getId());
+				 			
 				jqPropertyMapper.createProperty(property);
+				
 				System.out.println("Property:"+property.getId()+":"+property.getName());
 				
 			}
@@ -77,6 +111,7 @@ public class JQPropertyService
 				addPropertyOptions(String.valueOf(property.getId()),options);
 			
 			}
+			
 				
 		
 		}
@@ -106,7 +141,7 @@ public class JQPropertyService
 	
 		for(int i=0;i<properties.size();i++)
 		{
-			jqPropertyMapper.deleteProperty(properties.get(i));	
+			jqPropertyMapper.deleteProperty(properties.get(i));
 		
 		}
 		
@@ -115,11 +150,14 @@ public class JQPropertyService
 	
 	}
 	
-	public void loadPropertyOptions(List<JQProperty> properties)
+	public void loadPropertyOptions(List<JQColumn> columns)
 	{
-		for(int i=0;i<properties.size();i++)
+		for(int i=0;i<columns.size();i++)
 		{
-			JQProperty property = properties.get(i);
+			JQColumn column = columns.get(i);
+			
+			JQProperty property = column.getProperty();
+			
 			List<JQPropertyOption> options = getPropertyOptions(String.valueOf(property.getId()));
 			property.setOptions(options);		
 		}

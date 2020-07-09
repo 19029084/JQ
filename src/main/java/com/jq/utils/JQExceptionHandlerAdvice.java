@@ -9,6 +9,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.client.HttpClientErrorException;
 
+import org.slf4j.*;
 
 /**
  * 异常处理器
@@ -20,6 +21,8 @@ import org.springframework.web.client.HttpClientErrorException;
 @ResponseBody
 @Slf4j
 public class JQExceptionHandlerAdvice {
+
+    private final Logger log = LoggerFactory.getLogger(JQExceptionHandlerAdvice.class);
     /**
      * 处理未捕获的Exception
      * @param e 异常

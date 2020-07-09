@@ -3,9 +3,11 @@ package com.jq.controller;
 import com.jq.entity.JQModule;
 import com.jq.entity.JQModuleConfig;
 import com.jq.entity.JQModuleData;
+import com.jq.entity.JQConfig;
 
 
 import com.jq.service.JQModuleService;
+import com.jq.service.JQConfigService;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,46 +45,35 @@ import com.jq.utils.*;
 
 @JQBaseResponse
 @RestController
-@Api(tags = "Module Management API")
+@Api(tags = "Config ")
 @RequestMapping("/api/v1")
 
-class JQModuleController
+class JQConfigController
 {
 
 @Resource
-JQModuleService m_service;
+JQConfigService m_service;
 
-@GetMapping("/modules")
-@ApiOperation("Get All Modules Information")
+@GetMapping("/configs")
+@ApiOperation("Get All Configs Information")
 @ResponseBody
-public Object getModules()
+public Object getConfigs()
 {
-	//PageHelper.startPage(pageNum,pageSize);
-	List<JQModule> modules = m_service.getModules("0");
-	for(int i=0;i<modules.size();i++)
-	{
-		List<JQModule> subModules =  m_service.getModules(String.valueOf(modules.get(i).getId()));
-		
-		modules.get(i).setChildren(subModules);
-	
-	}
-	
-	
-	//PageInfo<JQModule> pageInfo= new PageInfo<>(modules);
 
- return modules;
-
+	List<JQConfig> configs = m_service.getConfigs();
+	
+	return configs;
 }
 
 
-@PostMapping("/modules")
-@ApiOperation("Create Modules")
+@PostMapping("/configs")
+@ApiOperation("Create Configs")
 @ResponseBody
-int createModules(@RequestBody List<JQModule> modules)
+int createConfigs(@RequestBody List<JQConfig> configs)
 {
-	return m_service.createModules(modules,"0");
+	return m_service.createConfigs(configs);
 }
-
+/*
 @PutMapping("/modules")
 @ApiOperation("Update Modules' name and path")
 @ResponseBody
@@ -240,6 +231,8 @@ int deleteModuleData(@PathVariable String mid,
  return m_service.deleteModuleData(mid,moduleData);
 
 }
+
+*/
 
 
 

@@ -4,12 +4,16 @@ import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.jq.entity.JQColumn;
+
 
 public class JQModuleConfig
 {
 	public JQModuleConfig()
 	{
-	 propertyStack = new Stack<JQProperty>();
+	 //propertyStack = new Stack<JQColumn>();
+	 //propertyMap = new TreeMap<Integer,JQProperty>();
+	 	columns = new ArrayList<JQColumn>();
 		
 	}
 
@@ -43,40 +47,60 @@ public class JQModuleConfig
 		return configId;	
 	}	
 	
-	public void push(JQProperty property)
+	public void push(JQColumn property)
 	{
-		System.out.println("  PUSH:: "+property.getName());
-		propertyStack.push(property);
+		//System.out.println("  PUSH:: "+property.getName());
+		//propertyStack.push(property);
+		columns.add(property);
 	}
 	
-	public JQProperty pop()
+	public JQColumn pop()
 	{
-		System.out.println(" POP ");
-		return propertyStack.pop();
-	}
-	
-	public JQProperty peek()
-	{
-		System.out.println("----"+propertyStack.empty());
-		return propertyStack.peek();
-	}
-	
-	public List<JQProperty> getProperties()
-	{
-		List<JQProperty> propertyList = new ArrayList<JQProperty>(propertyStack);
-		
-		return propertyList;
-	}	
-	
-	public void setProperties(List<JQProperty> properties)
-	{
-	
-		while(!propertyStack.empty())
+		//System.out.println(" POP ");
+		int size = columns.size();
+		JQColumn column = null;
+		if(size>0)
 		{
-			propertyStack.pop();
+			column = columns.get(size-1);
+			columns.remove(size-1);
+		}
+		return column;
+	}
+	
+	public JQColumn peek()
+	{
+		//System.out.println("----"+propertyStack.empty());
+		//return propertyStack.peek();
+		int size = columns.size();
+		JQColumn column = null;
+		
+		if(size>0)
+		{
+			column = columns.get(size-1);			
 		}
 		
-		propertyStack.addAll(properties);
+		return column;
+		
+	}
+	
+	public List<JQColumn> getProperties()
+	{
+		//List<JQColumn> propertyList = new ArrayList<JQColumn>(propertyStack);
+		
+		//return propertyList;
+		return columns;
+	}	
+	
+	public void setProperties(List<JQColumn> columns)
+	{
+	
+		//while(!propertyStack.empty())
+		//{
+		//	propertyStack.pop();
+		//}
+		
+		//propertyStack.addAll(properties);
+		this.columns = columns;
 	
 	
 	}
@@ -96,7 +120,10 @@ public class JQModuleConfig
 	private int configId;
 	private int moduleId;
 	
-	private Stack<JQProperty> propertyStack;
+	//private Stack<JQColumn> propertyStack;
+	//private TreeMap<Integer,JQProperty> propertyMap;
+	
+	private List<JQColumn> columns;
 	
 	
 }

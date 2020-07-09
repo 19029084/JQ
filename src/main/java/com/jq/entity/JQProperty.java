@@ -1,6 +1,7 @@
 package com.jq.entity;
 
 import com.jq.entity.JQPropertyOption;
+import com.jq.entity.JQPropertyType;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -8,6 +9,10 @@ import java.util.ArrayList;
 public class JQProperty
 {
 
+	public JQProperty()
+	{
+		propertyType = new JQPropertyType();
+	}
 
 	public void setId(int id)
 	{
@@ -33,24 +38,26 @@ public class JQProperty
 		return name==null?reference:name;
 	}
 	
-	public void setValue(String value)
-	{
-		this.value=value;		
-	}
-	
-	public void setType(int type)
-	{
-		this.type=type;
-	}
 	public String getValue()
 	{
 		return this.value;		
 	}
 	
-	public int getType()
+	public void setValue(String value)
 	{
-		return this.type;
-	}		
+		this.value=value;		
+	}
+	
+	public void setPropertyType(JQPropertyType propertyType)
+	{
+		this.propertyType = propertyType;
+	}
+
+	public JQPropertyType getPropertyType()
+	{
+		return this.propertyType;
+	}	
+	
 	
 	public void setReference(String reference)
 	{
@@ -79,7 +86,7 @@ public class JQProperty
 	}	
 
 	private int id;
-	private int type;
+	private JQPropertyType propertyType;
 	private String name;
 	private String value;
 	

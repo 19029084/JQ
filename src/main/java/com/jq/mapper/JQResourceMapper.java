@@ -2,6 +2,8 @@ package com.jq.mapper;
 
 
 import com.jq.entity.JQUrl;
+import com.jq.entity.JQRole;
+
 import com.jq.entity.JQPropertyOption;
 import com.jq.entity.JQModuleConfig;
 
@@ -37,7 +39,7 @@ public interface JQResourceMapper
 	JQUrl findUrlByName(String name);
 	
 	
-	List<JQRoles> getRoles();
+	List<JQRole> getRoles();
 	
 
 }

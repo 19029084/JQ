@@ -9,32 +9,54 @@
 <mapper namespace="com.jq.mapper.JQPropertyMapper">
 
 	<resultMap id="JQProperty" type="com.jq.entity.JQProperty">
-		<id property="id" column="id"/>
-		<result property="name" column="name" />
-		<result property="type" column="type" />
+		<id property="id" column="propertyID"/>
+		<result property="name" column="propertyName" />		
+		<association property="propertyType" javaType="com.jq.entity.JQPropertyType">
+			<id property="id" column="propertyTypeID"/>
+			<result property="type" column="propertyType" />
+		</association>
 	</resultMap>
 
 	<select id="getProperties" resultMap="JQProperty">	
-		select * from Property where valid=1
+		select p.id as propertyID, p.name as propertyName, t.type as propertyType t.id as propertyTypeID 
+		from Property p, PropertyType t 
+		where p.valid=1 and p.type_id = t.id
 	</select>
 	
 	
-	<select id="getPropertyByConfig" resultMap="JQProperty">	
-		select prop.* 
-		from Property prop, ModuleConfig mc 
-		where prop.valid=1 and mc.valid=1 and mc.propertyId= prop.Id and mc.configId=#{configId} and mc.moduleId=#{moduleId}
+	<!--select id="getPropertyByConfig" resultMap="JQProperty">	
+		select prop.id as id ,prop.name as name , t.type as type, t.id as typeId
+		from Property prop, ModuleConfig mc , PropertyType t 
+		where prop.valid=1 and mc.valid=1 and mc.propertyId= prop.Id and mc.configId=#{configId} and mc.moduleId=#{moduleId} and t.id = prop.type_id
+	</select-->
+	
+	<resultMap id="JQColumn" type="com.jq.entity.JQColumn">
+		
+		<result property="sortKey" column="sortKey"/>
+		<association property="property" javaType="com.jq.entity.JQProperty">
+			<id property="id" column="propertyID"/>
+			<result property="name" column="propertyName" />
+			<association property="propertyType" javaType="com.jq.entity.JQPropertyType">
+				<id property="id" column="propertyTypeID"/>
+				<result property="type" column="propertyType" />
+			</association>	
+		</association>	
+	</resultMap>	
+	
+	<select id="getColumnByConfig" resultMap="JQColumn">	
+		select mc.sortKey as sortKey, prop.id as propertyID, prop.name as propertyName, t.type as propertyType, t.id as propertyTypeID
+		from Property prop, ModuleConfig mc, PropertyType t 
+		where prop.valid=1 and mc.valid=1 and mc.propertyId= prop.Id and mc.configId=#{configId} and mc.moduleId=#{moduleId} and t.id = prop.type_id
 	</select>
-	
-	
 	
 	<insert id = "createProperty" keyProperty="id" useGeneratedKeys="true">
-		insert into Property(Name,Type,Valid) 
-		select #{name},#{type},1 from dual 
+		insert into Property(Name,type_id,Valid) 
+		select #{name},#{propertyType.id},1 from dual 
 		where not exists ( select * from Property where Name=#{name})
 	</insert>
 
 	<update id = "updateProperty">
-		update Property set Name=#{name}, Type = #{type}
+		update Property set Name=#{name}, type_id = #{propertyType.id}
 		where id = #{id}
 	</update>
 	
@@ -45,8 +67,9 @@
 	
 	<select id="findPropertyByName" resultMap="JQProperty">
 	
-		select * from Property 
-		where Name=#{name}
+		select p.id as propertyID, p.name as propertyName, t.type as propertyType, t.id as propertyTypeID 
+		from Property p, PropertyType t 
+		where Name=#{name} and p.type_id = t.id
 	
 	</select>
 
@@ -82,6 +105,41 @@
 		where PID= #{pid} and id=#{option.id}	
 	</update>	
 
+	<resultMap id="JQPropertyType" type="com.jq.entity.JQPropertyType">		
+		<result property="type" column="type" />
+		<result property="description" column="description" />	
+		<result property="id" column="id" />	
+				
+	</resultMap>
+		
+	<select id="getProperyTypes" resultMap="JQPropertyType">	
+		select id, type, description from PropertyType where valid=1
+	</select>
+	
+	
+	<insert id="createPropertyType">	
+		insert into PropertyType(type,description,Valid) 
+		select #{type},#{description},1
+		from dual
+		where not exists ( select * from PropertyType where Type=#{type})
+	</insert>
+
+	<update id="updatePropertyType">
+		update PropertyType set type = #{type} and description = #{description}
+		where id=#{id}		
+	</update>
+	
+	<update id="deletePropertyType">
+		update PropertyType set Valid =0
+		where id=#{id}	
+	</update>
+	
+	<select id="findPropertyType" resultMap="JQPropertyType">
+	
+		select * from PropertyType 
+		where Type=#{type}
+	
+	</select>
 
 
 

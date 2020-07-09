@@ -4,6 +4,7 @@ import com.jq.entity.JQModule;
 import com.jq.entity.JQModuleData;
 import com.jq.entity.JQModuleConfig;
 import com.jq.entity.JQPropertyOption;
+import com.jq.entity.JQConfig;
 
 
 import com.jq.entity.JQProperty;
@@ -24,16 +25,16 @@ import java.util.List;
 
 
 @Mapper
-public interface JQModuleMapper{
+public interface JQConfigMapper{
 	
-	List<JQModule> getModules(String pid);
-	int createModule(JQModule module,String pid,String urlId);
-	int updateModule(JQModule module,String pid,String urlId);
-	int deleteModule(JQModule module,String pid);
-	JQModule getModuleByName(String name,String pid);
+	List<JQConfig> getConfigs();
+	int createConfig(JQConfig config);
+	/*int updateModule(JQModule module,String pid,String urlId);
+	int deleteModule(JQModule module,String pid);*/
+	JQConfig getConfigByName(String name);
 	
 	
-	
+	/*
 	List<JQModuleConfig> getModuleConfig(String mid);
 	//int addModuleConfig(String mid,JQModuleConfig config);
 	int addModuleConfig(String mid, String sortKey, String propertyId,String configId );
@@ -46,7 +47,7 @@ public interface JQModuleMapper{
 	int deleteModuleData(String mid, int rowId, JQProperty property);
 	
 	
-	int getTotalQuantity(String mid,String configId);
+	int getTotalQuantity(String mid,String configId);*/
 	
 
 }

@@ -6,35 +6,35 @@
 	
 	
 	
-<mapper namespace="com.jq.mapper.JQModuleMapper">
+<mapper namespace="com.jq.mapper.JQConfigMapper">
 
-	<resultMap id="JQModule" type="com.jq.entity.JQModule">
-	<id property="id" column="id"/>
-	<result property="name" column="name" />
-	<result property="path" column="path" />
+	<resultMap id="JQConfig" type="com.jq.entity.JQConfig">
+		<id property="id" column="id"/>
+		<result property="name" column="name" />
+		<result property="title" column="title" />
+		<result property="valid" column="valid"/>
 	</resultMap>
 
-	<select id="getModules" resultMap="JQModule">	
-		select m.id as id,m.name as name,u.url as path 
-		from Module m left join sys_url u on (m.urlid=u.id)
-		where m.parentid= #{pid} and m.Valid = 1
+	<select id="getConfigs" resultMap="JQConfig">	
+		select c.id as id,c.name as name,c.title as title,c.valid as valid 
+		from Config c
 	</select>
 	
-	<select id="getModuleByName" resultMap="JQModule">
-		select m.id as id,m.name as name,u.url as path 
-		from Module m left join sys_url u on (m.urlid=u.id)
-		where m.parentid= #{pid} and m.Valid = 1 and m.name=#{name}
+	<select id="getConfigByName" resultMap="JQConfig">
+		select c.id as id,c.name as name,c.title as title,c.valid as valid 
+		from Config c 
+		where c.name=#{name}
 	</select>
 	
 	
-	<insert id="createModule" keyProperty="module.id" useGeneratedKeys="true" >
-		insert into Module(name,parentid,urlid,valid) 
-		select #{module.name},#{pid},#{urlId},1
+	<insert id="createConfig" keyProperty="id" useGeneratedKeys="true" >
+		insert into Config(name,title,valid) 
+		select #{name},#{title},1
 		from dual 
-		where not exists(select * from Module where name=#{module.name})
+		where not exists(select * from Config where name=#{name})
 	</insert>
 	
-	<update id="updateModule">
+	<!--update id="updateModule">
 		update Module set name=#{module.name},urlid=#{urlId} where parentid=#{pid} and id=#{module.id}
 	</update>
 	
@@ -68,7 +68,7 @@
 	
 	<update id="deleteModuleConfig">	
 		update ModuleConfig set valid=0 where ModuleId=#{mid} and ConfigId= #{config.configId}
-	</update>
+	</update-->
 	
 	<!--resultMap id="JQColumn" type="com.jq.mapper.JQColumn">
 		<id property="id" column="id"/>
@@ -82,7 +82,7 @@
 	
 	
 	
-	<resultMap id="JQModuleData" type="com.jq.entity.JQModuleData">		
+	<!--resultMap id="JQModuleData" type="com.jq.entity.JQModuleData">		
 		<result property="parentId" column="parentId" />
 		<collection property="columns" ofType="com.jq.entity.JQColumn">
 			<id property="sortKey" column="sortKey"/>
@@ -133,7 +133,7 @@
 		from ModuleConfig mc, ModuleData md
 		where mc.id=md.fieldid and mc.moduleId=#{mid} and mc.configId=#{configId} 
 	
-	</select>
+	</select-->
 	
 	
 	

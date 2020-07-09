@@ -6,11 +6,12 @@ import com.jq.entity.JQModuleConfig;
 import com.jq.entity.JQProperty;
 import com.jq.entity.JQPropertyOption;
 import com.jq.entity.JQUrl;
-
+import com.jq.entity.JQConfig;
 
 
 import com.jq.mapper.JQModuleMapper;
 import com.jq.mapper.JQPropertyMapper;
+import com.jq.mapper.JQConfigMapper;
 
 import com.jq.entity.JQColumn;
 import com.jq.entity.JQRow;
@@ -37,13 +38,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 @Service
-public class JQModuleService
+public class JQConfigService
 {
 	//@Resource
 	//IJQModuleDAO moduleDAO;
 
 	@Autowired
-	JQModuleMapper jqModuleMapper;
+	JQConfigMapper jqConfigMapper;
 	//@Autowired
 	//JQPropertyMapper jqPropertyMapper;
 	
@@ -52,82 +53,46 @@ public class JQModuleService
 	
 	@Resource 
 	JQResourceService resourceService;
-	
-	@Resource
-	JQConfigService configService;
 
-	public List<JQModule> getModules(String pid)
+	public List<JQConfig> getConfigs()
 	{	
-
-		String pass= "admin";
-		BCryptPasswordEncoder bcryptPasswordEncoder = new BCryptPasswordEncoder();
-		String hashPass = bcryptPasswordEncoder.encode(pass);
-		System.out.println(hashPass);
-
-		return jqModuleMapper.getModules(pid);                
+		return jqConfigMapper.getConfigs();                
 	}
 	
 	
-	
+/*	
 	public JQModule getModuleByName(String name,String pid)
 	{
 		return jqModuleMapper.getModuleByName(name,pid);
 	}
 	
-	
-	public int createModules(List<JQModule> modules, String pid)
+*/	
+	public int createConfigs(List<JQConfig> configs)
 	{
-		for(int i=0;i<modules.size();i++)
+		for(int i=0;i<configs.size();i++)
 		{
-			JQModule module = modules.get(i);
+			JQConfig config = configs.get(i);
 			
-			if(module == null)
-			{
-				continue;
-			}
-			System.out.println("Module:"+module.getName());
-			
-			String urlId = null;
-			
-			if(module.getPath() != null)
-			{
-				urlId = String.valueOf(resourceService.createUrl(new JQUrl(module.getPath())));
-			}
-			
-			int moduleId = jqModuleMapper.createModule(module,pid,urlId);
-			
-			JQModule newModule = jqModuleMapper.getModuleByName(module.getName(),pid);
-			
-			module.setId(newModule.getId());
-			
-			System.out.println(module.getName()+"Module: " + moduleId);
-			
-			System.out.println(":::"+newModule.getId());
-			
-			List<JQModule> subModules = module.getChildren();
-			
-			if(subModules !=null)
-			{
-				createModules(subModules,String.valueOf(module.getId()));
-			}
-			
-			List<JQModuleConfig> configs = module.getModuleConfigs();
-			
-			//configService.createConfigs(configs);
-			
-			addModuleConfig(String.valueOf(module.getId()),configs);
-			
-			List<JQModuleData> data= module.getModuleData();
-			
-			addModuleData(String.valueOf(module.getId()),data);	
-		
+			createConfig(config);
 		}	
 		
 		return 0;
 	
+	}
+	
+	public int createConfig(JQConfig config)
+	{
+		int configId = jqConfigMapper.createConfig(config);
+		
+		JQConfig newConfig = jqConfigMapper.getConfigByName(config.getName());
+		
+		config.setId(newConfig.getId());
+		
+		return newConfig.getId();
+		
 	}	
 
-
+/*
 	public int updateModules(List<JQModule> modules, String pid)
 	{
 		for(int i=0;i<modules.size();i++)
@@ -366,6 +331,6 @@ public class JQModuleService
 		}	
 		return 0;
 	}
-	
+	*/
 
 }

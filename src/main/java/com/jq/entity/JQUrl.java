@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
-
 @Data
 public class JQUrl
 {
@@ -23,6 +22,16 @@ public class JQUrl
 	{
 	
 		this.url = url;
+	}
+	
+	public String getUrl()
+	{
+		return url;
+	}
+	
+	public int getId()
+	{
+		return id;
 	}
 
 

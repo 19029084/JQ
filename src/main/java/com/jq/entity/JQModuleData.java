@@ -10,7 +10,7 @@ public class JQModuleData extends JQModuleConfig
 
 	
 
-	public void setData(List<JQProperty> properties)
+	/*public void setData(List<JQProperty> properties)
 	{
 		if(row==null)
 		{
@@ -25,7 +25,7 @@ public class JQModuleData extends JQModuleConfig
 		
 			row.put(property.getId(),property);
 		}
-	}
+	}*/
 
 
 	//public void addData(JQProperty property)
@@ -69,6 +69,6 @@ public class JQModuleData extends JQModuleConfig
 	
 	private int parentId;
 	
-	private HashMap<Integer,JQProperty> row = new HashMap<Integer,JQProperty>();
+	//private HashMap<Integer,JQProperty> row = new HashMap<Integer,JQProperty>();
 	
 }

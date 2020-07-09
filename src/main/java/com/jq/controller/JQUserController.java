@@ -93,7 +93,7 @@ public Object getUrls()
 
 
 @GetMapping(value="/role")
-public Object getUrls()
+public Object getRoles()
 {
 	return m_resourceService.getRoles();
 }

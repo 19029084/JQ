@@ -69,12 +69,12 @@ public class JQModule
 	}
 	
 	
-	public List<JQModule> getSubModules()
+	public List<JQModule> getChildren()
 	{
 		return subModules;	
 	}
 	
-	public void setSubModules(List<JQModule> subModules)
+	public void setChildren(List<JQModule> subModules)
 	{
 	
 		this.subModules = subModules;
