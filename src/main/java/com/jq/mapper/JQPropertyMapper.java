@@ -3,7 +3,7 @@ package com.jq.mapper;
 
 import com.jq.entity.JQProperty;
 import com.jq.entity.JQPropertyOption;
-import com.jq.entity.JQModuleConfig;
+import com.jq.entity.JQConfig;
 import com.jq.entity.JQColumn;
 
 import org.apache.ibatis.annotations.Insert;
@@ -25,7 +25,7 @@ public interface JQPropertyMapper
 	JQProperty findPropertyByName(String name);
 	
 	//List<JQProperty> getPropertyByConfig(JQModuleConfig config);
-	List<JQColumn> getColumnByConfig(JQModuleConfig config);
+	List<JQColumn> getColumnByConfig(JQConfig config);
 
 	
 		

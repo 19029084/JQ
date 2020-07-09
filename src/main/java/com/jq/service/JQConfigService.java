@@ -88,6 +88,22 @@ public class JQConfigService
 		
 		config.setId(newConfig.getId());
 		
+		List<JQColumn> columns = config.getProperties();
+			
+		for(int j=0;j<columns.size();j++)
+		{
+			JQColumn column = columns.get(j);
+				
+			JQProperty property = column.getProperty();
+				
+			propertyService.createProperty(property);
+				
+			jqConfigMapper.addConfigProperty(String.valueOf(column.getSortKey()),
+								String.valueOf(property.getId()),
+								String.valueOf(config.getId()));
+				
+		}
+		
 		return newConfig.getId();
 		
 	}	

@@ -9,19 +9,20 @@
 <mapper namespace="com.jq.mapper.JQModuleMapper">
 
 	<resultMap id="JQModule" type="com.jq.entity.JQModule">
-	<id property="id" column="id"/>
-	<result property="name" column="name" />
-	<result property="path" column="path" />
+		<id property="id" column="id"/>
+		<result property="pid" column="pid" />
+		<result property="name" column="name" />
+		<result property="path" column="path" />
 	</resultMap>
 
 	<select id="getModules" resultMap="JQModule">	
-		select m.id as id,m.name as name,u.url as path 
+		select m.id as id,m.name as name,u.url as path, m.parentid as pid 
 		from Module m left join sys_url u on (m.urlid=u.id)
 		where m.parentid= #{pid} and m.Valid = 1
 	</select>
 	
 	<select id="getModuleByName" resultMap="JQModule">
-		select m.id as id,m.name as name,u.url as path 
+		select m.id as id,m.name as name,u.url as path, m.parentid as pid
 		from Module m left join sys_url u on (m.urlid=u.id)
 		where m.parentid= #{pid} and m.Valid = 1 and m.name=#{name}
 	</select>
@@ -43,19 +44,22 @@
 	</update>
 	
 	<resultMap id="JQModuleConfig" type="com.jq.entity.JQModuleConfig">
-		
-		<result property="configId" column="configId" />
 		<result property="moduleId" column="moduleId" />
-		
+		<association property="jqConfig" javaType="com.jq.entity.JQConfig">
+			<id property="id" column="id"/>		
+			<result property="name" column="name" />
+			<result property="title" column="title" />
+			<result property="valid" column="valid" />
+		</association>
 		
 	</resultMap>	
 	
 	
 	
 	<select id="getModuleConfig" resultMap="JQModuleConfig">	
-		select distinct moduleId,configId
-		from ModuleConfig mc
-		where mc.moduleid= #{mid} and mc.valid = 1
+		select mc.moduleId as moduleId, c.id as id, c.name as name, c.title as tile,c.valid as valid
+		from ModuleConfig mc, Config c
+		where mc.moduleid= #{mid} and mc.valid = 1 and mc.configId = c.id
 	</select>
 	
 	<insert id="addModuleConfig">
@@ -84,7 +88,7 @@
 	
 	<resultMap id="JQModuleData" type="com.jq.entity.JQModuleData">		
 		<result property="parentId" column="parentId" />
-		<collection property="columns" ofType="com.jq.entity.JQColumn">
+		<collection property="columns" javaType="java.util.ArrayList" ofType="com.jq.entity.JQColumn">
 			<id property="sortKey" column="sortKey"/>
 			<association property="property" javaType="com.jq.entity.JQProperty">
 				<id property="id" column="propertyID"/>

@@ -43,11 +43,18 @@
 		</association>	
 	</resultMap>	
 	
-	<select id="getColumnByConfig" resultMap="JQColumn">	
+	<!--select id="getColumnByConfig" resultMap="JQColumn">	
 		select mc.sortKey as sortKey, prop.id as propertyID, prop.name as propertyName, t.type as propertyType, t.id as propertyTypeID
 		from Property prop, ModuleConfig mc, PropertyType t 
 		where prop.valid=1 and mc.valid=1 and mc.propertyId= prop.Id and mc.configId=#{configId} and mc.moduleId=#{moduleId} and t.id = prop.type_id
+	</select-->
+
+	<select id="getColumnByConfig" resultMap="JQColumn">	
+		select cp.sortKey as sortKey, prop.id as propertyID, prop.name as propertyName, t.type as propertyType, t.id as propertyTypeID
+		from Property prop, ConfigProperty cp, PropertyType t 
+		where prop.valid=1 and cp.valid=1 and cp.propertyId= prop.Id and cp.configId=#{id} and t.id = prop.type_id
 	</select>
+
 	
 	<insert id = "createProperty" keyProperty="id" useGeneratedKeys="true">
 		insert into Property(Name,type_id,Valid) 

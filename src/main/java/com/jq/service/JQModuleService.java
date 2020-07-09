@@ -6,6 +6,8 @@ import com.jq.entity.JQModuleConfig;
 import com.jq.entity.JQProperty;
 import com.jq.entity.JQPropertyOption;
 import com.jq.entity.JQUrl;
+import com.jq.entity.JQConfig;
+
 
 
 
@@ -113,7 +115,15 @@ public class JQModuleService
 			
 			List<JQModuleConfig> configs = module.getModuleConfigs();
 			
-			//configService.createConfigs(configs);
+			for(int j=0;j<configs.size();j++)
+			{
+				JQConfig config = configs.get(j).getJQConfig();
+				
+				configService.createConfig(config);
+				
+			}
+			
+			
 			
 			addModuleConfig(String.valueOf(module.getId()),configs);
 			
@@ -319,7 +329,7 @@ public class JQModuleService
 		{
 			JQModuleConfig c = configs.get(i);
 			
-			propertyService.loadPropertyByConfig(c);
+			propertyService.loadPropertyByConfig(c.getJQConfig());
 
 		}
 		
@@ -333,24 +343,22 @@ public class JQModuleService
 		{
 			JQModuleConfig config = configs.get(i);
 			
-			List<JQColumn> columns = config.getProperties();
+			//List<JQColumn> columns = config.getConfig().getProperties();
 			
 			
 			//propertyService.createProperties(properties);
 			
-			for(int j=0;j<columns.size();j++)
-			{
-				JQColumn column = columns.get(j);
+			//for(int j=0;j<columns.size();j++)
+			//{
+			//	JQColumn column = columns.get(j);
 				
-				JQProperty property = column.getProperty();
+			//	JQProperty property = column.getProperty();
 				
-				propertyService.createProperty(property);
+			//	propertyService.createProperty(property);
 				
-				jqModuleMapper.addModuleConfig(mid,String.valueOf(column.getSortKey()),
-								String.valueOf(property.getId()),
-								String.valueOf(config.getConfigId()));
+			jqModuleMapper.addModuleConfig(mid,"-1","-1",String.valueOf(config.getJQConfig().getId()));
 				
-			}
+			//}
 			
 			
 			

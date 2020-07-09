@@ -6,6 +6,7 @@ import com.jq.entity.JQModuleConfig;
 import com.jq.entity.JQPropertyType;
 
 import com.jq.entity.JQColumn;
+import com.jq.entity.JQConfig;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class JQPropertyService
 		
 	}
 	
-	public void loadPropertyByConfig(JQModuleConfig config)
+	public void loadPropertyByConfig(JQConfig config)
 	{
 		//List<JQProperty> properties = jqPropertyMapper.getPropertyByConfig(config);
 		

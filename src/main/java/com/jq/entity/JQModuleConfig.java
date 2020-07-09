@@ -5,17 +5,23 @@ import java.util.List;
 import java.util.ArrayList;
 
 import com.jq.entity.JQColumn;
+import com.jq.entity.JQConfig;
 
 
 public class JQModuleConfig
 {
 	public JQModuleConfig()
 	{
-	 //propertyStack = new Stack<JQColumn>();
-	 //propertyMap = new TreeMap<Integer,JQProperty>();
-	 	columns = new ArrayList<JQColumn>();
+	 	//propertyStack = new Stack<JQColumn>();
+	 	//propertyMap = new TreeMap<Integer,JQProperty>();
+	 	//columns = new ArrayList<JQColumn>();
 		
 	}
+	
+	//public JQModuleConfig(JQConfig config)
+	//{
+	//	this.config = config;
+	//}
 
 	public int getId()
 	{
@@ -46,64 +52,7 @@ public class JQModuleConfig
 	{
 		return configId;	
 	}	
-	
-	public void push(JQColumn property)
-	{
-		//System.out.println("  PUSH:: "+property.getName());
-		//propertyStack.push(property);
-		columns.add(property);
-	}
-	
-	public JQColumn pop()
-	{
-		//System.out.println(" POP ");
-		int size = columns.size();
-		JQColumn column = null;
-		if(size>0)
-		{
-			column = columns.get(size-1);
-			columns.remove(size-1);
-		}
-		return column;
-	}
-	
-	public JQColumn peek()
-	{
-		//System.out.println("----"+propertyStack.empty());
-		//return propertyStack.peek();
-		int size = columns.size();
-		JQColumn column = null;
-		
-		if(size>0)
-		{
-			column = columns.get(size-1);			
-		}
-		
-		return column;
-		
-	}
-	
-	public List<JQColumn> getProperties()
-	{
-		//List<JQColumn> propertyList = new ArrayList<JQColumn>(propertyStack);
-		
-		//return propertyList;
-		return columns;
-	}	
-	
-	public void setProperties(List<JQColumn> columns)
-	{
-	
-		//while(!propertyStack.empty())
-		//{
-		//	propertyStack.pop();
-		//}
-		
-		//propertyStack.addAll(properties);
-		this.columns = columns;
-	
-	
-	}
+
 	
 	boolean isConfig()
 	{
@@ -116,6 +65,18 @@ public class JQModuleConfig
 	}
 	
 	
+	public void setJQConfig(JQConfig jqConfig)
+	{
+	
+		this.jqConfig=jqConfig;
+	}
+	
+	public JQConfig getJQConfig()
+	{
+		return jqConfig;
+	}
+	
+	
 	private int id;
 	private int configId;
 	private int moduleId;
@@ -123,7 +84,9 @@ public class JQModuleConfig
 	//private Stack<JQColumn> propertyStack;
 	//private TreeMap<Integer,JQProperty> propertyMap;
 	
-	private List<JQColumn> columns;
+	//private List<JQColumn> columns;
+	
+	private JQConfig jqConfig;
 	
 	
 }

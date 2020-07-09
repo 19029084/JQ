@@ -33,6 +33,7 @@ public interface JQConfigMapper{
 	int deleteModule(JQModule module,String pid);*/
 	JQConfig getConfigByName(String name);
 	
+	int addConfigProperty(String sortKey, String propertyId,String configId );
 	
 	/*
 	List<JQModuleConfig> getModuleConfig(String mid);

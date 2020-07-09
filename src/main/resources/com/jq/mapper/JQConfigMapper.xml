@@ -56,17 +56,17 @@
 		select distinct moduleId,configId
 		from ModuleConfig mc
 		where mc.moduleid= #{mid} and mc.valid = 1
-	</select>
+	</select-->
 	
-	<insert id="addModuleConfig">
-		insert into ModuleConfig(ModuleId,PropertyId,ConfigId,SortKey,Valid) 
-		select #{mid},#{propertyId},#{configId},#{sortKey},1
+	<insert id="addConfigProperty">
+		insert into ConfigProperty(PropertyId,ConfigId,SortKey,Valid) 
+		select #{propertyId},#{configId},#{sortKey},1
 		from dual
-		where not exists (select * from ModuleConfig 
-				   where ModuleId = #{mid} and PropertyId=#{propertyId} and ConfigId=#{configId})
+		where not exists (select * from ConfigProperty 
+				   where PropertyId=#{propertyId} and ConfigId=#{configId})
 	</insert>
 	
-	<update id="deleteModuleConfig">	
+	<!--update id="deleteModuleConfig">	
 		update ModuleConfig set valid=0 where ModuleId=#{mid} and ConfigId= #{config.configId}
 	</update-->
 	

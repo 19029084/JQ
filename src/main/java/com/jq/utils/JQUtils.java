@@ -107,7 +107,7 @@ public class JQUtils
 			{
 				modules = new ArrayList<JQModule>();	
 				moduleStack = new Stack<JQModule>();	
-				configStack = new Stack<JQModuleConfig>();	
+				configStack = new Stack<JQConfig>();	
 		
 			}
 			else if(MODULE.equalsIgnoreCase(rootElement.getName())) 
@@ -143,7 +143,7 @@ public class JQUtils
 			else if(CONFIG.equalsIgnoreCase(rootElement.getName()))
 			{
 		
-				JQModuleConfig config = new JQModuleConfig();
+				JQConfig config = new JQConfig();
 				
 				configStack.push(config);
 			
@@ -152,10 +152,15 @@ public class JQUtils
 				{
 					switch(attribute.getName())
 					{
-						case "id":
-							int configId=Integer.parseInt(attribute.getText());
-							config.setConfigId(configId);					
-							break;				
+						case "name":
+							//int configId=Integer.parseInt(attribute.getText());
+							//config.setConfigId(configId);
+							config.setName(attribute.getText());					
+							break;	
+						case "title":
+							//int configId=Integer.parseInt(attribute.getText());
+							//config.setConfigId(configId);					
+							break;			
 						default:
 					
 							System.out.println("UNKNOW ATTRIBUTE:"+attribute.getName());
@@ -165,7 +170,7 @@ public class JQUtils
 			}
 			else if (DATA.equalsIgnoreCase(rootElement.getName()))
 			{
-				JQModuleData data = new JQModuleData();
+				/*JQModuleData data = new JQModuleData();
 				
 				configStack.push(data);
 				
@@ -183,7 +188,7 @@ public class JQUtils
 					
 							System.out.println("UNKNOW ATTRIBUTE:"+attribute.getName());
 					}
-				}				
+				}*/				
 				
 				
 			}
@@ -195,7 +200,7 @@ public class JQUtils
 				
 				column.setProperty(property);
 			
-				JQModuleConfig config = configStack.peek();
+				JQConfig config = configStack.peek();
 				
 				System.out.println("Config: "+config);
 				List<Attribute> attributes = rootElement.attributes();
@@ -238,10 +243,7 @@ public class JQUtils
 			{
 				JQPropertyOption option = new JQPropertyOption();
 				
-				JQModuleConfig config = configStack.peek();
-				
-				
-				System.out.println("Config:"+config.getConfigId());
+				JQConfig config = configStack.peek();
 				
 				config.peek().getProperty().addOption(option);
 			
@@ -281,7 +283,13 @@ public class JQUtils
 			{
 				JQModule module = moduleStack.peek();
 				
-				module.addConfig(configStack.pop());
+				JQConfig config = configStack.pop();
+				
+				JQModuleConfig moduleConfig = new JQModuleConfig();
+				
+				moduleConfig.setJQConfig(config);
+								
+				module.addConfig(moduleConfig);
 			}	
 			
 			
@@ -289,7 +297,7 @@ public class JQUtils
 			{
 				JQModule module= moduleStack.peek();
 				
-				module.addData((JQModuleData)configStack.pop());
+				//module.addData((JQModuleData)configStack.pop());
 				
 			}
 		
@@ -328,7 +336,7 @@ public class JQUtils
 	
 	private List<JQConfig> configs;
 	
-	private Stack<JQModuleConfig> configStack;
+	private Stack<JQConfig> configStack;
 	
 	
 	

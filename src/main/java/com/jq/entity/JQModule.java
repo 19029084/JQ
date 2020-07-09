@@ -12,6 +12,7 @@ import com.jq.entity.JQModuleConfig;
 public class JQModule
 {
 	private int id;
+	private int pid;
 	private String name;
 	private String path;
 	
@@ -41,6 +42,18 @@ public class JQModule
 		this.id=id;
 	}
 	
+	public int getPid()
+	{
+		return pid;
+	}
+	
+	public void setPid(int pid)
+	{
+		this.pid=pid;
+	}
+	
+	
+	
 	public void setName(String name)
 	{
 		this.name=name;
@@ -54,7 +67,7 @@ public class JQModule
 	
 	public String getPath()
 	{
-		return path;
+		return path==null?"":path;
 	}
 	
 	public void setPath(String path)
