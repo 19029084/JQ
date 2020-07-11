@@ -32,8 +32,7 @@ public class JQPropertyService
 
 	public List<JQProperty> getProperties()
 	{
-		List<JQProperty> properties = jqPropertyMapper.getProperties();
-		
+		List<JQProperty> properties = jqPropertyMapper.findAllProperties();		
 		
 		return properties;
 		
@@ -48,7 +47,7 @@ public class JQPropertyService
 		
 		//loadPropertyOptions(properties);
 		
-		List<JQColumn> columns = jqPropertyMapper.getColumnByConfig(config);
+		List<JQColumn> columns = jqPropertyMapper.findColumnByConfigId(config.getId());
 		
 		config.setProperties(columns);
 		
@@ -63,7 +62,7 @@ public class JQPropertyService
 		{
 		
 			JQProperty property = properties.get(i);
-			
+
 			createProperty(property);	
 		
 		}
@@ -75,27 +74,21 @@ public class JQPropertyService
 		//for(int i=0;i<properties.size();i++)
 		{
 			//JQProperty property = properties.get(i);
-			JQProperty oldProperty = null;
+			JQProperty existProperty  = findPropertyByName(property.getName());
 			
-			
-			if((oldProperty=findPropertyByName(property.getName()))!=null)
+			if(existProperty != null)
 			{
-				property.setId(oldProperty.getId());
-				System.out.println("Find Property:"+property.getId()+":"+property.getName());
+				property.setId(existProperty.getId());
 			}
 			else
 			{
 			
 				//property =properties.get(i);
 				
-				JQPropertyType type = property.getPropertyType();//new JQPropertyType();
+				JQPropertyType type = property.getPropertyType();
 				
-				//type.setType(property.getPropertyType().getType());
-				
-				jqPropertyMapper.createPropertyType(type);
-				
-				type = jqPropertyMapper.findPropertyType(type.getType());
-				
+				createPropertyType(type);	
+
 				property.setPropertyType(type);//setTypeId(type.getId());
 				 			
 				jqPropertyMapper.createProperty(property);
@@ -109,16 +102,30 @@ public class JQPropertyService
 			if(options != null)
 			{
 			
-				addPropertyOptions(String.valueOf(property.getId()),options);
+				assignPropertyOptions(property.getId(),options);
 			
 			}
-			
-				
-		
 		}
 		
 		return 0;
 	
+	
+	}
+	
+	
+	public void createPropertyType(JQPropertyType type)
+	{
+	
+		JQPropertyType existType = jqPropertyMapper.findPropertyTypeByType(type.getType());
+		
+		if(existType == null)
+		{
+			jqPropertyMapper.createPropertyType(type);
+		}
+		else
+		{
+			type.setId(existType.getId());
+		}
 	
 	}
 	
@@ -159,15 +166,16 @@ public class JQPropertyService
 			
 			JQProperty property = column.getProperty();
 			
-			List<JQPropertyOption> options = getPropertyOptions(String.valueOf(property.getId()));
+			List<JQPropertyOption> options = getPropertyOptions(property.getId());
+			
 			property.setOptions(options);		
 		}
 	
 	}
 
-	public List<JQPropertyOption> getPropertyOptions(String propertyId)
+	public List<JQPropertyOption> getPropertyOptions(int propertyId)
 	{
-		List<JQPropertyOption> propertyOptions = jqPropertyMapper.getProperyOptions(propertyId);
+		List<JQPropertyOption> propertyOptions = jqPropertyMapper.findProperyOptionsById(propertyId);
 		
 		
 		return propertyOptions;
@@ -175,11 +183,11 @@ public class JQPropertyService
 	}
 	
 	
-	public int addPropertyOptions(String propertyId,List<JQPropertyOption> propertyOptions)
+	public int assignPropertyOptions(int propertyId,List<JQPropertyOption> propertyOptions)
 	{
 		for(int i=0;i<propertyOptions.size();i++)
 		{
-			jqPropertyMapper.addPropertyOption(propertyId,propertyOptions.get(i));
+			jqPropertyMapper.assignPropertyOption(propertyId,propertyOptions.get(i));
 		}
 		
 		return 0;

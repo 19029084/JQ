@@ -12,6 +12,7 @@ public class JQProperty
 	public JQProperty()
 	{
 		propertyType = new JQPropertyType();
+		propertyType.setType("text");
 	}
 
 	public void setId(int id)

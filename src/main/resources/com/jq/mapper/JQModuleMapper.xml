@@ -44,6 +44,7 @@
 	</update>
 	
 	<resultMap id="JQModuleConfig" type="com.jq.entity.JQModuleConfig">
+		<id property="id" column="mcid"/>
 		<result property="moduleId" column="moduleId" />
 		<association property="jqConfig" javaType="com.jq.entity.JQConfig">
 			<id property="id" column="id"/>		
@@ -57,7 +58,7 @@
 	
 	
 	<select id="getModuleConfig" resultMap="JQModuleConfig">	
-		select mc.moduleId as moduleId, c.id as id, c.name as name, c.title as tile,c.valid as valid
+		select mc.id as mcid, mc.moduleId as moduleId, c.id as id, c.name as name, c.title as tile,c.valid as valid
 		from ModuleConfig mc, Config c
 		where mc.moduleid= #{mid} and mc.valid = 1 and mc.configId = c.id
 	</select>

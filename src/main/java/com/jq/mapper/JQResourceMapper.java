@@ -7,6 +7,10 @@ import com.jq.entity.JQRole;
 import com.jq.entity.JQPropertyOption;
 import com.jq.entity.JQModuleConfig;
 
+import com.jq.entity.JQUser;
+import com.jq.entity.JQPermission;
+
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -17,6 +21,24 @@ import java.util.List;
 @Mapper
 public interface JQResourceMapper
 {
+	JQUser findUserByName(String name);
+	
+	int createUser(JQUser user);
+	
+	JQRole findRoleByCode(String code);
+	
+	List<JQRole> findAllRoles();
+	
+	List<JQRole> findRolesByUserId(int userId);
+	
+	int createRole(JQRole role);
+	
+	int assignRole(int userId, int roleId);
+	
+	List<JQPermission> findAllPermissions();
+	
+	List<JQPermission> findPermissionsByUserId(int userId);
+	
 	//List<JQProperty> getProperties();
 	//int createProperty(JQProperty property);	
 	//int updateProperty(JQProperty property);	
@@ -37,9 +59,5 @@ public interface JQResourceMapper
 	int createUrl(JQUrl jqUrl);
 	
 	JQUrl findUrlByName(String name);
-	
-	
-	List<JQRole> getRoles();
-	
 
 }

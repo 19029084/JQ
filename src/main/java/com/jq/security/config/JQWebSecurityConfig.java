@@ -20,6 +20,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+
+import javax.annotation.Resource;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -34,6 +38,8 @@ public class JQWebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
     
+    @Resource
+    private JQFilterSecurityInterceptor jqFilterSecurityInterceptor;
     
     //@Autowired 
     //JQAuthenticationFailureHandler jqAuthenticationFailureHandler;
@@ -41,10 +47,13 @@ public class JQWebSecurityConfig extends WebSecurityConfigurerAdapter {
     //@Autowired 
     //JQAuthenticationSuccessHandler jqAuthenticationSuccessHandler;
 
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    //@Autowired
+    //private PasswordEncoder passwordEncoder;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -59,7 +68,12 @@ public class JQWebSecurityConfig extends WebSecurityConfigurerAdapter {
     	     .antMatchers("/oauth/**","/api/v1/login","/swagger-ui.html","/swagger-resources/**","/webjars/**","/v2/api-docs/**").permitAll()
     	     .anyRequest().authenticated()
     	     .and()
-    	     .formLogin();//.loginPage("/login").failureUrl("/login?error");
+    	     .formLogin()
+    	     .and()
+    	     .logout().logoutUrl("/api/v1/logout").permitAll().invalidateHttpSession(true)
+    	     .deleteCookies("JSESSIONID").logoutSuccessHandler(new JQLogoutSuccessHandler());
+    	     
+    	     //.loginPage("/login").failureUrl("/login?error");
         //http.authorizeRequests()
         //	 .anyRequest().authenticated()
         //        .and()
@@ -67,6 +81,7 @@ public class JQWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //.formLogin().loginPage("/api/v1/login").failureUrl("/login-error")                
         //        .and()
         //        .csrf().disable();
+        http.addFilterBefore(jqFilterSecurityInterceptor, FilterSecurityInterceptor.class);
     }
 
 }

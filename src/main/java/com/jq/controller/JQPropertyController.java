@@ -93,9 +93,9 @@ public class JQPropertyController
 	@GetMapping("/properties/{propertyId:\\d+}")
 	@ApiOperation("获取某字段的选项值")
 	@ResponseBody
-	List<JQPropertyOption> getPropertyOptions(@PathVariable String propertyId)
+	List<JQPropertyOption> getPropertyOptions(@PathVariable int propertyId)
 	{
-	
+
 		return m_service.getPropertyOptions(propertyId);
 
 	}
@@ -103,11 +103,11 @@ public class JQPropertyController
 	@PostMapping("/properties/{propertyId:\\d+}")
 	@ApiOperation("添加某字段的选项值")
 	@ResponseBody
-	int addPropertyOptions(@PathVariable String propertyId,
+	int addPropertyOptions(@PathVariable int propertyId,
 	                       @RequestBody List<JQPropertyOption> propertyOptions)
 	{
 	
-		return m_service.addPropertyOptions(propertyId,propertyOptions);
+		return m_service.assignPropertyOptions(propertyId,propertyOptions);
 
 	}
 	

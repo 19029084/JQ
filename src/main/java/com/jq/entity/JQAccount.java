@@ -36,7 +36,7 @@ public class JQAccount extends JQUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> list=new ArrayList<>();
-        Set<JQRole> roles = getRoles();
+        List<JQRole> roles = getRoles();
         if(roles != null)
         {
         for(JQRole role:roles){

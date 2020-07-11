@@ -18,28 +18,38 @@ import java.util.List;
 @Mapper
 public interface JQPropertyMapper
 {
-	List<JQProperty> getProperties();
-	int createProperty(JQProperty property);	
-	int updateProperty(JQProperty property);	
-	int deleteProperty(JQProperty property);
+	List<JQProperty> findAllProperties();
+	
 	JQProperty findPropertyByName(String name);
 	
+	int createProperty(JQProperty property);
+		
+	int updateProperty(JQProperty property);
+		
+	int deleteProperty(JQProperty property);
+	
+
+	
 	//List<JQProperty> getPropertyByConfig(JQModuleConfig config);
-	List<JQColumn> getColumnByConfig(JQConfig config);
+	List<JQColumn> findColumnByConfigId(int configId);
 
 	
 		
-	List<JQPropertyOption> getProperyOptions(String pid);
-	int addPropertyOption(String pid,JQPropertyOption option);
+	List<JQPropertyOption> findProperyOptionsById(int pid);
+	
+	int assignPropertyOption(int pid,JQPropertyOption option);
+	
 	int updatePropertyOption(String pid,JQPropertyOption option);
 	int deletePropertyOption(String pid,JQPropertyOption option);
 	
 	
-	List<JQPropertyType> getPropertyTypes();
+	List<JQPropertyType> findAllProperyTypes();
+	JQPropertyType findPropertyTypeByType(String type);
+		
 	int createPropertyType(JQPropertyType type);	
 	int updatePropertyType(JQPropertyType type);	
 	int deletePropertyType(JQPropertyType type);	
-	JQPropertyType findPropertyType(String type);
+
 	
 	
 	

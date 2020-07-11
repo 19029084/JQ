@@ -29,30 +29,38 @@ create table oauth_refresh_token (
       
     create table if not exists sys_role
     (
-      id char(32) not null,
+      #id char(32) not null,
+      id int not null auto_increment, 
+      code varchar(50) not null,
       name varchar(50) null,
-      name_cn varchar(255) null,      
-      constraint sys_role_id_uindex
-        unique (id)
+      #name_cn varchar(255) null,      
+      #constraint sys_role_id_uindex
+      #  unique (id)
+      url varchar(50) not null,
+      primary key (id)
+      
     );
-    alter table sys_role 
-      add primary key (id);
+    #alter table sys_role 
+    #  add primary key (id);
       
       
     create table if not exists sys_user
     (
+      #id char(32) not null,
+      id int not null auto_increment, 
       username varchar(50) not null,
-      email varchar(50) null,
-      password varchar(500) null,
-      activated tinyint null,
-      activationkey varchar(50) null,
-      resetpasswordkey varchar(50) null,
-      id char(32) not null,
-      constraint sys_user_id_uindex
-        unique (id)
+      #email varchar(50) null,
+      password varchar(500) not null,
+      #activated tinyint null,
+      #activationkey varchar(50) null,
+      #resetpasswordkey varchar(50) null,
+      identity varchar(50) not null,
+      primary key (id)
+      #constraint sys_user_id_uindex
+      #  unique (id)
     );
-    alter table sys_user
-      add primary key (id);
+    #alter table sys_user
+    #  add primary key (id);
       
       
     create table if not exists sys_user_role
@@ -71,8 +79,9 @@ create table oauth_refresh_token (
 CREATE TABLE if not exists sys_permission
 (
 	id int auto_increment primary key,
-	permission_code varchar(32) null,
-	permission_name varchar(32) null
+	code varchar(255) not null,
+	name varchar(255) not null,
+	url varchar(200) not null
 );
 
 
@@ -241,11 +250,26 @@ CREATE TABLE WhiteList
 
 );
 
+	INSERT INTO JQ.sys_user (username, password, identity, id) VALUES ('admin', '$2a$10$arpqY6Mvt8VatFMcbuYtzuzeLj1ZGaQ9lFOQ9b8BSPJJ6KeG8mBuK', '00000001','1');
 
-    INSERT INTO JQ.sys_user (username, email, password, activated, activationkey, resetpasswordkey, id) VALUES ('admin', 'admin@qq.com', '$2a$10$arpqY6Mvt8VatFMcbuYtzuzeLj1ZGaQ9lFOQ9b8BSPJJ6KeG8mBuK', 1, null, null, '1');
-    INSERT INTO JQ.sys_role (id, name,name_cn) VALUES ('1', 'ROLE_ADMIN','管理员');
-    INSERT INTO JQ.sys_role (id, name,name_cn) VALUES ('2', 'ROLE_USER','用户');
-    INSERT INTO JQ.sys_user_role (id, user_id, role_id) VALUES ('1', '1', '1');
+    #INSERT INTO JQ.sys_user (username, email, password, activated, activationkey, resetpasswordkey, id) VALUES ('admin', 'admin@qq.com', '$2a$10$arpqY6Mvt8VatFMcbuYtzuzeLj1ZGaQ9lFOQ9b8BSPJJ6KeG8mBuK', 1, null, null, '1');
+    
+    #INSERT INTO JQ.sys_user (username, email, password, activated, activationkey, resetpasswordkey, id) VALUES ('user', 'user@qq.com', '$2a$10$arpqY6Mvt8VatFMcbuYtzuzeLj1ZGaQ9lFOQ9b8BSPJJ6KeG8mBuK', 1, null, null, '2');
+    #INSERT INTO JQ.sys_role (id, name,name_cn) VALUES ('1', 'ROLE_ADMIN','管理员');
+    #INSERT INTO JQ.sys_role (id, name,name_cn) VALUES ('2', 'ROLE_USER','用户');
+    #INSERT INTO JQ.sys_user_role (id, user_id, role_id) VALUES ('1', '1', '1');
+    #INSERT INTO JQ.sys_user_role (id, user_id, role_id) VALUES ('2', '2', '2');
+    
+    
+    #INSERT INTO JQ.sys_role_permission (id, role_id, permission_id) VALUES ('1', '1', '1');
+    #INSERT INTO JQ.sys_role_permission (id, role_id, permission_id) VALUES ('2', '2', '2');
+    #INSERT INTO JQ.sys_permission (id, code, name , url) VALUES ('1', 'ROLE_API','API', '/admin/**');
+    #INSERT INTO JQ.sys_permission (id, code, name , url) VALUES ('2', 'ROLE_TEST','TEST', '/test/**');
+    
+    
+    
+    
+    
 
 
 

@@ -8,30 +8,40 @@
 	
 <mapper namespace="com.jq.mapper.JQConfigMapper">
 
-	<resultMap id="JQConfig" type="com.jq.entity.JQConfig">
-		<id property="id" column="id"/>
-		<result property="name" column="name" />
-		<result property="title" column="title" />
-		<result property="valid" column="valid"/>
-	</resultMap>
-
-	<select id="getConfigs" resultMap="JQConfig">	
-		select c.id as id,c.name as name,c.title as title,c.valid as valid 
+	<select id="findAllConfigs" resultType="com.jq.entity.JQConfig">	
+		select c.* 
 		from Config c
 	</select>
 	
-	<select id="getConfigByName" resultMap="JQConfig">
+	<select id="findConfigByName" resultType="com.jq.entity.JQConfig">
 		select c.id as id,c.name as name,c.title as title,c.valid as valid 
 		from Config c 
 		where c.name=#{name}
 	</select>
 	
-	
-	<insert id="createConfig" keyProperty="id" useGeneratedKeys="true" >
+	<select id="findConfigByID" resultType="com.jq.entity.JQConfig">
+		select c.* 
+		from Config c 
+		where c.id=#{id}
+	</select>
+		
+	<insert id="createConfig" parameterType="com.jq.entity.JQConfig" >
+		<selectKey resultType="int" keyProperty="id" order="AFTER">
+			SELECT LAST_INSERT_ID()		
+		</selectKey>	
 		insert into Config(name,title,valid) 
 		select #{name},#{title},1
 		from dual 
 		where not exists(select * from Config where name=#{name})
+	</insert>
+	
+	
+	<insert id="assignProperty">
+		insert into ConfigProperty(PropertyId,ConfigId,SortKey,Valid) 
+		select #{propertyId},#{configId},#{sortKey},1
+		from dual
+		where not exists (select * from ConfigProperty 
+				   where PropertyId=#{propertyId} and ConfigId=#{configId})
 	</insert>
 	
 	<!--update id="updateModule">
@@ -58,13 +68,7 @@
 		where mc.moduleid= #{mid} and mc.valid = 1
 	</select-->
 	
-	<insert id="addConfigProperty">
-		insert into ConfigProperty(PropertyId,ConfigId,SortKey,Valid) 
-		select #{propertyId},#{configId},#{sortKey},1
-		from dual
-		where not exists (select * from ConfigProperty 
-				   where PropertyId=#{propertyId} and ConfigId=#{configId})
-	</insert>
+
 	
 	<!--update id="deleteModuleConfig">	
 		update ModuleConfig set valid=0 where ModuleId=#{mid} and ConfigId= #{config.configId}

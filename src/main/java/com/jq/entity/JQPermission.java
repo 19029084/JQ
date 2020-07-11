@@ -1,0 +1,77 @@
+package com.jq.entity;
+
+
+import javax.persistence.*;
+import java.util.Objects;
+import java.util.List;
+//import org.codehaus.jackson.annotate.JsonBackReference;
+
+//@Entity
+//@Table(name="sys_permission")
+
+public class JQPermission
+{
+	//@Id
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@Column(name="id")
+	private int id;
+	//@Column(name="code")
+	private String code;
+	//@Column(name="name")
+	private String name;
+	//@Column(name="url")
+	private String url;
+	
+	public int getId()
+	{
+		return id;
+	}
+	
+	public void setId(int id)
+	{
+		this.id=id;	
+	}
+	
+	
+	public String getCode()
+	{
+		return code;
+	}
+
+	public void setCode(String code)
+	{
+		this.code = code;	
+	}
+	
+	
+	public String getName()
+	{
+		return name;
+	}
+	
+	public void setName(String name)
+	{
+		this.name=name;	
+	}
+	
+	
+	public String getUrl()
+	{
+		return url;
+	}
+	
+	public void setUrl(String url)
+	{
+		this.url=url;	
+	}
+	
+	//@JsonBackReference
+	//@ManyToMany(mappedBy="permissions")
+	//private List<JQRole> roles;
+	
+		
+	
+	
+
+
+}

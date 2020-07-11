@@ -18,10 +18,10 @@ public class JQModuleConfig
 		
 	}
 	
-	//public JQModuleConfig(JQConfig config)
-	//{
-	//	this.config = config;
-	//}
+	public JQModuleConfig(JQConfig config)
+	{
+		this.jqConfig = config;
+	}
 
 	public int getId()
 	{

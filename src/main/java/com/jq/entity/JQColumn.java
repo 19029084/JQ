@@ -8,6 +8,11 @@ import java.util.List;
 public class JQColumn ///extends JQProperty
 
 {
+	public void setId(int id)
+	{
+		this.id=id;
+	
+	}
 
 	public JQColumn()
 	{
@@ -50,6 +55,8 @@ public class JQColumn ///extends JQProperty
 	{
 		return this.property;	
 	}
+	
+	private int id;
 	
 	private int sortKey;
 	

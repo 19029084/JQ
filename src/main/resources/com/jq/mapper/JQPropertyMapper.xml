@@ -17,11 +17,29 @@
 		</association>
 	</resultMap>
 
-	<select id="getProperties" resultMap="JQProperty">	
+	<select id="findAllProperties" resultMap="JQProperty">	
 		select p.id as propertyID, p.name as propertyName, t.type as propertyType t.id as propertyTypeID 
 		from Property p, PropertyType t 
 		where p.valid=1 and p.type_id = t.id
 	</select>
+	
+	<select id="findPropertyByName" resultMap="JQProperty">
+	
+		select p.id as propertyID, p.name as propertyName, t.type as propertyType, t.id as propertyTypeID 
+		from Property p, PropertyType t 
+		where Name=#{name} and p.type_id = t.id
+	
+	</select>
+	
+	<insert id = "createProperty" parameterType="com.jq.entity.JQProperty">	
+		<selectKey resultType="int" keyProperty="id" order="AFTER">
+			SELECT LAST_INSERT_ID()		
+		</selectKey>
+		insert into Property(Name,type_id,Valid) 
+		select #{name},#{propertyType.id},1 from dual 
+		where not exists ( select * from Property where Name=#{name})
+	</insert>		
+	
 	
 	
 	<!--select id="getPropertyByConfig" resultMap="JQProperty">	
@@ -31,7 +49,7 @@
 	</select-->
 	
 	<resultMap id="JQColumn" type="com.jq.entity.JQColumn">
-		
+		<id property="id" column="id"/>
 		<result property="sortKey" column="sortKey"/>
 		<association property="property" javaType="com.jq.entity.JQProperty">
 			<id property="id" column="propertyID"/>
@@ -49,18 +67,13 @@
 		where prop.valid=1 and mc.valid=1 and mc.propertyId= prop.Id and mc.configId=#{configId} and mc.moduleId=#{moduleId} and t.id = prop.type_id
 	</select-->
 
-	<select id="getColumnByConfig" resultMap="JQColumn">	
-		select cp.sortKey as sortKey, prop.id as propertyID, prop.name as propertyName, t.type as propertyType, t.id as propertyTypeID
+	<select id="findColumnByConfigID" resultMap="JQColumn">	
+		select cp.id as id, cp.sortKey as sortKey, prop.id as propertyID, prop.name as propertyName, t.type as propertyType, t.id as propertyTypeID
 		from Property prop, ConfigProperty cp, PropertyType t 
-		where prop.valid=1 and cp.valid=1 and cp.propertyId= prop.Id and cp.configId=#{id} and t.id = prop.type_id
+		where prop.valid=1 and cp.valid=1 and cp.propertyId= prop.Id and cp.configId=#{configId} and t.id = prop.type_id
 	</select>
-
 	
-	<insert id = "createProperty" keyProperty="id" useGeneratedKeys="true">
-		insert into Property(Name,type_id,Valid) 
-		select #{name},#{propertyType.id},1 from dual 
-		where not exists ( select * from Property where Name=#{name})
-	</insert>
+
 
 	<update id = "updateProperty">
 		update Property set Name=#{name}, type_id = #{propertyType.id}
@@ -72,13 +85,7 @@
 		where id=#{id}	
 	</update>
 	
-	<select id="findPropertyByName" resultMap="JQProperty">
-	
-		select p.id as propertyID, p.name as propertyName, t.type as propertyType, t.id as propertyTypeID 
-		from Property p, PropertyType t 
-		where Name=#{name} and p.type_id = t.id
-	
-	</select>
+
 
 
 
@@ -90,12 +97,12 @@
 				
 	</resultMap>
 		
-	<select id="getProperyOptions" resultMap="JQPropertyOption">	
+	<select id="findProperyOptionsById" resultMap="JQPropertyOption">	
 		select id, value,PID as propertyId from PropertyOption where PID = #{pid} and valid=1
 	</select>
 	
 	
-	<insert id="addPropertyOption">	
+	<insert id="assignPropertyOption">	
 		insert into PropertyOption(value,PID,Valid) 
 		select #{option.value},#{pid},1
 		from dual
@@ -118,13 +125,23 @@
 		<result property="id" column="id" />	
 				
 	</resultMap>
+	
+	<select id="findPropertyTypeByType" resultMap="JQPropertyType">
+	
+		select * from PropertyType 
+		where Type=#{type}
+	
+	</select>
 		
-	<select id="getProperyTypes" resultMap="JQPropertyType">	
+	<select id="findAllProperyTypes" resultMap="JQPropertyType">	
 		select id, type, description from PropertyType where valid=1
 	</select>
 	
 	
-	<insert id="createPropertyType">	
+	<insert id="createPropertyType">
+		<selectKey resultType="int" keyProperty="id" order="AFTER">
+			SELECT LAST_INSERT_ID()		
+		</selectKey>		
 		insert into PropertyType(type,description,Valid) 
 		select #{type},#{description},1
 		from dual
@@ -141,12 +158,7 @@
 		where id=#{id}	
 	</update>
 	
-	<select id="findPropertyType" resultMap="JQPropertyType">
-	
-		select * from PropertyType 
-		where Type=#{type}
-	
-	</select>
+
 
 
 

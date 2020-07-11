@@ -27,13 +27,14 @@ import java.util.List;
 @Mapper
 public interface JQConfigMapper{
 	
-	List<JQConfig> getConfigs();
+	List<JQConfig> findAllConfigs();
 	int createConfig(JQConfig config);
 	/*int updateModule(JQModule module,String pid,String urlId);
 	int deleteModule(JQModule module,String pid);*/
-	JQConfig getConfigByName(String name);
+	JQConfig findConfigByName(String name);
+	JQConfig findConfigByID(String cid);
 	
-	int addConfigProperty(String sortKey, String propertyId,String configId );
+	int assignProperty(int configId,int propertyId, String sortKey);
 	
 	/*
 	List<JQModuleConfig> getModuleConfig(String mid);

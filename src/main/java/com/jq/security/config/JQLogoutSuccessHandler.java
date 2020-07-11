@@ -23,8 +23,9 @@ public class JQLogoutSuccessHandler extends AbstractAuthenticationTargetUrlReque
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
     
-    	System.out.println("Logout......");
+    	
         String token = request.getHeader(HEADER_AUTHORIZATION);
+        System.out.println("Logout......"+token);
         if (token!=null&&token.startsWith(BEARER_AUTHENTICATION)){
             OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(token.split(" ")[0]);
             if (oAuth2AccessToken!=null){

@@ -73,6 +73,21 @@ int createConfigs(@RequestBody List<JQConfig> configs)
 {
 	return m_service.createConfigs(configs);
 }
+
+
+@GetMapping("/configs/{cid:\\d+}")
+@ApiOperation("Get one config Information")
+@ResponseBody
+public Object getConfig(@PathVariable String cid)
+{
+	
+	JQConfig config = m_service.loadConfig(cid);
+	
+	return config;
+}
+
+
+
 /*
 @PutMapping("/modules")
 @ApiOperation("Update Modules' name and path")

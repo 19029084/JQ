@@ -56,7 +56,26 @@ public class JQConfigService
 
 	public List<JQConfig> getConfigs()
 	{	
-		return jqConfigMapper.getConfigs();                
+		 List<JQConfig> configs = jqConfigMapper.findAllConfigs();
+		 
+		 for(int i=0;i<configs.size();i++)
+		 {
+		 	propertyService.loadPropertyByConfig(configs.get(i));
+		 }
+		 
+		 return configs;                
+	}
+	
+	public JQConfig loadConfig(String cid)
+	{
+		JQConfig newConfig = jqConfigMapper.findConfigByID(cid);
+		
+		if(newConfig!=null)
+		{
+			propertyService.loadPropertyByConfig(newConfig);
+		}
+		
+		return newConfig;	
 	}
 	
 	
@@ -82,11 +101,18 @@ public class JQConfigService
 	
 	public int createConfig(JQConfig config)
 	{
-		int configId = jqConfigMapper.createConfig(config);
 		
-		JQConfig newConfig = jqConfigMapper.getConfigByName(config.getName());
 		
-		config.setId(newConfig.getId());
+		JQConfig existConfig = jqConfigMapper.findConfigByName(config.getName());
+		
+		if(existConfig ==null)
+		{
+			jqConfigMapper.createConfig(config);
+		}
+		else
+		{
+			config.setId(existConfig.getId());
+		}
 		
 		List<JQColumn> columns = config.getProperties();
 			
@@ -98,13 +124,11 @@ public class JQConfigService
 				
 			propertyService.createProperty(property);
 				
-			jqConfigMapper.addConfigProperty(String.valueOf(column.getSortKey()),
-								String.valueOf(property.getId()),
-								String.valueOf(config.getId()));
+			jqConfigMapper.assignProperty(config.getId(),property.getId(),String.valueOf(column.getSortKey()));
 				
 		}
 		
-		return newConfig.getId();
+		return 0;
 		
 	}	
 

@@ -33,19 +33,73 @@
 	
 	</select>
 	
-	<resultMap id="JQRole" type="com.jq.entity.JQRole">
-		<id property="id" column="id"/>
-		<result property="name" column="name" />
-		<result property="nameCN" column="name_cn" />
-	</resultMap>
 
-	<select id="getRoles" resultMap="JQRole">	
-		select * from sys_role	
+	<select id="findUserByName" resultType="com.jq.entity.JQUser">	
+		select u.id as id, u.username as username, u.password as password
+		from sys_user u 
+		where username=#{username}				
 	</select>
 	
+	<select id="findRoleByCode" resultType="com.jq.entity.JQRole">	
+		select r.*
+		from sys_role r 
+		where code=#{code}				
+	</select>	
 
 
+	<select id="findAllRoles" resultType="com.jq.entity.JQRole">	
+		select r.*
+		from sys_role r 
+	</select>
 
+	<select id="findRolesByUserId" resultType="com.jq.entity.JQRole">	
+		select r.*
+		from sys_user u 
+		left join sys_user_role sur on u.id=sur.user_id
+		left join sys_role r on sur.role_id = r.id
+		where u.id=#{userId}
+	</select>
+
+	<select id="findAllPermissions" resultType="com.jq.entity.JQPermission">	
+		select * from sys_permission;
+	</select>
+	
+	
+
+	<select id="findPermissionsByUserId" parameterType="int" resultType="com.jq.entity.JQPermission">	
+		select p.*
+		from sys_user u 
+		left join sys_user_role sur on u.id=sur.user_id
+		left join sys_role r on sur.role_id = r.id
+		left join sys_role_permission srp on srp.role_id=r.id
+		left join sys_permission p on p.id = srp.permission_id		
+		where u.id = #{userId}				
+	</select>
+	
+	<insert id = "createUser" parameterType="com.jq.entity.JQUser">
+		<selectKey resultType="int" keyProperty="id" order="AFTER">
+			SELECT LAST_INSERT_ID()		
+		</selectKey>		
+		insert into sys_user(username,password,identity) 
+		select #{username},#{password},#{identity} from dual 
+		where not exists ( select * from sys_user where username=#{username})
+	</insert>
+	
+
+	<insert id = "createRole" parameterType="com.jq.entity.JQRole">
+		<selectKey resultType="int" keyProperty="id" order="AFTER">
+			SELECT LAST_INSERT_ID()		
+		</selectKey>		
+		insert into sys_role(code,name,url) 
+		select #{code},#{name},#{url} from dual 
+		where not exists ( select * from sys_role where code=#{code})
+	</insert>
+	
+	<insert id = "assignRole">
+		insert into sys_user_role(user_id,role_id) 
+		select #{userId},#{roleId} from dual 
+		where not exists ( select * from sys_user_role where user_id=#{userId} and role_id=#{roleId})
+	</insert>
 
 
 </mapper>	

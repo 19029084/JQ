@@ -28,6 +28,11 @@ public class JQConfig
 	{
 		this.title=title;
 	}
+	
+	public String getTitle()
+	{
+		return this.title;
+	}
 
 
 	public void setId(int id)

@@ -3,6 +3,7 @@ package com.jq.controller;
 import com.jq.entity.JQModule;
 import com.jq.entity.JQModuleConfig;
 import com.jq.entity.JQModuleData;
+import com.jq.entity.JQConfig;
 
 
 import com.jq.service.JQModuleService;
@@ -39,6 +40,8 @@ import com.github.pagehelper.PageInfo;
 import com.jq.entity.JQModuleTable;
 
 import com.jq.utils.*;
+
+import java.util.ArrayList;
 
 
 @JQBaseResponse
@@ -167,10 +170,15 @@ List<JQModuleConfig> getModuleConfig(@PathVariable String mid)
 @ApiImplicitParam(name="mid",value="Module ID",defaultValue="0",required=true)
 @ResponseBody
 int addModuleConfig(@PathVariable String mid,
-                    @RequestBody List<JQModuleConfig> configs)
+                    @RequestBody List<JQConfig> configs)
 {
+	List<JQModuleConfig> moduleConfigs = new ArrayList<JQModuleConfig>();
+	for(int i=0;i<configs.size();i++)
+	{
+		moduleConfigs.add(new JQModuleConfig(configs.get(i)));
+	}
 
- return m_service.addModuleConfig(mid,configs);
+ 	return m_service.addModuleConfig(mid,moduleConfigs);
 
 }
 

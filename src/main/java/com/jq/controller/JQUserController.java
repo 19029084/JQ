@@ -51,6 +51,10 @@ import com.jq.utils.*;
 
 import com.jq.service.*;
 
+import java.util.List;
+import com.jq.entity.JQUser;
+import com.jq.entity.JQRole;
+
 @JQBaseResponse
 @RestController
 @Api(tags = "User Management API")
@@ -84,6 +88,30 @@ public Object login(@RequestParam("username") String username,
         return token;
 }
 
+
+@PostMapping(value="/logout")
+public Object logout()
+{
+
+	//OAuth2AccessToken token = null;
+	//MultiValueMap<String,Object> paramsMap=new LinkedMultiValueMap<>();
+        //paramsMap.set("username",username);
+        //paramsMap.set("password",password);
+        //paramsMap.set("grant_type","password");
+        //RestTemplate restTemplate=new RestTemplate();
+        //restTemplate.getInterceptors().add(new BasicAuthenticationInterceptor("webapp","JQApp"));
+        //token=restTemplate.postForObject("http://localhost:"+port+"/oauth/token",paramsMap,OAuth2AccessToken.class);
+
+        return 0;
+}
+
+@PostMapping(value="/user")
+public Object createUser(@RequestBody List<JQUser> users)
+{
+	
+	return m_resourceService.createUser(users);
+}
+
 @GetMapping(value="/url")
 public Object getUrls()
 {
@@ -99,6 +127,21 @@ public Object getRoles()
 }
 
 
+@PostMapping(value="/role")
+public Object createRole(@RequestBody List<JQRole> roles)
+{
+
+	return m_resourceService.createRole(roles);
+}
+
+
+@PostMapping(value="/{uid:\\d+}/role")
+public Object createRole(@PathVariable int uid,
+		         @RequestBody List<JQRole> roles)
+{
+
+	return m_resourceService.assignRole(uid,roles);
+}
 
 
 }
