@@ -7,6 +7,60 @@
 	
 	
 	<module name="数据中心" path="/datacenter">
+		<module name ="jis">
+		<config name='         村         组每户人员基本情况'>
+		    <property name='序号' order='1' />
+		    <property name='行政村' order='2' />
+		    <property name='自然村' order='3' />
+		    <property name='组别' order='4' />
+		    <property name='姓名' order='5' />
+		    <property name='性别' order='6' />
+		    <property name='学历（注明在读情况' order='7' />
+		    <property name='与户主关系' order='8' />
+		    <property name='身份证号码' order='9' />
+		    <property name='城镇/农村户口' order='10' />
+		    <property name='就业情况' order='11' />
+		    <property name='参军情况（注明退役/现役）' order='12' />
+		    <property name='是否低保户' order='13' />
+		    <property name='是否贫困户' order='14' />
+		    <property name='是否一般户' order='15' />
+		    <property name='是否五保户' order='16' />
+		    <property name='是否分散供养户' order='17' />
+		    <property name='是否残疾人' order='18' />
+		    <property name='是否军属户' order='19' />
+		    <property name='是否烈属户' order='20' />
+		    <property name='是否公职人员' order='21' />
+		    <property name='是否参加养老保险' order='22' />
+		    <property name='是否参加医疗保险' order='23' />
+		    <property name='房屋情况（附照片）' order='24' />
+		</config>
+		<data ref='         村         组每户人员基本情况' >
+		    <property ref='序号' value= ''/>
+		    <property ref='行政村' value= '文桥乡江桥村'/>
+		    <property ref='自然村' value= '一组'/>
+		    <property ref='组别' value= '一组'/>
+		    <property ref='姓名' value= '李木贵'/>
+		    <property ref='性别' value= '男'/>
+		    <property ref='学历（注明在读情况' value= ''/>
+		    <property ref='与户主关系' value= '1户主'/>
+		    <property ref='身份证号码' value= '360429194907252316'/>
+		    <property ref='城镇/农村户口' value= '农村'/>
+		    <property ref='就业情况' value= ''/>
+		    <property ref='参军情况（注明退役/现役）' value= '否'/>
+		    <property ref='是否低保户' value= '否'/>
+		    <property ref='是否贫困户' value= '否'/>
+		    <property ref='是否一般户' value= '是'/>
+		    <property ref='是否五保户' value= '否'/>
+		    <property ref='是否分散供养户' value= ''/>
+		    <property ref='是否残疾人' value= '否'/>
+		    <property ref='是否军属户' value= '否'/>
+		    <property ref='是否烈属户' value= '否'/>
+		    <property ref='是否公职人员' value= '否'/>
+		    <property ref='是否参加养老保险' value= '否'/>
+		    <property ref='是否参加医疗保险' value= '否'/>
+		    <property ref='房屋情况（附照片）' value= ''/>
+		</data>
+		</module>
 	<module name="扶贫管理">
 		 <config>
 		 	<property name="序号" type ="inputNumber" order="1"/>
