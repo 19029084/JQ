@@ -52,9 +52,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         	
         	for(JQPermission permission: permissions)
         	{
-        		if(permission !=null && permission.getCode()!=null)
+        		if(permission !=null && permission.getName()!=null)
         		{
-        			GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(permission.getCode());
+        			GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ROLE_"+permission.getName());
         			grantedAuthorities.add(grantedAuthority);
         		}
         	}

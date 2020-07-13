@@ -25,7 +25,7 @@ public interface JQResourceMapper
 	
 	int createUser(JQUser user);
 	
-	JQRole findRoleByCode(String code);
+	JQRole findRoleByName(String name);
 	
 	List<JQRole> findAllRoles();
 	
@@ -38,6 +38,12 @@ public interface JQResourceMapper
 	List<JQPermission> findAllPermissions();
 	
 	List<JQPermission> findPermissionsByUserId(int userId);
+	
+	JQPermission findPermissionByName(String name);
+	
+	int createPermission(JQPermission permission,int parentId);
+	
+	int assignPermission(int roleId, int permissonId);
 	
 	//List<JQProperty> getProperties();
 	//int createProperty(JQProperty property);	

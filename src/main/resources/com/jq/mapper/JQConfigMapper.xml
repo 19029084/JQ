@@ -35,15 +35,31 @@
 		where not exists(select * from Config where name=#{name})
 	</insert>
 	
+	<insert id="createWidget" parameterType="com.jq.entity.JQWidget" >
+		<selectKey resultType="int" keyProperty="id" order="AFTER">
+			SELECT LAST_INSERT_ID()		
+		</selectKey>	
+		insert into Widget(Name,PropertyId,WidgetId,ConfigId,DataSource,Required,Visiable,Searchable,Shareable,valid) 
+		select #{name},#{propertyId},#{widgetId},#{configId},#{required},#{datasource},#{visiable},#{searchable},#{shareable},1
+		from dual 
+		where not exists(select * from Widget where name=#{name})
+	</insert>
+
 	
-	<insert id="assignProperty">
-		insert into ConfigProperty(PropertyId,ConfigId,SortKey,Valid) 
-		select #{propertyId},#{configId},#{sortKey},1
+	<insert id="assignWidget">
+		insert into ConfigWidget(WidgetId,ConfigId,SortKey,Valid) 
+		select #{widgetId},#{configId},#{sortKey},1
 		from dual
-		where not exists (select * from ConfigProperty 
-				   where PropertyId=#{propertyId} and ConfigId=#{configId})
+		where not exists (select * from ConfigWidget 
+				   where WidgetId=#{widgetId} and ConfigId=#{configId})
 	</insert>
 	
+
+
+
+
+
+
 	<!--update id="updateModule">
 		update Module set name=#{module.name},urlid=#{urlId} where parentid=#{pid} and id=#{module.id}
 	</update>

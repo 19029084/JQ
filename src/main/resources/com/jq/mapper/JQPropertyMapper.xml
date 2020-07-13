@@ -18,7 +18,7 @@
 	</resultMap>
 
 	<select id="findAllProperties" resultMap="JQProperty">	
-		select p.id as propertyID, p.name as propertyName, t.type as propertyType t.id as propertyTypeID 
+		select p.id as propertyID, p.name as propertyName, t.type as propertyType, t.id as propertyTypeID 
 		from Property p, PropertyType t 
 		where p.valid=1 and p.type_id = t.id
 	</select>
@@ -48,7 +48,7 @@
 		where prop.valid=1 and mc.valid=1 and mc.propertyId= prop.Id and mc.configId=#{configId} and mc.moduleId=#{moduleId} and t.id = prop.type_id
 	</select-->
 	
-	<resultMap id="JQColumn" type="com.jq.entity.JQColumn">
+	<!--resultMap id="JQColumn" type="com.jq.entity.JQColumn">
 		<id property="id" column="id"/>
 		<result property="sortKey" column="sortKey"/>
 		<association property="property" javaType="com.jq.entity.JQProperty">
@@ -59,6 +59,28 @@
 				<result property="type" column="propertyType" />
 			</association>	
 		</association>	
+	</resultMap-->	
+	
+	<resultMap id="columns" type="com.jq.entity.JQColumn">
+			<id property="id" column="id"/>
+			<result property="sortKey" column="sortKey"/>
+			<association property="property" javaType="com.jq.entity.JQWidget">
+				<id property="id" column="widgetId"/>
+				<result property="name" column="widgetName" />
+				<result property="value" column="widgetValue" />
+				<result property="propertyId" column="ProperyID" />
+				<result property="widgeId" column="refWidgetId" />
+
+				<result property="configId" column="refConfigId" />
+				<result property="dataSource" column="dataSource" />
+
+				<result property="visible" column="visible" />
+				<result property="searchable" column="searchable" />
+				<result property="shareable" column="shareable" />
+				<result property="required" column="required" />
+
+
+			</association>
 	</resultMap>	
 	
 	<!--select id="getColumnByConfig" resultMap="JQColumn">	
@@ -67,11 +89,11 @@
 		where prop.valid=1 and mc.valid=1 and mc.propertyId= prop.Id and mc.configId=#{configId} and mc.moduleId=#{moduleId} and t.id = prop.type_id
 	</select-->
 
-	<select id="findColumnByConfigID" resultMap="JQColumn">	
+	<!--select id="findColumnByConfigId" resultMap="JQColumn">	
 		select cp.id as id, cp.sortKey as sortKey, prop.id as propertyID, prop.name as propertyName, t.type as propertyType, t.id as propertyTypeID
 		from Property prop, ConfigProperty cp, PropertyType t 
 		where prop.valid=1 and cp.valid=1 and cp.propertyId= prop.Id and cp.configId=#{configId} and t.id = prop.type_id
-	</select>
+	</select-->
 	
 
 

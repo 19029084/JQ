@@ -16,6 +16,7 @@ import com.jq.mapper.JQConfigMapper;
 import com.jq.entity.JQColumn;
 import com.jq.entity.JQRow;
 import com.jq.entity.JQModuleTable;
+import com.jq.entity.JQWidget;
 
 
 
@@ -79,13 +80,13 @@ public class JQConfigService
 	}
 	
 	
-/*	
-	public JQModule getModuleByName(String name,String pid)
+	
+	public JQConfig findConfigByName(String name)
 	{
-		return jqModuleMapper.getModuleByName(name,pid);
+		return jqConfigMapper.findConfigByName(name);
 	}
 	
-*/	
+	
 	public int createConfigs(List<JQConfig> configs)
 	{
 		for(int i=0;i<configs.size();i++)
@@ -120,16 +121,25 @@ public class JQConfigService
 		{
 			JQColumn column = columns.get(j);
 				
-			JQProperty property = column.getProperty();
+			//JQProperty property = column.getProperty();
 				
-			propertyService.createProperty(property);
+			//propertyService.createProperty(property);
 				
-			jqConfigMapper.assignProperty(config.getId(),property.getId(),String.valueOf(column.getSortKey()));
+			//jqConfigMapper.assignProperty(config.getId(),property.getId(),String.valueOf(column.getSortKey()));
+			
+			JQWidget widget = column.getWidget();
+			
+			createWidget(widget);
 				
 		}
 		
 		return 0;
 		
+	}
+	
+	public int createWidget(JQWidget widget)
+	{
+		return jqConfigMapper.createWidget(widget);
 	}	
 
 /*

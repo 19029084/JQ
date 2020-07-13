@@ -41,7 +41,9 @@ public interface JQModuleMapper{
 	int deleteModuleConfig(String mid,JQModuleConfig config);
 	
 	List<JQModuleData> getModuleData(String mid,String configId);
-	int addModuleData(String mid, String configId, int parentId,JQProperty property);
+	
+	int addModuleData(int fieldId, int parentId,String value);
+	
 	int updateModuleData(String mid, int rowId,JQProperty property);
 	int deleteModuleData(String mid, int rowId, JQProperty property);
 	

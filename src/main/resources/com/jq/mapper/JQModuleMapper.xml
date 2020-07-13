@@ -90,32 +90,37 @@
 	<resultMap id="JQModuleData" type="com.jq.entity.JQModuleData">		
 		<result property="parentId" column="parentId" />
 		<collection property="columns" javaType="java.util.ArrayList" ofType="com.jq.entity.JQColumn">
-			<id property="sortKey" column="sortKey"/>
-			<association property="property" javaType="com.jq.entity.JQProperty">
-				<id property="id" column="propertyID"/>
-				<result property="name" column="propertyName" />
-				<result property="value" column="propertyValue" />
-				<association property="type" javaType="com.jq.entity.JQPropertyType">			
-					<id property="id" column="propertyTypeID" />		
-					<result property="type" column="propertyType" />
-				</association>
+			<id property="id" column="configWidgetId"/>
+			<result property="sortKey" column="sortKey"/>
+			<association property="property" javaType="com.jq.entity.JQWidget">
+				<id property="id" column="widgetId"/>
+				<result property="name" column="widgetName" />
+				<result property="value" column="widgetValue" />
+				<result property="propertyId" column="ProperyID" />
+				<result property="widgeId" column="refWidgetId" />
+
+				<result property="configId" column="refConfigId" />
+				<result property="dataSource" column="dataSource" />
+
+				<result property="visible" column="visible" />
+				<result property="searchable" column="searchable" />
+				<result property="shareable" column="shareable" />
+				<result property="required" column="required" />
+
+
 			</association>
 	        </collection>	
 	</resultMap>
 	
 	<select id="getModuleData" resultMap="JQModuleData">
-		select md.parentId as parentId, mc.sortKey as sortKey, mc.propertyid as propertyID, prop.name as propertyName, md.data as propertyValue, pt.type as propertyType, pt.id as propertyTypeID
-		from ModuleData md,ModuleConfig mc,Property prop, PropertyType pt
-		where mc.moduleid = #{mid} and mc.id = md.fieldId and mc.configId=#{configId} and prop.id=mc.propertyid and pt.id = prop.type_id
-		order by md.parentId, mc.sortKey
+		select md.parentId as parentId, cw.sortKey as sortKey, cw.id as configWidgetId , w.id as widgetId, w.name as widgetName,w.value as widgetValue, w.propertyId as ProperyID, w.widgetId as refWidgetId, w.configId as refConfigId,w.dataSource as dataSource, w.visible as visible, w.searchable as searchable, w.required as required, w.shareable as shareable
+		from ModuleData md,ModuleConfig mc, ConfigWidget cw, Widget w
+		where mc.moduleid = #{mid} and mc.id = md.fieldId and mc.configId=#{configId} and cw.configId=mc.configId and cw.widgetId = w.id
+		order by md.parentId, cw.sortKey
 	</select>
 	
 	<insert id="addModuleData">
-		Insert into ModuleData(FieldID,ParentID,Data) 
-		select mc.ID as fieldID,#{parentId},#{property.value}
-		from ModuleConfig mc,Property prop
-		where configID=#{configId} and moduleID=#{mid} and PropertyID=prop.id and prop.name=#{property.name}
-		
+		Insert into ModuleData(FieldID,ParentID,Data) Values (#{fieldId},#{parentId},#{value})
 	</insert>
 	
 	
@@ -135,8 +140,8 @@
 	
 	<select id="getTotalQuantity" resultType="int">
 		select count(distinct md.parentId)
-		from ModuleConfig mc, ModuleData md
-		where mc.id=md.fieldid and mc.moduleId=#{mid} and mc.configId=#{configId} 
+		from ModuleConfig mc,ConfigProperty cp, ModuleData md
+		where mc.moduleId=#{mid} and mc.configId=#{configId} and mc.configId=cp.configId and cp.id=md.fieldId
 	
 	</select>
 	

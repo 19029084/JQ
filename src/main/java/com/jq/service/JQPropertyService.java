@@ -47,11 +47,12 @@ public class JQPropertyService
 		
 		//loadPropertyOptions(properties);
 		
-		List<JQColumn> columns = jqPropertyMapper.findColumnByConfigId(config.getId());
+		//@TODO
+		//List<JQColumn> columns = jqPropertyMapper.findColumnByConfigId(config.getId());
 		
-		config.setProperties(columns);
+		//config.setProperties(columns);
 		
-		loadPropertyOptions(columns);
+		//loadPropertyOptions(columns);
 	
 	}	
 
@@ -163,12 +164,12 @@ public class JQPropertyService
 		for(int i=0;i<columns.size();i++)
 		{
 			JQColumn column = columns.get(i);
+			//@TODO
+			//JQProperty property = column.getProperty();
 			
-			JQProperty property = column.getProperty();
+			//List<JQPropertyOption> options = getPropertyOptions(property.getId());
 			
-			List<JQPropertyOption> options = getPropertyOptions(property.getId());
-			
-			property.setOptions(options);		
+			//property.setOptions(options);		
 		}
 	
 	}

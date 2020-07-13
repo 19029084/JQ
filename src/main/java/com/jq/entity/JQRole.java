@@ -13,8 +13,8 @@ import lombok.Data;
 public class JQRole
 {
 	private int id;
-	private String code;
-	private String url;	
+	//private String code;
+	//private String url;	
 	private String name;
 	//private String nameCN;
 		
@@ -46,6 +46,6 @@ public class JQRole
 	//	joinColumns=@JoinColumn(name="permission_id"),
 	//	inverseJoinColumns=@JoinColumn(name="role_id")
 	//	)
-	//private List<JQPermission> permissions;
+	private List<JQPermission> permissions;
 
 }

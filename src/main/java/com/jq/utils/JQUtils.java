@@ -170,9 +170,12 @@ public class JQUtils
 			}
 			else if (DATA.equalsIgnoreCase(rootElement.getName()))
 			{
-				/*JQModuleData data = new JQModuleData();
 				
-				configStack.push(data);
+				JQConfig config = new JQConfig();
+				
+				/*JQModuleData data = new JQModuleData();*/
+				
+				configStack.push(config);
 				
 				List<Attribute> attributes = rootElement.attributes();
 				
@@ -181,14 +184,15 @@ public class JQUtils
 					switch(attribute.getName())
 					{
 						case "ref":
-							int configId=Integer.parseInt(attribute.getText());
-							data.setConfigId(configId);					
+							//int configId=Integer.parseInt(attribute.getText());
+							//data.setConfigId(configId);
+							config.setName(attribute.getText());					
 							break;				
 						default:
 					
 							System.out.println("UNKNOW ATTRIBUTE:"+attribute.getName());
 					}
-				}*/				
+				}				
 				
 				
 			}
@@ -197,8 +201,8 @@ public class JQUtils
 				JQColumn column = new JQColumn();
 				
 				JQProperty property = new JQProperty();
-				
-				column.setProperty(property);
+				//@TODO
+				//column.setProperty(property);
 			
 				JQConfig config = configStack.peek();
 				
@@ -213,6 +217,7 @@ public class JQUtils
 					switch(attribute.getName())
 					{
 						case "name":
+						case "ref":
 							property.setName(attribute.getText());					
 							break;
 							
@@ -220,9 +225,9 @@ public class JQUtils
 							property.setValue(attribute.getText());
 							break;
 							
-						case "ref":
-							property.setReference(attribute.getText());
-							break;
+						//case "ref":
+						//	property.setReference(attribute.getText());
+						//	break;
 							
 						case "type":
 							property.getPropertyType().setType(attribute.getText());						
@@ -244,8 +249,8 @@ public class JQUtils
 				JQPropertyOption option = new JQPropertyOption();
 				
 				JQConfig config = configStack.peek();
-				
-				config.peek().getProperty().addOption(option);
+				//@TODO
+				//config.peek().getProperty().addOption(option);
 			
 				List<Attribute> attributes = rootElement.attributes();
 				for(Attribute attribute: attributes)
@@ -297,7 +302,13 @@ public class JQUtils
 			{
 				JQModule module= moduleStack.peek();
 				
-				//module.addData((JQModuleData)configStack.pop());
+				JQConfig config = configStack.pop();
+				
+				JQModuleData moduleData = new JQModuleData();
+				
+				moduleData.setJQConfig(config);
+				
+				module.addData(moduleData);
 				
 			}
 		

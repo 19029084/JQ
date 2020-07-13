@@ -40,17 +40,7 @@
 		where username=#{username}				
 	</select>
 	
-	<select id="findRoleByCode" resultType="com.jq.entity.JQRole">	
-		select r.*
-		from sys_role r 
-		where code=#{code}				
-	</select>	
 
-
-	<select id="findAllRoles" resultType="com.jq.entity.JQRole">	
-		select r.*
-		from sys_role r 
-	</select>
 
 	<select id="findRolesByUserId" resultType="com.jq.entity.JQRole">	
 		select r.*
@@ -60,21 +50,7 @@
 		where u.id=#{userId}
 	</select>
 
-	<select id="findAllPermissions" resultType="com.jq.entity.JQPermission">	
-		select * from sys_permission;
-	</select>
-	
-	
 
-	<select id="findPermissionsByUserId" parameterType="int" resultType="com.jq.entity.JQPermission">	
-		select p.*
-		from sys_user u 
-		left join sys_user_role sur on u.id=sur.user_id
-		left join sys_role r on sur.role_id = r.id
-		left join sys_role_permission srp on srp.role_id=r.id
-		left join sys_permission p on p.id = srp.permission_id		
-		where u.id = #{userId}				
-	</select>
 	
 	<insert id = "createUser" parameterType="com.jq.entity.JQUser">
 		<selectKey resultType="int" keyProperty="id" order="AFTER">
@@ -85,14 +61,27 @@
 		where not exists ( select * from sys_user where username=#{username})
 	</insert>
 	
+	<select id="findAllRoles" resultType="com.jq.entity.JQRole">	
+		select r.*
+		from sys_role r 
+	</select>	
+	
+	<select id="findRoleByName" resultType="com.jq.entity.JQRole">	
+		select r.*
+		from sys_role r 
+		where name=#{name}				
+	</select>	
+
+
+	
 
 	<insert id = "createRole" parameterType="com.jq.entity.JQRole">
 		<selectKey resultType="int" keyProperty="id" order="AFTER">
 			SELECT LAST_INSERT_ID()		
 		</selectKey>		
-		insert into sys_role(code,name,url) 
-		select #{code},#{name},#{url} from dual 
-		where not exists ( select * from sys_role where code=#{code})
+		insert into sys_role(name) 
+		select #{name} from dual 
+		where not exists ( select * from sys_role where name=#{name})
 	</insert>
 	
 	<insert id = "assignRole">
@@ -100,6 +89,42 @@
 		select #{userId},#{roleId} from dual 
 		where not exists ( select * from sys_user_role where user_id=#{userId} and role_id=#{roleId})
 	</insert>
+	
+	<select id="findAllPermissions" resultType="com.jq.entity.JQPermission">	
+		select * from sys_permission;
+	</select>
+
+	<select id="findPermissionsByUserId" parameterType="int" resultType="com.jq.entity.JQPermission">	
+		select p.*
+		from sys_user u 
+		left join sys_user_role sur on u.id=sur.user_id
+		left join sys_role r on sur.role_id = r.id
+		left join sys_role_permission srp on srp.role_id=r.id
+		left join sys_permission p on p.id = srp.permission_id		
+		where u.id = #{userId}				
+	</select>	
+	
+	<select id="findPermissionByName" resultType="com.jq.entity.JQPermission">	
+		select * 
+		from sys_permission
+		where name=#{name}
+	</select>
+	
+	<insert id = "createPermission" parameterType="com.jq.entity.JQPermission">
+		<selectKey resultType="int" keyProperty="id" order="AFTER">
+			SELECT LAST_INSERT_ID()		
+		</selectKey>		
+		insert into sys_permission(name,url,parentid) 
+		select #{name},#{url},#{parentId} from dual 
+		where not exists ( select * from sys_permission where name=#{name})
+	</insert>
+			
+	<insert id = "assignPermission">
+		insert into sys_role_permission(role_id,permission_id) 
+		select #{roleId},#{permissionId} from dual 
+		where not exists ( select * from sys_role_permission where role_id=#{roleId} and permission_id=#{permissionId})
+	</insert>
+	
 
 
 </mapper>	

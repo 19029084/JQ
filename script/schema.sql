@@ -31,12 +31,12 @@ create table oauth_refresh_token (
     (
       #id char(32) not null,
       id int not null auto_increment, 
-      code varchar(50) not null,
+      #code varchar(50) not null,
       name varchar(50) null,
       #name_cn varchar(255) null,      
       #constraint sys_role_id_uindex
       #  unique (id)
-      url varchar(50) not null,
+      #url varchar(50) not null,
       primary key (id)
       
     );
@@ -79,9 +79,10 @@ create table oauth_refresh_token (
 CREATE TABLE if not exists sys_permission
 (
 	id int auto_increment primary key,
-	code varchar(255) not null,
+	#code varchar(255) not null,
 	name varchar(255) not null,
-	url varchar(200) not null
+	url varchar(200) not null,
+	parentid int not null
 );
 
 
@@ -141,16 +142,37 @@ CREATE TABLE Config
 )AUTO_INCREMENT=1;
 
 
-CREATE TABLE ConfigProperty
+CREATE TABLE ConfigWidget
 (
 	ID INT(11) NOT NULL AUTO_INCREMENT,
 	ConfigID INT(11) NOT NULL,
-	PropertyID INT(11) NOT NULL,
-	SortKey int(11) NOT NULL,
+	
+	WidgetID INT(11) NOT NULL,	
+		
+	SortKey int(11) NOT NULL,	
 	VALID BOOLEAN NOT NULL,
 	PRIMARY KEY(ID)
 
 )AUTO_INCREMENT=1;
+
+
+CREATE TABLE Widget
+(
+	ID INT(11) NOT NULL AUTO_INCREMENT,
+	Name VARCHAR(255) NOT NULL,
+	PropertyID INT(11) NULL,
+	WidgetID INT(11) NULL,
+	ConfigID INT(11) NULL,
+	Required BOOLEAN NOT NULL,
+	Visiable BOOLEAN NOT NULL,
+	Searchable BOOLEAN NOT NULL,
+	Shareable BOOLEAN NOT NULL,	
+	DataSource INT(11) NOT NULL,
+	Value VARCHAR(255) NULL, 
+	VALID BOOLEAN NOT NULL,
+	PRIMARY KEY(ID)
+)AUTO_INCREMENT=1;
+
 
 CREATE TABLE Property
 (

@@ -13,6 +13,8 @@ import javax.annotation.Resource;
 import com.jq.entity.JQUrl;
 import com.jq.entity.JQRole;
 
+import com.jq.entity.JQPermission;
+
 import com.jq.entity.JQUser;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -104,7 +106,7 @@ public class JQResourceService{
     	{
     		JQRole role  = roles.get(i);
     		
-    		JQRole existRole = jqResourceMapper.findRoleByCode(role.getCode());
+    		JQRole existRole = jqResourceMapper.findRoleByName(role.getName());
     		
     		if(existRole == null)
     		{
@@ -116,6 +118,16 @@ public class JQResourceService{
     		}
     		
     		System.out.println("role---: "+role.getId());
+    		
+    		List<JQPermission> permissions = role.getPermissions();
+    		
+    		
+    		if(permissions != null)
+    		{
+    		
+    			createPermission(permissions,0);
+    		
+    		}
     		
     	}
     	
@@ -131,6 +143,48 @@ public class JQResourceService{
     	for(int i=0;i<roles.size();i++)
     	{
     		jqResourceMapper.assignRole(userId,roles.get(i).getId());
+    	}
+    	return 0;
+    
+    }
+    
+     public List<JQPermission> getPermissions()
+    {
+	return jqResourceMapper.findAllPermissions();
+    
+    }   
+    
+    public int createPermission(List<JQPermission> permissions, int parentId)
+    {
+    	for(int i=0;i<permissions.size();i++)
+    	{
+    		JQPermission permission = permissions.get(i);
+    		
+    		JQPermission existPermission = jqResourceMapper.findPermissionByName(permission.getName());
+    		
+    		if(existPermission == null)
+    		{
+    			jqResourceMapper.createPermission(permission,parentId);
+    		}
+    		else
+    		{
+    			permission.setId(existPermission.getId());
+    		}
+    		
+    	
+    	}
+    	
+    	return 0;
+    
+    }
+    
+    
+    public int assignPermission(int roleId, List<JQPermission> permissions)
+    {
+
+    	for(int i=0;i<permissions.size();i++)
+    	{
+    		jqResourceMapper.assignPermission(roleId,permissions.get(i).getId());
     	}
     	return 0;
     

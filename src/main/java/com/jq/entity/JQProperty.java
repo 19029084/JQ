@@ -35,13 +35,12 @@ public class JQProperty
 
 	public String getName()
 	{
-		System.out.println(name+":"+reference);
 		return name==null?reference:name;
 	}
 	
 	public String getValue()
 	{
-		return this.value;		
+		return this.value==null?"":value;		
 	}
 	
 	public void setValue(String value)

@@ -8,6 +8,7 @@ import com.jq.entity.JQConfig;
 
 
 import com.jq.entity.JQProperty;
+import com.jq.entity.JQWidget;
 
 import com.jq.entity.JQRow;
 
@@ -34,7 +35,9 @@ public interface JQConfigMapper{
 	JQConfig findConfigByName(String name);
 	JQConfig findConfigByID(String cid);
 	
-	int assignProperty(int configId,int propertyId, String sortKey);
+	int createWidget(JQWidget widget);
+	
+	int assignWidget(int configId,int widgetId, String sortKey);
 	
 	/*
 	List<JQModuleConfig> getModuleConfig(String mid);

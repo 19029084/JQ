@@ -2,6 +2,7 @@ package com.jq.entity;
 
 import com.jq.entity.JQProperty;
 import com.jq.entity.JQPropertyOption;
+import com.jq.entity.JQWidget;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class JQColumn ///extends JQProperty
 
 	public JQColumn()
 	{
-		property = new JQProperty();
+		widget = new JQWidget();
 		sortKey = -1;	
 	}
 
@@ -35,11 +36,11 @@ public class JQColumn ///extends JQProperty
 		return sortKey;
 	}
 	
-	public void setProperty(JQProperty property)
-	{
-		this.property = property;
+	//public void setProperty(JQProperty property)
+	//{
+	//	this.property = property;
 	
-	}
+	//}
 	
 //	public void addOption(JQPropertyOption option)
 //	{
@@ -51,16 +52,28 @@ public class JQColumn ///extends JQProperty
 //		property.setOptions(options);
 //	}
 	
-	public JQProperty getProperty()
+	//public JQProperty getProperty()
+	//{
+	//	return this.property;	
+	//}
+	
+	public JQWidget getWidget()
 	{
-		return this.property;	
+		return widget;
+	}
+	
+	public void setWidget(JQWidget widget)
+	{
+		this.widget=widget;
 	}
 	
 	private int id;
 	
 	private int sortKey;
 	
-	private JQProperty property;
+	private JQWidget widget;
+	
+	//private JQProperty property;
 
 
 }

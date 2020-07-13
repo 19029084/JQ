@@ -31,7 +31,7 @@ public class JQInvocationSecurityMetadataSourceService  implements
         List<JQPermission> permissions = jqResourceMapper.findAllPermissions();
         for(JQPermission permission : permissions) {
             array = new ArrayList<>();
-            cfg = new SecurityConfig(permission.getCode());
+            cfg = new SecurityConfig("ROLE_"+permission.getName());
             array.add(cfg);
             map.put(permission.getUrl(), array);
         }

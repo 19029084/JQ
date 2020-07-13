@@ -31,7 +31,7 @@ public interface JQPropertyMapper
 
 	
 	//List<JQProperty> getPropertyByConfig(JQModuleConfig config);
-	List<JQColumn> findColumnByConfigId(int configId);
+	//List<JQColumn> findColumnByConfigId(int configId);
 
 	
 		

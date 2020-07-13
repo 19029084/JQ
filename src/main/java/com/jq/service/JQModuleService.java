@@ -263,19 +263,40 @@ public class JQModuleService
 	
 	public int addModuleData(String mid, List<JQModuleData> moduleData)
 	{
+		System.out.println("**************************addModuleData************************");
+		
 		for(int i=0;i<moduleData.size();i++)
 		{
 		
-			int configId = moduleData.get(i).getConfigId();
+			JQConfig config = moduleData.get(i).getJQConfig();
 			
-			int total = jqModuleMapper.getTotalQuantity(String.valueOf(mid),String.valueOf(configId));
+			JQConfig existConfig = configService.findConfigByName(config.getName());
 			
-			//List<JQProperty> data = moduleData.get(i).getProperties();
-			
-			//for(int j=0;j<data.size();j++)
+			if(existConfig != null)
 			{
-			//jqModuleMapper.addModuleData(String.valueOf(mid),String.valueOf(configId),total+1,data.get(j));			
-			}	
+		
+				int configId = existConfig.getId();
+				
+				System.out.println(mid+"**************************addModuleData************************"+configId);
+				
+				int total = jqModuleMapper.getTotalQuantity(String.valueOf(mid),String.valueOf(configId));
+				
+				List<JQColumn> data = config.getProperties();
+				
+				for(int j=0;j<data.size();j++)
+				{	
+					//@TODO
+					//JQProperty property = data.get(j).getProperty();
+					
+					//System.out.println("**************************addModuleData************************"+property.getName()+":"+property.getValue());
+					
+					//jqModuleMapper.addModuleData(String.valueOf(mid),String.valueOf(configId),total+j+1,property);			
+				}	
+			}
+			else
+			{
+				System.out.println("DataSet is NOT correct and NO config could be found!!!");
+			}
 		}
 		
 		return 0;

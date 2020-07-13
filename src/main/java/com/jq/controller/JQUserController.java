@@ -55,6 +55,8 @@ import java.util.List;
 import com.jq.entity.JQUser;
 import com.jq.entity.JQRole;
 
+import com.jq.entity.JQPermission;
+
 @JQBaseResponse
 @RestController
 @Api(tags = "User Management API")
@@ -136,11 +138,43 @@ public Object createRole(@RequestBody List<JQRole> roles)
 
 
 @PostMapping(value="/{uid:\\d+}/role")
-public Object createRole(@PathVariable int uid,
+public Object assignRole(@PathVariable int uid,
 		         @RequestBody List<JQRole> roles)
 {
 
 	return m_resourceService.assignRole(uid,roles);
+}
+
+
+@GetMapping(value="/permission")
+public Object getPermissions()
+{
+	return m_resourceService.getPermissions();
+}
+
+
+@PostMapping(value="/permission")
+public Object createPermission(@RequestBody List<JQPermission> permissions)
+{
+
+	return m_resourceService.createPermission(permissions,0);
+}
+
+
+@PostMapping(value="/permission/{parentId:\\d+}")
+public Object createPermission(@RequestBody List<JQPermission> permissions,
+				@PathVariable int parentId)
+{
+
+	return m_resourceService.createPermission(permissions,parentId);
+}
+
+@PostMapping(value="/role/{roleId:\\d+}/permission")
+public Object assignPermission(@PathVariable int roleId,
+		         @RequestBody List<JQPermission> permissions)
+{
+
+	return m_resourceService.assignPermission(roleId,permissions);
 }
 
 

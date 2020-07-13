@@ -16,7 +16,7 @@ public class JQPermission
 	//@Column(name="id")
 	private int id;
 	//@Column(name="code")
-	private String code;
+	//private String code;
 	//@Column(name="name")
 	private String name;
 	//@Column(name="url")
@@ -33,15 +33,15 @@ public class JQPermission
 	}
 	
 	
-	public String getCode()
-	{
-		return code;
-	}
+	//public String getCode()
+	//{
+	//	return code;
+	//}
 
-	public void setCode(String code)
-	{
-		this.code = code;	
-	}
+	//public void setCode(String code)
+	//{
+	//	this.code = code;	
+	//}
 	
 	
 	public String getName()
