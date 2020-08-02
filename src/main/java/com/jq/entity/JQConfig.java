@@ -5,22 +5,44 @@ import java.util.ArrayList;
 
 import java.util.UUID;
 
-public class JQConfig
+import com.jq.api.JQConfigBase;
+
+public class JQConfig extends JQObject
 {
 	public JQConfig()
 	{
-		name = UUID.randomUUID().toString();
 		columns = new ArrayList<JQColumn>();
+		
+		base = new JQConfigBase();
+		
+		base.setName(UUID.randomUUID().toString());
+		
+		children = new ArrayList<JQConfig>();
+		
+		parentId =0;
+		
 	}
 	
+	
+	public JQConfig(JQConfigBase base)
+	{
+		columns = new ArrayList<JQColumn>();
+		
+		this.base=base;
+		
+		children = new ArrayList<JQConfig>();
+		
+		parentId=0;
+	
+	}	
 	public void setName(String name)
 	{
-		this.name=name;
+		this.base.setName(name);
 	}
 	
 	public String getName()
 	{
-		return this.name;
+		return this.base.getName();
 	}
 
 
@@ -108,11 +130,53 @@ public class JQConfig
 	
 	
 	}
-	private String name;
+	
+	public String getRef()
+	{
+		return ref;
+	}
+	
+	public void setRef(String ref)
+	{
+		this.ref=ref;
+	}
+	
+	public void addChildren(JQConfig config)
+	{
+		children.add(config);
+	}
+	
+	public List<JQConfig> getChildren()
+	{
+		return children;
+	}
+	
+	public void setChildren(List<JQConfig> children)
+	{
+		this.children = children;
+	}
+	
+	public int getParentId()
+	{
+		return parentId;
+	}
+	
+	public void setParentId(int parentId)
+	{
+		this.parentId = parentId;
+	}
+	
+	private JQConfigBase base;
 	private String title;	
 	private int id;
 	private boolean valid;
 	
+	private String ref;
+	
+	private int parentId;
+	
 	private List<JQColumn> columns;
+	
+	private List<JQConfig> children;
 	
 }

@@ -12,7 +12,8 @@ def main(argv):
 			dirs = os.listdir(path)
 			first=1
 			print('<modules>')
-			print('    <module >')
+			print('    <module name=\'原始数据\'>')
+			print('    	<module name=\'人员基本信息\'>')
 			for file in dirs:
 				#print(os.path.join(path,file))
 				workbook = xlrd.open_workbook(os.path.join(path,file))
@@ -25,26 +26,27 @@ def main(argv):
 					
 					name = worksheet.cell(0,0).value
 					if first:
-						print('        <config name=\''+name+'\'>')
+						print('        	<config name=\''+name+'\'>')
 					
 						properties = worksheet.row_values(3)
 					
 						for j in range(ncols):
-							print('            <property name=\''+properties[j]+'\' order=\''+str(j+1)+'\' />')
+							print('            	<widget name=\''+properties[j]+'\' order=\''+str(j+1)+'\' />')
 						
-						print('        </config>')
+						print('        	</config>')
 						
 						first = 0
 					
 					for i in range(4,nrows):
-						print('        <data ref=\''+name+'\' >')
+						print('        	<data ref=\''+name+'\' >')
 						for j in range(ncols):
-							print('            <property ref=\''+ properties[j]+'\' value= \''+ worksheet.row_values(i)[j]+'\'/>')
+							print('            	<widget ref=\''+ properties[j]+'\' value= \''+ worksheet.row_values(i)[j]+'\' order=\''+str(j+1)+'\' />')
 					
-						print('        </data>')
+						print('        	</data>')
 			
 		
 		
+			print('    	</module>')
 			print('    </module>')
 			print('</modules>')
 	

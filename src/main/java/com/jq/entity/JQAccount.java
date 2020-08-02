@@ -22,7 +22,7 @@ public class JQAccount extends JQUser implements UserDetails {
 
     private boolean expire;
 
-    //private List<JQRole> roles;
+    private List<JQRole> roles;
 
     public JQAccount(JQUser user){
         username=user.getUsername();

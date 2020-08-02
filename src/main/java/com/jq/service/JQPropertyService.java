@@ -5,6 +5,8 @@ import com.jq.entity.JQPropertyOption;
 import com.jq.entity.JQModuleConfig;
 import com.jq.entity.JQPropertyType;
 
+import com.jq.entity.JQWidget;
+
 import com.jq.entity.JQColumn;
 import com.jq.entity.JQConfig;
 
@@ -16,9 +18,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.Resource;
 
+import java.util.HashMap;
+
+import java.util.ArrayList;
+
 @Service
 public class JQPropertyService
 {
+	
+	
+	
 	@Autowired 
 	JQPropertyMapper jqPropertyMapper;
 	
@@ -53,6 +62,32 @@ public class JQPropertyService
 		//config.setProperties(columns);
 		
 		//loadPropertyOptions(columns);
+		
+		List<JQColumn> columns = config.getProperties();
+		
+		for(int i=0;i<columns.size();i++)
+		{
+			JQColumn column = columns.get(i);
+			
+			List<JQWidget> widgets = column.getWidget();
+			
+			for(int j=0;j<widgets.size();j++)
+			{
+				
+				//@todo
+				/*
+				List<JQProperty> properties = widgets.get(j).getProperties();
+				
+				for(int k=0;k<properties.size();k++)
+				{
+					JQProperty property = properties.get(k);
+					
+					loadPropertyOptions(property);
+					
+				}*/
+			}
+		
+		}
 	
 	}	
 
@@ -145,7 +180,7 @@ public class JQPropertyService
 	}
 	
 	
-	public int deleteProperties(List<JQProperty> properties)
+	/*public int deleteProperties(List<JQProperty> properties)
 	{
 	
 		for(int i=0;i<properties.size();i++)
@@ -157,45 +192,131 @@ public class JQPropertyService
 		return 0;
 	
 	
-	}
+	}*/
 	
-	public void loadPropertyOptions(List<JQColumn> columns)
+	public void deleteProperty(int id)
 	{
-		for(int i=0;i<columns.size();i++)
-		{
-			JQColumn column = columns.get(i);
-			//@TODO
-			//JQProperty property = column.getProperty();
-			
-			//List<JQPropertyOption> options = getPropertyOptions(property.getId());
-			
-			//property.setOptions(options);		
-		}
-	
+		jqPropertyMapper.deleteProperty(id);
 	}
+	
+	
 
+	public void loadPropertyOptions(JQProperty property)
+	{
+		int propertyId = property.getId();
+		List<JQPropertyOption> options = getPropertyOptions(propertyId);
+		if(options !=null)
+		{
+			property.setOptions(options);
+		}
+	}
+	
+	
 	public List<JQPropertyOption> getPropertyOptions(int propertyId)
 	{
+		
+		
 		List<JQPropertyOption> propertyOptions = jqPropertyMapper.findProperyOptionsById(propertyId);
 		
+		HashMap<Integer, List<JQPropertyOption> > cache = new HashMap<Integer,List<JQPropertyOption> >();
 		
-		return propertyOptions;
+		for(int i=0;i<propertyOptions.size();i++)
+		{
+			JQPropertyOption option = propertyOptions.get(i);
+			
+			List<JQPropertyOption> children = cache.get(option.getParentId());
+			
+			if(children == null)
+			{
+				children = new ArrayList<JQPropertyOption>();
+				
+				cache.put(option.getParentId(), children);
+			}
+			
+			children.add(option);
+		}
 		
+		List<JQPropertyOption> children = cache.get(0);
+		
+		if(children != null)
+		{
+			
+			for(int i=0;i<children.size();i++)
+			{
+				JQPropertyOption option = children.get(i);
+				
+				List<JQPropertyOption> c = cache.get(option.getId());
+				
+				if(c!=null)
+				{
+					option.setChildren(c);
+				}
+			
+			}
+			
+					
+		}
+		
+		return children;
 	}
+	
+	
+	
 	
 	
 	public int assignPropertyOptions(int propertyId,List<JQPropertyOption> propertyOptions)
 	{
 		for(int i=0;i<propertyOptions.size();i++)
 		{
-			jqPropertyMapper.assignPropertyOption(propertyId,propertyOptions.get(i));
+			JQPropertyOption option = propertyOptions.get(i);
+			
+			createPropertyOption(propertyId,0,option);			
+			
+			
+			
+			List<JQPropertyOption> children = option.getChildren();
+			
+			if(children != null)
+			{
+				for(int j=0;j<children.size();j++)
+				{
+				
+					
+					JQPropertyOption child = children.get(j);
+					
+					createPropertyOption(propertyId,option.getId(),child);
+					
+				}
+			}
+			
+			
+			
+			
 		}
 		
 		return 0;
 	}
 	
 	
-	public int updatePropertyOptions(String propertyId,List<JQPropertyOption> propertyOptions)
+	public void createPropertyOption(int propertyId, int parentId, JQPropertyOption option)
+	{
+		JQPropertyOption existOption = jqPropertyMapper.findPropertyOptionByValue(propertyId,parentId,option.getValue());
+		
+		if(existOption ==null)
+		{
+			jqPropertyMapper.assignPropertyOption(propertyId,parentId, option);
+			System.out.println("option: "+option.getId());
+		}
+		else
+		{
+			option.setId(existOption.getId());
+		}
+			
+	
+	}
+	
+	
+	public int updatePropertyOptions(int propertyId,List<JQPropertyOption> propertyOptions)
 	{
 		for(int i=0;i<propertyOptions.size();i++)
 		{
@@ -206,7 +327,7 @@ public class JQPropertyService
 	}
 	
 	
-	public int deletePropertyOptions(String propertyId,List<JQPropertyOption> propertyOptions)
+	/*public int deletePropertyOptions(String propertyId,List<JQPropertyOption> propertyOptions)
 	{
 		for(int i=0;i<propertyOptions.size();i++)
 		{
@@ -214,6 +335,15 @@ public class JQPropertyService
 		}
 		
 		return 0;
+	}*/
+	
+	public void deletePropertyOptionByIds(int propertyId,List<Integer> optionIds)
+	{
+		for(int i=0;i<optionIds.size();i++)
+		{
+			jqPropertyMapper.deletePropertyOption(propertyId,optionIds.get(i));
+		}
+	
 	}
 
 	

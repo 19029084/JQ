@@ -14,14 +14,4 @@ public class JQApplication {
 		SpringApplication.run(JQApplication.class, args);
 	}
 
-
-
-
-	//@Bean
-	//public PasswordEncoder passwordEncoder()	
-	//{
-	//	return new BCryptPasswordEncoder();
-	//}
-
-
 }

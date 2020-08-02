@@ -6,7 +6,9 @@ import com.jq.entity.JQWidget;
 
 import java.util.List;
 
-public class JQColumn ///extends JQProperty
+import java.util.ArrayList;
+
+public class JQColumn extends JQObject
 
 {
 	public void setId(int id)
@@ -14,10 +16,15 @@ public class JQColumn ///extends JQProperty
 		this.id=id;
 	
 	}
+	
+	public int getId()
+	{	
+		return id;
+	}
 
 	public JQColumn()
 	{
-		widget = new JQWidget();
+		widgets = new ArrayList<JQWidget>();
 		sortKey = -1;	
 	}
 
@@ -35,43 +42,27 @@ public class JQColumn ///extends JQProperty
 	{
 		return sortKey;
 	}
+ 
+ 	public void addWidget(JQWidget widget)
+ 	{
+ 		widgets.add(widget);
+ 	}
 	
-	//public void setProperty(JQProperty property)
-	//{
-	//	this.property = property;
-	
-	//}
-	
-//	public void addOption(JQPropertyOption option)
-//	{
-//		property.addOption(option);
-//	}
-	
-//	public void setOptions(List<JQPropertyOption> options)
-//	{
-//		property.setOptions(options);
-//	}
-	
-	//public JQProperty getProperty()
-	//{
-	//	return this.property;	
-	//}
-	
-	public JQWidget getWidget()
+	public List<JQWidget> getWidget()
 	{
-		return widget;
+		return widgets;
 	}
 	
-	public void setWidget(JQWidget widget)
+	public void setWidget(List<JQWidget> widgets)
 	{
-		this.widget=widget;
+		this.widgets =widgets;
 	}
 	
 	private int id;
 	
 	private int sortKey;
 	
-	private JQWidget widget;
+	private List<JQWidget> widgets;
 	
 	//private JQProperty property;
 

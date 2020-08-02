@@ -17,7 +17,7 @@ import com.jq.entity.JQColumn;
 import com.jq.entity.JQRow;
 import com.jq.entity.JQModuleTable;
 import com.jq.entity.JQWidget;
-
+import com.jq.entity.JQProperty;
 
 
 import java.util.List;
@@ -54,27 +54,21 @@ public class JQConfigService
 	
 	@Resource 
 	JQResourceService resourceService;
+	
+	@Resource 
+	JQWidgetService widgetService;
+	
 
 	public List<JQConfig> getConfigs()
 	{	
 		 List<JQConfig> configs = jqConfigMapper.findAllConfigs();
-		 
-		 for(int i=0;i<configs.size();i++)
-		 {
-		 	propertyService.loadPropertyByConfig(configs.get(i));
-		 }
-		 
+
 		 return configs;                
 	}
 	
-	public JQConfig loadConfig(String cid)
+	public JQConfig loadConfig(int configId)
 	{
-		JQConfig newConfig = jqConfigMapper.findConfigByID(cid);
-		
-		if(newConfig!=null)
-		{
-			propertyService.loadPropertyByConfig(newConfig);
-		}
+		JQConfig newConfig = jqConfigMapper.findConfigById(configId);
 		
 		return newConfig;	
 	}
@@ -127,9 +121,27 @@ public class JQConfigService
 				
 			//jqConfigMapper.assignProperty(config.getId(),property.getId(),String.valueOf(column.getSortKey()));
 			
-			JQWidget widget = column.getWidget();
+			List<JQWidget> widgets = column.getWidget();
 			
-			createWidget(widget);
+			for(int k=0;k<widgets.size();k++)
+			{
+				JQWidget widget = widgets.get(k);
+				
+				createWidget(widget,0);
+			
+				jqConfigMapper.assignWidget(config.getId(),widget.getId(), String.valueOf(j+1));
+				
+				List<JQWidget> children = widget.getChildren();
+				if(children != null)
+				{
+					for(int i=0;i<children.size();i++)
+					{
+						jqConfigMapper.assignWidget(config.getId(),widget.getId(), String.valueOf(j+1));
+						
+					}
+				}				
+				
+			}
 				
 		}
 		
@@ -137,9 +149,132 @@ public class JQConfigService
 		
 	}
 	
-	public int createWidget(JQWidget widget)
+	public void deleteConfig(int configId)
 	{
-		return jqConfigMapper.createWidget(widget);
+		jqConfigMapper.deleteConfig(configId);
+	}
+	
+	public void createWidget(JQWidget widget,int parentId)
+	{	
+	
+		JQWidget existWidget = findWidgetByName(widget.getName());
+		if(existWidget != null)
+		{
+			widget.setId(existWidget.getId());
+		}
+		else
+		{
+		
+
+			switch(widget.getDataSource())
+			{
+				case 0:
+				
+					JQProperty property = widget.getProperty();
+			
+					if(property ==null)
+					{
+						widget.setDataSource(-1);
+					}
+					else
+					{
+						propertyService.createProperty(property);
+						
+						widget.setPropertyId(property.getId());
+						
+						
+					}
+				
+					/*List<JQProperty> properties = widget.getProperties();
+					
+					if(properties !=null)
+						System.out.println("properties:" + properties.size());
+					
+					if(properties == null || properties.size()==0 )
+					{
+						
+
+						JQProperty property = new JQProperty();
+						property.setName(widget.getName());
+						propertyService.createProperty(property);
+						widget.addProperty(property);
+					}
+					else
+					{
+						for(int i=0;i<properties.size();i++)
+						{
+							propertyService.createProperty(properties.get(i));
+						}
+					}*/
+					
+					break;
+				case 1:
+					/*if(widget.getWidgetId() == -1)
+					{
+						JQWidget refWidget = findWidgetByName(widget.getRef());
+						if(refWidget == null)
+						{
+							//@TODO
+							System.out.println("ERROR !!!");
+							return;
+						}
+						else
+						{
+							widget.setWidgetId(refWidget.getId());
+						}
+					}*/				
+					break;			
+				case 2:
+					/*if(widget.getConfigId() == -1)
+					{
+						JQConfig refJQConfig = findConfigByName(widget.getRef());
+						if(refJQConfig == null)
+						{
+							
+							JQConfig config = new JQConfig();
+							config.setName(widget.getRef());						
+							createConfig(config);
+						}
+						else
+						{
+							widget.setConfigId(refJQConfig.getId());
+						}
+					}*/
+					break;	
+					
+				default:
+					System.out.println("ERROR DataSource:"+widget.getDataSource());		
+			
+			}			
+			
+			jqConfigMapper.createWidget(widget);
+			
+			/*List<JQProperty> properties = widget.getProperties();
+			
+			for(int i=0;i<properties.size();i++)
+			{
+				widgetService.assignProperty(widget.getId(),properties.get(i).getId());
+			}*/
+		}
+		
+		
+		List<JQWidget> children = widget.getChildren();
+		if(children != null)
+		{
+			for(int i=0;i<children.size();i++)
+			{
+				JQWidget child = children.get(i);
+				
+				createWidget(child,widget.getId());
+				
+			}
+		}
+	}
+	
+	
+	public JQWidget findWidgetByName(String name)
+	{
+		return jqConfigMapper.findWidgetByName(name);
 	}	
 
 /*

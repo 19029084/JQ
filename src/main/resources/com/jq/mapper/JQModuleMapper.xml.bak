@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	
+	
+<mapper namespace="com.jq.mapper.JQModuleMapper">
+
+	<resultMap id="JQModule" type="com.jq.entity.JQModule">
+		<id property="id" column="id"/>
+		<result property="pid" column="pid" />
+		<result property="name" column="name" />
+		<result property="path" column="path" />
+	</resultMap>
+
+	<select id="getModules" resultMap="JQModule">	
+		select m.id as id,m.name as name,u.url as path, m.parentid as pid 
+		from Module m left join sys_url u on (m.urlid=u.id)
+		where m.parentid= #{pid} and m.Valid = 1
+	</select>
+	
+	<select id="getModuleByName" resultMap="JQModule">
+		select m.id as id,m.name as name,u.url as path, m.parentid as pid
+		from Module m left join sys_url u on (m.urlid=u.id)
+		where m.parentid= #{pid} and m.Valid = 1 and m.name=#{name}
+	</select>
+	
+	
+	<insert id="createModule" keyProperty="module.id" useGeneratedKeys="true" >
+		insert into Module(name,parentid,urlid,valid) 
+		select #{module.name},#{pid},#{urlId},1
+		from dual 
+		where not exists(select * from Module where name=#{module.name})
+	</insert>
+	
+	<update id="updateModule">
+		update Module set name=#{module.name},urlid=#{urlId} where parentid=#{pid} and id=#{module.id}
+	</update>
+	
+	<update id="deleteModule">
+		update Module set Valid = 0 where parentid=#{pid} and id=#{module.id}
+	</update>
+	
+	<resultMap id="JQModuleConfig" type="com.jq.entity.JQModuleConfig">
+		<id property="id" column="mcid"/>
+		<result property="moduleId" column="moduleId" />
+		<association property="jqConfig" javaType="com.jq.entity.JQConfig">
+			<id property="id" column="id"/>		
+			<result property="name" column="name" />
+			<result property="title" column="title" />
+			<result property="valid" column="valid" />
+		</association>
+		
+	</resultMap>	
+	
+	
+	
+	<select id="getModuleConfig" resultMap="JQModuleConfig">	
+		select mc.id as mcid, mc.moduleId as moduleId, c.id as id, c.name as name, c.title as tile,c.valid as valid
+		from ModuleConfig mc, Config c
+		where mc.moduleid= #{mid} and mc.valid = 1 and mc.configId = c.id
+	</select>
+	
+	<insert id="addModuleConfig">
+		insert into ModuleConfig(ModuleId,PropertyId,ConfigId,SortKey,Valid) 
+		select #{mid},#{propertyId},#{configId},#{sortKey},1
+		from dual
+		where not exists (select * from ModuleConfig 
+				   where ModuleId = #{mid} and PropertyId=#{propertyId} and ConfigId=#{configId})
+	</insert>
+	
+	<update id="deleteModuleConfig">	
+		update ModuleConfig set valid=0 where ModuleId=#{mid} and ConfigId= #{config.configId}
+	</update>
+	
+	<!--resultMap id="JQColumn" type="com.jq.mapper.JQColumn">
+		<id property="id" column="id"/>
+		
+		<result property="rowId" column="rowId" />
+		<result property="propertyId" column="propertyId" />
+		<result property="value" column="value" />
+		<result property="name" column="name" />
+		<result property="type" column="type" />	
+	</resultMap-->
+	
+	
+	
+	<resultMap id="JQModuleData" type="com.jq.entity.JQModuleData">		
+		<result property="parentId" column="parentId" />
+		<collection property="columns" javaType="java.util.ArrayList" ofType="com.jq.entity.JQColumn">
+			<id property="id" column="configWidgetId"/>
+			<result property="sortKey" column="sortKey"/>
+			<association property="widget" javaType="com.jq.entity.JQWidget">
+				<id property="id" column="widgetId"/>
+				<result property="name" column="widgetName" />
+				<result property="value" column="widgetValue" />
+				<result property="propertyId" column="ProperyID" />
+				<result property="widgeId" column="refWidgetId" />
+
+				<result property="configId" column="refConfigId" />
+				<result property="dataSource" column="dataSource" />
+
+				<result property="visible" column="visible" />
+				<result property="searchable" column="searchable" />
+				<result property="shareable" column="shareable" />
+				<result property="required" column="required" />
+
+
+			</association>
+	        </collection>	
+	</resultMap>
+	
+	<select id="getModuleData" resultMap="JQModuleData">
+		select md.parentId as parentId, cw.sortKey as sortKey, cw.id as configWidgetId , w.id as widgetId, w.name as widgetName,w.value as widgetValue, w.propertyId as ProperyID, w.widgetId as refWidgetId, w.configId as refConfigId,w.dataSource as dataSource, w.visible as visible, w.searchable as searchable, w.required as required, w.shareable as shareable
+		from ModuleData md,ModuleConfig mc, ConfigWidget cw, Widget w
+		where mc.moduleid = #{mid} and mc.id = md.fieldId and mc.configId=#{configId} and cw.configId=mc.configId and cw.widgetId = w.id
+		order by md.parentId, cw.sortKey
+	</select>
+	
+	<insert id="addModuleData">
+		Insert into ModuleData(FieldID,ParentID,Data) Values (#{fieldId},#{parentId},#{value})
+	</insert>
+	
+	
+	<update id="updateModuleData">
+	
+		update ModuleData set Data=#{property.value} 
+		
+		where RID=#{rowId} and ModuleID=#{mid} and PropertyID = #{property.id}
+	
+	</update>
+	
+	
+	<delete id="deleteModuleData">
+		delete from ModuleData
+		where RID=#{rowId} and ModuleID=#{mid} and PropertyID = #{property.id}	
+	</delete>
+	
+	<select id="getTotalQuantity" resultType="int">
+		select count(distinct md.parentId)
+		from ModuleConfig mc,ConfigWidget cw, ModuleData md
+		where mc.moduleId=#{mid} and mc.configId=#{configId} and mc.configId=cw.configId and cw.id=md.fieldId
+	
+	</select>
+	
+	
+	
+
+	
+	
+	
+
+
+
+
+</mapper>	
+
+
+

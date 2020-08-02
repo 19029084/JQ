@@ -33,11 +33,20 @@ public interface JQConfigMapper{
 	/*int updateModule(JQModule module,String pid,String urlId);
 	int deleteModule(JQModule module,String pid);*/
 	JQConfig findConfigByName(String name);
-	JQConfig findConfigByID(String cid);
+	JQConfig findConfigById(int configId);
+	
+	
+	List<JQWidget> findWidgetByConfigId(int configId);
+	
+	JQWidget findWidgetByName(String name);
 	
 	int createWidget(JQWidget widget);
 	
 	int assignWidget(int configId,int widgetId, String sortKey);
+	
+	void deleteConfig(int configId);
+	
+	
 	
 	/*
 	List<JQModuleConfig> getModuleConfig(String mid);

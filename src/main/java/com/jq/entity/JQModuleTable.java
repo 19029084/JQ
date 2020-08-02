@@ -8,8 +8,11 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-public class JQModuleTable
+import java.io.Serializable;
+
+public class JQModuleTable implements Serializable
 {
+	private static final long serialVersionUID=1L;
 /*
 public void addData(JQModuleData data)
 {

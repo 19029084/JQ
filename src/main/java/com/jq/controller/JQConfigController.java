@@ -78,7 +78,7 @@ int createConfigs(@RequestBody List<JQConfig> configs)
 @GetMapping("/configs/{cid:\\d+}")
 @ApiOperation("Get one config Information")
 @ResponseBody
-public Object getConfig(@PathVariable String cid)
+public Object getConfig(@PathVariable int cid)
 {
 	
 	JQConfig config = m_service.loadConfig(cid);

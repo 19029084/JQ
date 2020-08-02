@@ -8,76 +8,143 @@ import java.util.Iterator;
 
 import com.jq.entity.JQModuleConfig;
 
+import com.jq.api.JQModuleBase;
 
-public class JQModule
+import java.util.Map;
+import java.util.UUID;
+
+public class JQModule extends JQObject
 {
 	private int id;
-	private int pid;
-	private String name;
-	private String path;
+	private int parentId;
+	private JQUrl url;
+	
+	private JQModuleBase base;
+	
+
 	
 	public JQModule(){
 	
 		subModules = new ArrayList();
 		dataList = new ArrayList();
 		configList= new ArrayList();
+		base = new JQModuleBase();
+		url = new JQUrl(UUID.randomUUID().toString());
+		
+		
+	}
+
+
+	public JQModule(JQModuleBase base){
+	
+		subModules = new ArrayList();
+		dataList = new ArrayList();
+		configList= new ArrayList();
+		url = new JQUrl(UUID.randomUUID().toString());
+		this.base = base;
+		
 		
 		
 	}
 
 	JQModule(int id,String name)
 	{
-
-		this.id = id;
-		this.name = name;
+		subModules = new ArrayList();
+		dataList = new ArrayList();
+		configList= new ArrayList();
+		url = new JQUrl(UUID.randomUUID().toString());
+		
+		base = new JQModuleBase();
+		this.base.setName(name);
+		this.base.setId(id);
 	}
+	
+	public void setUrlId(int urlId)
+	{
+		this.url.setId(urlId);
+	}
+
+	public int getUrlId()
+	{
+		return url.getId();
+	}	
 	
 	public int getId()
 	{
-		return id;
+		return base.getId();
 	}
 	
 	public void setId(int id)
 	{
-		this.id=id;
+		this.base.setId(id);
 	}
 	
-	public int getPid()
+	public String getStatus()
 	{
-		return pid;
+		return base.getStatus()==null?"":base.getStatus();
 	}
 	
-	public void setPid(int pid)
+	public void setStatus(String status)
 	{
-		this.pid=pid;
+		this.base.setStatus(status);
+	}	
+	
+	public int getParentId()
+	{
+		return parentId;
 	}
 	
-	
-	
+	public void setParentId(int parentId)
+	{
+		this.parentId=parentId;
+	}
+
+	public String getIcon() {
+		return base.getIcon()==null?"":base.getIcon();
+	}
+
+	public void setIcon(String icon) {
+		base.setIcon(icon);
+	}
+
 	public void setName(String name)
 	{
-		this.name=name;
+		this.base.setName(name);
 	}
 	
 	
 	public String getName()
 	{
-		return name;
+		return base.getName();
 	}
 	
 	public String getPath()
 	{
-		return path==null?"":path;
+		return url.getName()==null?"":url.getName();
 	}
 	
 	public void setPath(String path)
 	{
-		this.path=path;
+		this.url.setName(path);
 	}
 	
-
-	public void addSubModule(JQModule module)
+	public void setSortKey(String sortKey)
 	{
+		this.base.setSortKey(sortKey);
+	}
+	public String getSortKey()
+	{
+		return base.getSortKey();
+	}
+	
+	public JQUrl getUrl()
+	{
+		return url;
+	}
+
+	public void addChildren(JQModule module)
+	{
+		module.setSortKey(String.valueOf(subModules.size()+1));
 		subModules.add(module);
 	}
 	
@@ -117,6 +184,21 @@ public class JQModule
 	
 	}
 	
+	
+	public JQModuleBase toBase()
+	{
+		return base;
+	}
+	
+	public void toBase(Map<String,String> output)
+	{
+		output.put("moduleId",String.valueOf(getId()));
+		output.put("moduleName",String.valueOf(getName()));
+		output.put("moduleIcon",String.valueOf(getIcon()));
+		output.put("moduleStatus",String.valueOf(getStatus()));
+		output.put("moduleSortKey", String.valueOf(getSortKey()));
+		output.put("moduleUrl",String.valueOf(getPath()));		
+	}
 	
 	Stack<JQModuleConfig> configStack;
 	

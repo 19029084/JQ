@@ -1,7 +1,7 @@
 package com.jq.security;
 
 //import com.jq.security.repository.JQUserRepository;
-import com.jq.entity.JQAccount;
+//import com.jq.entity.JQAccount;
 import com.jq.entity.JQUser;
 import com.jq.entity.JQRole;
 import com.jq.entity.JQPermission;
@@ -40,9 +40,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        JQUser user=jqResourceMapper.findUserByName(s);
+        JQUser user=jqResourceMapper.findUserByName(s, null);
         //JQUser user= jqUserRepository.findByUsernameCaseInsensitive(s);
-        if(user==null){
+        if(user==null || user.getStatus() == 0){
             throw new UsernameNotFoundException("帐号不存在！");
         }else{
         

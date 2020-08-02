@@ -8,36 +8,97 @@
 	
 <mapper namespace="com.jq.mapper.JQResourceMapper">
 
+
+
+
+
+
 	<resultMap id="JQUrl" type="com.jq.entity.JQUrl">
 		<id property="id" column="id"/>
-		<result property="url" column="url" />
+		<result property="name" column="name" />
 		<result property="description" column="description" />
 	</resultMap>
 
-	<select id="getUrls" resultMap="JQUrl">	
+
+    <delete id="deleteRole">
+        delete from sys_role where id = #{id}
+    </delete>
+
+    <delete id="deleteRolePermission">
+        delete from sys_role_permission where role_id = #{id}
+    </delete>
+
+	<delete id="deleteUser">
+		delete from sys_user where id = #{id}
+	</delete>
+
+	<delete id="deleteUserRole">
+		delete from sys_user_role where user_id = #{id}
+	</delete>
+
+	<select id="getUrls" resultMap="JQUrl">
 		select * from sys_url	
 	</select>
-	
-	
-	<insert id = "createUrl" keyProperty="id" useGeneratedKeys="true">
-		insert into sys_url(url,description) 
-		select #{url},#{description} from dual 
-		where not exists ( select * from sys_url where url=#{url})
-	</insert>
-	
+
 	
 	<select id="findUrlByName" resultMap="JQUrl">
 	
 		select * from sys_url 
-		where url=#{name}
+		where name=#{name}
 	
 	</select>
 	
+	<insert id = "createUrl" keyProperty="id" useGeneratedKeys="true">
+		<selectKey resultType="int" keyProperty="id" order="AFTER">
+			SELECT LAST_INSERT_ID()		
+		</selectKey>
+		insert into sys_url(name,description) 
+		select #{name},#{description} from dual 
+		where not exists ( select * from sys_url where name=#{name})
+	</insert>
+	
+	<update id="updateUrl">
+		update sys_url set name = #{name} where id=#{id}
+	</update>
+
+	<update id="updateRole">
+		update sys_role
+		set
+			name = #{name},
+			remark = #{remark},
+			update_time = sysdate(),
+			update_by = #{updateBy}
+		where id = #{id}
+	</update>
+	<update id="updateUser">
+		update sys_user
+		set
+			username = #{username},
+		    nickname = #{nickname},
+		    dept_code = #{deptCode},
+		    status = #{status},
+			update_time = sysdate(),
+			update_by = #{updateBy}
+		where id = #{id}
+	</update>
+	<update id="updateUserPassword">
+		update sys_user
+		set password = #{password}
+		where id = #{id}
+	</update>
+	<update id="updateUserStatus">
+		update sys_user
+		set status = #{status}
+		where id = #{id}
+	</update>
 
 	<select id="findUserByName" resultType="com.jq.entity.JQUser">	
-		select u.id as id, u.username as username, u.password as password
-		from sys_user u 
-		where username=#{username}				
+		select id, username, password, status
+		from sys_user
+		where username=#{name}
+		<if test="id != null">
+			and id != #{id}
+		</if>
 	</select>
 	
 
@@ -56,31 +117,46 @@
 		<selectKey resultType="int" keyProperty="id" order="AFTER">
 			SELECT LAST_INSERT_ID()		
 		</selectKey>		
-		insert into sys_user(username,password,identity) 
-		select #{username},#{password},#{identity} from dual 
-		where not exists ( select * from sys_user where username=#{username})
+		insert into sys_user(username,password,nickname,dept_code,status,update_time,update_by)
+		select #{username},#{password},#{nickname},#{deptCode},#{status},sysdate(),#{updateBy} from dual
 	</insert>
 	
-	<select id="findAllRoles" resultType="com.jq.entity.JQRole">	
-		select r.*
-		from sys_role r 
+	<select id="findAllRoles" resultType="com.jq.vo.JQRoleRes">
+		select id, name, remark, update_by as updateBy, date_format(update_time,'%Y-%m-%d %H:%i:%S') as updateTime
+		from sys_role
+        <where>
+            <if test="roleName != null  and roleName != ''">
+                name like concat('%', #{roleName}, '%')
+            </if>
+        </where>
 	</select>	
 	
 	<select id="findRoleByName" resultType="com.jq.entity.JQRole">	
 		select r.*
 		from sys_role r 
-		where name=#{name}				
+		where name=#{name}
+		<if test="id != null">
+			and id != #{id}
+		</if>
 	</select>	
 
-
-	
 
 	<insert id = "createRole" parameterType="com.jq.entity.JQRole">
 		<selectKey resultType="int" keyProperty="id" order="AFTER">
 			SELECT LAST_INSERT_ID()		
 		</selectKey>		
-		insert into sys_role(name) 
-		select #{name} from dual 
+		insert into sys_role(name, remark)
+		select #{name}, #{remark} from dual
+		where not exists ( select * from sys_role where name=#{name})
+	</insert>
+
+
+	<insert id = "createRoleVo" parameterType="com.jq.vo.JQRoleReq">
+		<selectKey resultType="int" keyProperty="id" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into sys_role(name, remark, update_time, update_by)
+		select #{name}, #{remark}, sysdate(), #{updateBy} from dual
 		where not exists ( select * from sys_role where name=#{name})
 	</insert>
 	
@@ -109,23 +185,55 @@
 		from sys_permission
 		where name=#{name}
 	</select>
-	
+	<select id="findRoleById" resultType="com.jq.vo.JQRoleRes">
+		select id, name, remark, date_format(update_time,'%Y-%m-%d %H:%i:%S') as updateTime, update_by as updateBy from sys_role where id = #{id}
+	</select>
+	<select id="findRolePermissionByRoleId" resultType="com.jq.entity.JQRolePermission">
+		select id, role_id as roleId, permission_id as permissionId from sys_role_permission where role_id = #{id}
+	</select>
+
+	<select id="findUsersBySearch" resultType="com.jq.vo.JQUserRes">
+		select u.id, u.username, u.nickname, u.status, date_format(u.update_time,'%Y-%m-%d %H:%i:%S') as updateTime, u.update_by as updateBy, d.dept_name as departmentName
+		from sys_user u left join sys_department d on d.id = u.dept_code
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="userName != null  and userName != ''">
+				u.username like concat('%', #{userName}, '%')
+			</if>
+			<if test="nickName != null  and nickName != ''">
+				u.nickname like concat('%', #{nickName}, '%')
+			</if>
+		</trim>
+
+	</select>
+
+	<select id="findUserById" resultType="com.jq.entity.JQUser">
+		select u.id, u.username, u.nickname, u.dept_code as deptCode, d.dept_name as deptName, u.status, u.update_by as updateBy, date_format(u.update_time,'%Y-%m-%d %H:%i:%S') as updateTime
+		from sys_user u inner join sys_department d on d.id = u.dept_code where u.id = #{id}
+	</select>
+
+	<select id="findPermissionById" resultType="com.jq.entity.JQPermission">
+		select *
+		from sys_permission
+		where id=#{id}
+	</select>
+	<select id="findPermissionByRoleId" resultType="com.jq.entity.JQPermission">
+		select p.id, p.name, p.parentid from sys_permission p inner join sys_role_permission r on r.permission_id = p.id where r.role_id = #{roleId}
+	</select>
+
 	<insert id = "createPermission" parameterType="com.jq.entity.JQPermission">
 		<selectKey resultType="int" keyProperty="id" order="AFTER">
 			SELECT LAST_INSERT_ID()		
 		</selectKey>		
-		insert into sys_permission(name,url,parentid) 
-		select #{name},#{url},#{parentId} from dual 
-		where not exists ( select * from sys_permission where name=#{name})
+		insert into sys_permission(name,url_id,parentid) 
+		select #{permission.name},#{permission.urlId},#{parentId} from dual
+		where not exists ( select * from sys_permission where name=#{permission.name})
 	</insert>
-			
+
 	<insert id = "assignPermission">
 		insert into sys_role_permission(role_id,permission_id) 
 		select #{roleId},#{permissionId} from dual 
 		where not exists ( select * from sys_role_permission where role_id=#{roleId} and permission_id=#{permissionId})
 	</insert>
-	
-
 
 </mapper>	
 

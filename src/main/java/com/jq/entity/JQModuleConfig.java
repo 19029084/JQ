@@ -7,14 +7,17 @@ import java.util.ArrayList;
 import com.jq.entity.JQColumn;
 import com.jq.entity.JQConfig;
 
+import java.util.Map;
 
-public class JQModuleConfig
+
+public class JQModuleConfig extends JQObject
 {
 	public JQModuleConfig()
 	{
 	 	//propertyStack = new Stack<JQColumn>();
 	 	//propertyMap = new TreeMap<Integer,JQProperty>();
 	 	//columns = new ArrayList<JQColumn>();
+	 	jqConfig = new JQConfig();
 		
 	}
 	
@@ -45,12 +48,13 @@ public class JQModuleConfig
 	
 	public void setConfigId(int configId)
 	{
-		this.configId=configId;
+		//this.configId=configId;
+		this.jqConfig.setId(configId);
 	}
 	
 	public int getConfigId()
 	{
-		return configId;	
+		return this.jqConfig.getId();	
 	}	
 
 	
@@ -76,17 +80,36 @@ public class JQModuleConfig
 		return jqConfig;
 	}
 	
+	public void toBase(Map<String,String> base)
+	{
+		base.put("configId",String.valueOf(jqConfig.getId()));
+		base.put("configName", this.jqConfig.getName());	
+	}
 	
+	
+	public void setParentId(int parentId)
+	{
+	
+		this.parentId=parentId;
+	}
+	
+	
+	public int getParentId()
+	{
+	
+		return parentId;
+	}
 	private int id;
+	private int parentId;
 	private int configId;
 	private int moduleId;
 	
-	//private Stack<JQColumn> propertyStack;
-	//private TreeMap<Integer,JQProperty> propertyMap;
-	
-	//private List<JQColumn> columns;
 	
 	private JQConfig jqConfig;
+	
+	List<JQModuleConfig> children;
+	
+
 	
 	
 }

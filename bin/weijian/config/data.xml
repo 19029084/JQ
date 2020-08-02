@@ -1,0 +1,333 @@
+
+
+<modules>
+
+		
+	<module name="名人管理">
+		
+		<config name="名人信息">
+		 	<widget name="序号">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+		 	<widget name="所属城镇">
+		 		<property name="城镇" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}</option>
+		 		</property> 
+		 	</widget>
+		 	
+		 	<widget name="所属行政村">
+		 		<property name="行政村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{行政村}.{行政村}</option>
+		 		</property> 	
+		 	
+		 	</widget>
+		 	
+		 	<widget name="所属自然村">	
+		 		<property name="自然村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>
+		 	
+			<widget name="名人姓名" />
+			<widget name="出生地址" />
+			<widget name="联系电话" />
+			<widget name="名人类型" >
+		 		<property name="名人类型" type ="select">
+			 		<option>世界级名人</option>
+			 		<option>国家级名人</option>
+			 		<option>省级名人</option>
+			 		<option>市级名人</option>
+			 		<option>县级名人</option>
+			 		
+		 		</property>
+			</widget>
+			<widget name="安葬地址" type ="text"/>
+			
+			<widget name="简介" type ="textArea"/>
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+		 	
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>
+		 
+		 <data ref="名人信息">
+		 	<widget ref="序号"  value="1"/>
+		 	<widget ref="所属城镇" >
+		 		<property ref="城镇" value ="均桥镇"/>
+		 	</widget>
+		 			 	
+		 	<widget ref="所属行政村">
+		 		<property ref="行政村" value ="象山村"/>
+		 	</widget>		 			 	
+		 	<widget ref="所属自然村">	 	
+		 		<property ref="自然村" value ="一组"/>
+		 	</widget>
+		 	
+			<widget ref="名人姓名" value ="张三"/>
+			<widget ref="出生地址" value ="象山村张三宅" />
+			<widget ref="联系电话" value ="12345678910"/>
+			<widget ref="名人类型" value ="世界级名人"/>	
+			<widget name="安葬地址" value ="象山村张家族"/>			
+			<widget name="简介" value ="象山村张家大户人员"/>
+			<widget name="状态" value="启用"/>
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </data>
+		
+		
+	</module>
+		
+
+	
+	<module name="模板管理" path="/template">
+		<config name="模板配置">
+			<!--widget name="菜单名称" order="1"/-->
+			<widget name="模板编号" order="2"/>
+			<widget name="模板标题" order="3"/>
+			<widget name="选项数量" order="4"/>
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<!--widget name="操作" order="7">
+				<property name="模板管理-操作">
+					<option value="权限项查看"/>
+					<option value="添加下级"/>
+					<option value="编辑"/>
+					<option value="删除"/>
+				</property>
+			</widget-->
+		</config>
+	</module>
+	<module name="权限管理">
+		<module name="员工管理" path="/staff">
+			<config>
+				<widget name="员工账号" order="1"/>
+				<widget name="员工姓名" order="2"/>
+				<widget name="部门" order="3"/>
+				<widget name="角色数量" order="4"/>
+				<widget name="角色名称" order="5"/>
+				<widget name="更新时间" order="6"/>
+				<widget name="更新人" order="7"/>
+				<widget name="可用性状态" order="8"/>
+				<widget name="操作" order="9">
+					<property name="权限管理-操作">
+						<option value="打卡轨迹"/>
+						<option value="编辑"/>
+						<option value="删除"/>
+						<option value="重置密码"/>
+					</property>
+				</widget>
+			</config>
+		</module>
+		<module name="部门管理" path="/branch">
+			<config>
+				<widget name="部门名称" order="1"/>
+				<widget name="员工数量" order="2"/>
+				<widget name="更新时间" order="3"/>
+				<widget name="上次调度时间" order="4"/>
+				
+				<widget name="操作" order="5">
+					<property name="部门管理-操作">
+						<option value="新增子部门"/>
+						<option value="编辑"/>
+						<option value="删除"/>
+					</property>
+				</widget>
+			</config>
+		</module>
+		<module name="角色管理" path="/role">
+			<config>
+				<widget name="角色名称" order="1"/>
+				<widget name="更新时间" order="2"/>
+				<widget name="更新人" order="3"/>	
+				<widget name="操作" order="4">
+					<property name="角色管理-操作">
+						<option value="编辑"/>
+						<option value="删除"/>
+					</property>
+				</widget>
+			</config>
+		</module>
+
+	
+	</module>
+	<module name="系统管理" >
+	
+		<module name="字典管理" path="/widget">
+			<config name="字典配置">
+				<widget name="字典名称" order="1"/>
+				<widget name="编码" order="2"/>
+				<widget name="排序" order="3"/>	
+				<widget name="数据值数量" order="4"/>	
+				<widget name="描述" order="5"/>	
+				<widget name="引用数量" order="6"/>	
+				<widget name="可用性状态" order="7"/>	
+		 		<widget name="更新人" order="8">
+		 			<property name="更新人" type ="text" value="{username}"/>
+		 		</widget>
+				<widget name="更新时间" order="9" >
+					<property name="更新时间" type ="data" value="{now}"/>
+		 		</widget>	
+				<!--widget name="操作" order="10">
+					<property name="字典管理-操作">
+						<option value="编辑"/>
+						<option value="数据项管理"/>
+					</property>
+				</widget-->
+			</config>
+			
+			<module name="数据项管理" path="/option">
+				<config name="数据项配置">
+					<widget name="数据项名称" order="1"/>
+					<widget name="编码" order="2"/>
+					<widget name="排序" order="3"/>	
+					<!--widget name="数据值数量" order="4"/>	
+					<widget name="描述" order="5"/>	
+					<widget name="引用数量" order="6"/>	
+					<widget name="可用性状态" order="7"/-->	
+			 		<widget name="更新人" order="8">
+			 			<property name="更新人" type ="text" value="{username}"/>
+			 		</widget>
+					<widget name="更新时间" order="9" >
+						<property name="更新时间" type ="data" value="{now}"/>
+			 		</widget>	
+					<!--widget name="操作" order="10">
+						<property name="字典管理-操作">
+							<option value="编辑"/>
+							<option value="数据项管理"/>
+						</property>
+					</widget-->
+				</config>
+			</module>
+		</module>
+		<module name="系统白名单" path="/whitelist">
+			<config>
+				<widget name="IP名称" order="1"/>
+				<widget name="更新时间" order="2"/>
+				<widget name="更新人" order="3"/>	
+				<widget name="可用性状态" order="4"/>	
+				<widget name="操作" order="5">
+					<property name="系统白名单-操作">
+						<option value="编辑"/>
+						<option value="删除"/>
+					</property>
+				</widget>
+			</config>
+		</module>
+		<module name="打印设置" path="/print">
+			<config>
+				<widget name="备注名称" order="1"/>
+				<widget name="设备品牌" order="2"/>
+				<widget name="设备号码" order="3"/>	
+				<widget name="设备密钥" order="4"/>	
+				<widget name="打印纸款" order="5"/>	
+				<widget name="连接状态" order="6"/>	
+				<widget name="可用性状态" order="7"/>
+				<widget name="操作" order="8">
+					<property name="打印设置-操作">
+						<option value="编辑"/>
+						<option value="删除"/>
+					</property>
+				</widget>
+			</config>
+		</module>
+		<module name="菜单管理" path="/modules">
+			<config name="菜单配置">
+				<widget name="菜单名称" order="1"/>
+				<widget name="模板编号" order="2"/>
+				<widget name="图标" order="3"/>	
+				<widget name="排序" order="4"/>	
+				<widget name="URL" order="5"/>	
+				<widget name="可用性状态" order="6"/>
+				<widget name="操作" order="7">
+					<property name="菜单管理-操作">
+						<option value="权限项查看"/>
+						<option value="添加下级"/>
+						<option value="编辑"/>
+						<option value="删除"/>
+					</property>
+				</widget>
+				
+				<config name="子菜单配置">
+						<widget name="子菜单名称" order="1"/>
+						<widget name="模板编号" order="2"/>
+						<widget name="图标" order="3"/>	
+						<widget name="排序" order="4"/>	
+						<widget name="URL" order="5"/>	
+						<widget name="可用性状态" order="6"/>
+						<!--widget name="操作" order="7">
+							<property name="菜单管理-操作">
+								<option value="权限项查看"/>
+								<option value="添加下级"/>
+								<option value="编辑"/>
+								<option value="删除"/>
+							</property>
+						</widget-->
+				</config>				
+
+			</config>
+			
+
+		</module>
+	</module>
+	
+	<module name="AI机器人管理">
+		<module name="机器人管理" path="/robot">
+				<config>
+				<widget name="设备名称" order="1"/>
+				<widget name="设备品牌" order="2"/>
+				<widget name="设备号码" order="3"/>	
+				<widget name="设备密钥" order="4"/>	
+				<widget name="设备类型" order="5"/>	
+				<widget name="链接状态" order="6"/>
+				<widget name="可用性状态" order="7"/>
+				<widget name="操作" order="8">
+					<property name="机器人管理-操作">	
+						<option value="编辑"/>
+						<option value="删除"/>
+					</property>
+				</widget>
+			</config>
+		</module>
+		<module name="指令管理" path="/command">
+				<config>
+				<widget name="指令名称" order="1"/>
+				<widget name="指令编码" order="2"/>
+				<widget name="更新时间" order="3"/>	
+				<widget name="更新人" order="4"/>	
+				<widget name="可用性状态" order="5"/>	
+				<widget name="操作" order="6">
+					<property name="指令管理-操作">									
+						<option value="编辑"/>
+						<option value="删除"/>
+					</property>
+				</widget>
+			</config>
+		</module>
+	</module>
+	<module name="巡查上报-待处理">
+	
+	</module>
+	
+    
+</modules>

@@ -8,39 +8,174 @@
 	
 <mapper namespace="com.jq.mapper.JQConfigMapper">
 
-	<select id="findAllConfigs" resultType="com.jq.entity.JQConfig">	
-		select c.* 
+
+
+	<resultMap id="JQConfig" type="com.jq.entity.JQConfig">
+		<id property="id" column="configId"/>
+		
+		<result property="name" column="configName" />
+		<result property="title" column="configTitle" />
+		<result property="parentId" column="configParentId" />
+		
+		<result property="valid" column="configValid" />
+		
+		<collection property="columns" javaType="java.util.ArrayList" ofType="com.jq.entity.JQColumn">
+				
+			<id property="sortKey" column="sortKey" />
+			<result property="id" column="cwid"/>	
+			
+			
+			<collection property="widgets" javaType="java.util.ArrayList"  ofType="com.jq.entity.JQWidget">
+				<id property="id" column="wid"/>
+				<result property="widgetId" column="widgetId" />
+				<result property="configId" column="refConfigId" />
+				<result property="visiable" column="visiable" />
+				<result property="searchable" column="searchable" />				
+				<result property="shareable" column="shareable" />
+				<result property="required" column="required" />				
+				<result property="dataSource" column="dataSource" />
+				<result property="name" column="widgeName" />				
+				<result property="value" column="widgetValue" />
+				<!--collection property="properties" javaType="java.util.ArrayList"  ofType="com.jq.entity.JQProperty" >
+						<id property="id" column="propertyId"/>
+						<result property="name" column="propertyName"/>
+						<association property="propertyType" javaType="com.jq.entity.JQPropertyType">			
+							<id property="id" column="propertyTypeId" />		
+							<result property="type" column="propertyTypeName" />
+						</association>
+						
+				</collection-->
+			</collection>
+			
+		</collection>
+		
+	</resultMap>
+
+	<select id="findAllConfigs" resultMap="JQConfig">	
+		select c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid, c. parentId as configParentId,
+		       cw.id as cwid,cw.sortKey as sortKey,
+		       w.id as wid, w.propertyId, w.widgetId as widgetId, w.configId as refConfigId, w.visiable, w.searchable,w.shareable,w.required, 
+		       w.dataSource,w.name as widgeName, w.value as widgeValue,
+		       p.id as propertyId, p.name as propertyName,
+		       pt.id as propertyTypeId, pt.type as propertyTypeName		       
 		from Config c
+		left join ConfigWidget cw on c.id=cw.configId
+		left join Widget w on w.id = cw.widgetId
+
+		left join Property p on w.propertyId=p.id
+		left join PropertyType pt on p.type_id = pt.id		
+		order by cw.sortkey
+		
 	</select>
 	
-	<select id="findConfigByName" resultType="com.jq.entity.JQConfig">
-		select c.id as id,c.name as name,c.title as title,c.valid as valid 
-		from Config c 
+	<select id="findConfigByName" resultMap="JQConfig">
+		select c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid,c. parentId as configParentId,
+		       cw.id as cwid,cw.sortKey as sortKey,
+		       w.id as wid, w.propertyId, w.widgetId as widgetId, w.configId as refConfigId, w.visiable, w.searchable,w.shareable,w.required, 
+		       w.dataSource,w.name as widgeName, w.value as widgeValue,
+		       p.id as propertyId, p.name as propertyName,
+		       pt.id as propertyTypeId, pt.type as propertyTypeName
+		from Config c
+		left join ConfigWidget cw on c.id=cw.configId
+		left join Widget w on w.id = cw.widgetId
+
+		left join Property p on w.propertyId=p.id
+		left join PropertyType pt on p.type_id = pt.id
 		where c.name=#{name}
+		order by cw.sortkey
 	</select>
 	
-	<select id="findConfigByID" resultType="com.jq.entity.JQConfig">
-		select c.* 
-		from Config c 
-		where c.id=#{id}
+	<select id="findConfigById" resultMap="JQConfig">
+		select c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid,c. parentId as configParentId,
+		       cw.id as cwid,cw.sortKey as sortKey,
+		       w.id as wid, w.propertyId, w.widgetId as widgetId, w.configId as refConfigId, w.visiable, w.searchable,w.shareable,w.required, 
+		       w.dataSource,w.name as widgeName, w.value as widgeValue,
+		       p.id as propertyId, p.name as propertyName,
+		       pt.id as propertyTypeId, pt.type as propertyTypeName
+		from Config c
+		left join ConfigWidget cw on c.id=cw.configId
+		left join Widget w on w.id = cw.widgetId
+
+		left join Property p on w.propertyId=p.id
+		left join PropertyType pt on p.type_id = pt.id
+		where c.id=#{configId}
+		order by cw.sortkey
 	</select>
+
+	<!--select id="findAllConfigs" resultMap="JQConfig">	
+		select c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid,
+		       cw.id as cwid,cw.sortKey as sortKey,
+		       w.id as wid, w.propertyId, w.widgetId as widgetId, w.configId as refConfigId, w.visiable, w.searchable,w.shareable,w.required, 
+		       w.dataSource,w.name as widgeName, w.value as widgeValue,
+		       p.id as propertyId, p.name as propertyName,
+		       pt.id as propertyTypeId, pt.type as propertyTypeName		       
+		from Config c
+		left join ConfigWidget cw on c.id=cw.configId
+		left join Widget w on w.id = cw.widgetId
+		left join WidgetProperty wp on w.id=wp.widgetId
+		left join Property p on wp.propertyId=p.id
+		left join PropertyType pt on p.type_id = pt.id		
+		order by cw.sortkey
+		
+	</select>
+	
+	<select id="findConfigByName" resultMap="JQConfig">
+		select c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid,
+		       cw.id as cwid,cw.sortKey as sortKey,
+		       w.id as wid, w.propertyId, w.widgetId as widgetId, w.configId as refConfigId, w.visiable, w.searchable,w.shareable,w.required, 
+		       w.dataSource,w.name as widgeName, w.value as widgeValue,
+		       p.id as propertyId, p.name as propertyName,
+		       pt.id as propertyTypeId, pt.type as propertyTypeName
+		from Config c
+		left join ConfigWidget cw on c.id=cw.configId
+		left join Widget w on w.id = cw.widgetId
+		left join WidgetProperty wp on w.id=wp.widgetId
+		left join Property p on wp.propertyId=p.id
+		left join PropertyType pt on p.type_id = pt.id
+		where c.name=#{name}
+		order by cw.sortkey
+	</select>
+	
+	<select id="findConfigById" resultMap="JQConfig">
+		select c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid,
+		       cw.id as cwid,cw.sortKey as sortKey,
+		       w.id as wid, w.propertyId, w.widgetId as widgetId, w.configId as refConfigId, w.visiable, w.searchable,w.shareable,w.required, 
+		       w.dataSource,w.name as widgeName, w.value as widgeValue,
+		       p.id as propertyId, p.name as propertyName,
+		       pt.id as propertyTypeId, pt.type as propertyTypeName
+		from Config c
+		left join ConfigWidget cw on c.id=cw.configId
+		left join Widget w on w.id = cw.widgetId
+		left join WidgetProperty wp on w.id=wp.widgetId
+		left join Property p on wp.propertyId=p.id
+		left join PropertyType pt on p.type_id = pt.id
+		where c.id=#{configId}
+		order by cw.sortkey
+	</select-->
+
 		
 	<insert id="createConfig" parameterType="com.jq.entity.JQConfig" >
 		<selectKey resultType="int" keyProperty="id" order="AFTER">
 			SELECT LAST_INSERT_ID()		
 		</selectKey>	
-		insert into Config(name,title,valid) 
-		select #{name},#{title},1
+		insert into Config(name,title,parentId,valid) 
+		select #{name},#{title},#{parentId},1
 		from dual 
 		where not exists(select * from Config where name=#{name})
 	</insert>
+
+	<select id="findWidgetByConfigId" resultType="com.jq.entity.JQWidget">
+		select w.* 
+		from ConfigWidget cw, Widget w
+		where cw.configId=#{configId} and w.id = cw.widgetId
+	</select>	
 	
 	<insert id="createWidget" parameterType="com.jq.entity.JQWidget" >
 		<selectKey resultType="int" keyProperty="id" order="AFTER">
 			SELECT LAST_INSERT_ID()		
 		</selectKey>	
 		insert into Widget(Name,PropertyId,WidgetId,ConfigId,DataSource,Required,Visiable,Searchable,Shareable,valid) 
-		select #{name},#{propertyId},#{widgetId},#{configId},#{required},#{datasource},#{visiable},#{searchable},#{shareable},1
+		select #{name},#{propertyId},#{widgetId},#{configId},#{required},#{dataSource},#{visiable},#{searchable},#{shareable},1
 		from dual 
 		where not exists(select * from Widget where name=#{name})
 	</insert>
@@ -54,11 +189,16 @@
 				   where WidgetId=#{widgetId} and ConfigId=#{configId})
 	</insert>
 	
+	<select id="findWidgetByName" resultType="com.jq.entity.JQWidget">
+		select w.* 
+		from Widget w
+		where w.name=#{name}
+	</select>
 
 
-
-
-
+	<update id="deleteConfig">
+		update Config set Valid = 0 where id=#{configId}
+	</update>
 
 	<!--update id="updateModule">
 		update Module set name=#{module.name},urlid=#{urlId} where parentid=#{pid} and id=#{module.id}

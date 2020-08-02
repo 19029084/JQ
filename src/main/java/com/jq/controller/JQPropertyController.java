@@ -30,10 +30,23 @@ import javax.annotation.*;
 
 import com.jq.utils.*;
 
+import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
+
+import com.jq.api.JQPropertyBase;
+import com.jq.api.JQPropertyOptionBase;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+
+
 @JQBaseResponse
 @RestController
-@Api(tags = "Property Management API")
-@RequestMapping("/api/v1")
+@Api(tags = "字典管理模块")
+@RequestMapping("/api/v2")
 public class JQPropertyController
 {
 
@@ -43,11 +56,33 @@ public class JQPropertyController
 	@GetMapping("/properties")
 	@ApiOperation("获取所有字段信息")
 	@ResponseBody
-	List<JQProperty> getProperties()
+	Object getProperties( @RequestParam(value="pageNum",defaultValue="1") Integer pageNum,
+			       @RequestParam(value="pageSize",defaultValue="10") Integer pageSize)
 	{
 	
-		return m_service.getProperties();
-
+		PageHelper.startPage(pageNum,pageSize);
+		
+		List<HashMap<String,Object>> result = new ArrayList<HashMap<String,Object>>();
+		
+		List<JQProperty> properties= m_service.getProperties();
+		
+		for(int i=0;i<properties.size();i++)
+		{
+			HashMap<String, Object> output = new HashMap<String,Object>();
+		
+			JQProperty property = properties.get(i);
+			
+			m_service.loadPropertyOptions(property);
+						
+			property.toBase(output,true);
+			
+			result.add(output);
+		
+		}
+		
+		PageInfo< HashMap<String,Object> > pageInfo= new PageInfo<>(result);
+		
+		return pageInfo;
 	}
 
 
@@ -55,11 +90,18 @@ public class JQPropertyController
 	@PostMapping("/properties")
 	@ApiOperation("创建新的字段")
 	@ResponseBody
-	int createProperties(@RequestBody List<JQProperty> properties)
+	Object createProperties(@RequestBody List<JQPropertyBase> properties)
 	{
-	
-		return m_service.createProperties(properties);
-
+		List<Integer> ids =new ArrayList<Integer>();
+		for(int i=0;i<properties.size();i++)
+		{
+			JQProperty property = new JQProperty(properties.get(i));
+		
+			ids.add(m_service.createProperty(property));
+		
+		}
+		
+		return ids;
 	}
 	
 	
@@ -74,13 +116,13 @@ public class JQPropertyController
 	}
 	
 	
-	@DeleteMapping("/properties")
-	@ApiOperation("删除字段")
+	@DeleteMapping("/properties/{propertyId:\\d+}")
+	@ApiOperation("删除字典")
 	@ResponseBody
-	int deleteProperties(@RequestBody List<JQProperty> properties)
+	public void deleteProperties(@PathVariable int propertyId)
 	{
 	
-		return m_service.deleteProperties(properties);
+		m_service.deleteProperty(propertyId);
 
 	}
 
@@ -111,31 +153,31 @@ public class JQPropertyController
 
 	}
 	
-	@PutMapping("/properties/{propertyId:\\d+}")
+	@PutMapping("/properties/{propertyId:\\d+}/options/{optionId:\\d+}")
 	@ApiOperation("更新某字段的选项值")
 	@ResponseBody
-	int updatePropertyOptions(@PathVariable String propertyId,
+	int updatePropertyOptions(@PathVariable int propertyId,@PathVariable int optionId,
 	                          @RequestBody List<JQPropertyOption> propertyOptions)
 	{
-	
+		
+		
 		return m_service.updatePropertyOptions(propertyId,propertyOptions);
 
 	}
 	
 	
-	@DeleteMapping("/properties/{propertyId:\\d+}")
+	@DeleteMapping("/properties/{propertyId:\\d+}/options")
 	@ApiOperation("删除某字段的选项值")
 	@ResponseBody
-	int deletePropertyOptions(@PathVariable String propertyId, 
-	                          @RequestBody List<JQPropertyOption> propertyOptions)
+	Object deletePropertyOptions(@PathVariable int propertyId, 
+	                          @RequestBody List<Integer> ids)
 	{
 	
-		return m_service.deletePropertyOptions(propertyId,propertyOptions);
+		m_service.deletePropertyOptionByIds(propertyId,ids);
+		
+		return 0;
 
 	}
-
-
-
 
 }
 

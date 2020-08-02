@@ -41,11 +41,13 @@ public class JQModuleData extends JQModuleConfig
 		
 
 	
-	public void setParentId(int parentId)
-	{
+
 	
-		this.parentId=parentId;
-	}
+	//public void setRowId(int rowId)
+	//{
+	
+	//	this.rowId=rowId;
+	//}
 	
 	//public List<JQProperty> getData()
 	//{
@@ -67,8 +69,14 @@ public class JQModuleData extends JQModuleConfig
 	}
 
 	
-	private int parentId;
+	//private int parentId;
+	//private int rowId;
 	
-	//private HashMap<Integer,JQProperty> row = new HashMap<Integer,JQProperty>();
+	//public Object toBase()
+	//{
+		
+	//	return null;
+	
+	//}
 	
 }

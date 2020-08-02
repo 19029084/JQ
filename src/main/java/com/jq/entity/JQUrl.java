@@ -14,19 +14,19 @@ public class JQUrl
 
 	private int id;
 
-	private String url;
+	private String name;
 
 	private String description;
 
-	public JQUrl(String url)
+	public JQUrl(String name)
 	{
 	
-		this.url = url;
+		this.name = name;
 	}
 	
-	public String getUrl()
+	public String getName()
 	{
-		return url;
+		return name;
 	}
 	
 	public int getId()

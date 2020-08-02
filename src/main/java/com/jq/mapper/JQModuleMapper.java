@@ -4,6 +4,7 @@ import com.jq.entity.JQModule;
 import com.jq.entity.JQModuleData;
 import com.jq.entity.JQModuleConfig;
 import com.jq.entity.JQPropertyOption;
+import com.jq.entity.JQPropertyValue;
 
 
 import com.jq.entity.JQProperty;
@@ -25,30 +26,52 @@ import java.util.List;
 
 @Mapper
 public interface JQModuleMapper{
+
+	List<JQModule> getModules(int pid,String username);
+	int createModule(JQModule module,int pid,int urlId);
+	int updateModule(JQModule module,int parentId,int urlId);
+	int deleteModule(JQModule module);
 	
-	List<JQModule> getModules(String pid);
-	int createModule(JQModule module,String pid,String urlId);
-	int updateModule(JQModule module,String pid,String urlId);
-	int deleteModule(JQModule module,String pid);
-	JQModule getModuleByName(String name,String pid);
+	void deleteModuleById(int moduleId);
+	
+	JQModule findModuleByName(String name);
+	
+	JQModule findModuleById(int moduleId);
 	
 	
 	
-	List<JQModuleConfig> getModuleConfig(String mid);
+	List<JQModuleConfig> getModuleConfig(int mid);
+	
+	JQModuleConfig findModuleConfigByName(String module, String config);
+	JQModuleConfig findModuleConfigById(int moduleId, int configId);
+	
 	//int addModuleConfig(String mid,JQModuleConfig config);
-	int addModuleConfig(String mid, String sortKey, String propertyId,String configId );
-	//int updateModuleConfig(String mid,JQModuleConfig config);
+	int createModuleConfig(JQModuleConfig moduleConfig);
+	int updateModuleConfig(int moduleId,JQModuleConfig config);
 	int deleteModuleConfig(String mid,JQModuleConfig config);
 	
-	List<JQModuleData> getModuleData(String mid,String configId);
+	List<JQModuleData> getModuleData(String tableName,int moduleId,int configId);
 	
-	int addModuleData(int fieldId, int parentId,String value);
+	int addModuleData(String tableName,int fieldId, int propertyId, int rowId, int parentId,String value);
 	
-	int updateModuleData(String mid, int rowId,JQProperty property);
-	int deleteModuleData(String mid, int rowId, JQProperty property);
+	int updateModuleData(String tableName,int rowId, int fieldId,int widgetId, String value);
+	
+	int deleteModuleData(String tableName,int moduleId, int configId,int rowId);
+	
+	JQModuleData getModuleDataByRowId(String tableName,int moduleId,int configId,int rowId);
 	
 	
-	int getTotalQuantity(String mid,String configId);
+	int getTotalQuantity(String tableName,int moduleId,int configId);
+	
+	List<Integer> queryRowIds(String tableName,int moduleId, int configId, int widgetId,int propertyId,String value, List<Integer> rowIds);
+	
+	List<Integer> queryRowIdsByPropertyValue(String tableName,int moduleId, int configId, JQPropertyValue propertyValue, List<Integer> rowIds);
 	
 
+	
+	int existDataTable(@Param("tableName") String tableName);
+	
+	int dropDataTable(@Param("tableName") String tableName);
+	
+	int createDataTable(@Param("tableName") String tableName);
 }

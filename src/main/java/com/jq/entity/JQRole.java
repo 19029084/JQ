@@ -13,11 +13,10 @@ import lombok.Data;
 public class JQRole
 {
 	private int id;
-	//private String code;
-	//private String url;	
+
 	private String name;
-	//private String nameCN;
-		
+
+	private String remark;
 	//@Basic
         //@Column(name = "name")
         //public String getName() {
@@ -26,7 +25,7 @@ public class JQRole
         //public void setName(String name) {
         //    this.name = name;
         //}
-        
+
         //@Basic
         //@Column(name = "name_cn")
         //public String getNameCN() {
@@ -35,11 +34,11 @@ public class JQRole
         //public void setNameCN(String name_cn) {
         //    this.nameCN = name_cn;
         //}
-	
+
 	//@JsonBackReference
 	//@ManyToMany(mappedBy ="roles")
 	//private List<JQUser> users;
-	
+
 	//@ManyToMany
 	//@JoinTable(
 	//	name= "sys_permission",

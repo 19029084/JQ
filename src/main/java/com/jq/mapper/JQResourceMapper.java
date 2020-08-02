@@ -1,37 +1,29 @@
 package com.jq.mapper;
 
 
-import com.jq.entity.JQUrl;
-import com.jq.entity.JQRole;
-
-import com.jq.entity.JQPropertyOption;
-import com.jq.entity.JQModuleConfig;
-
-import com.jq.entity.JQUser;
-import com.jq.entity.JQPermission;
-
-
-import org.apache.ibatis.annotations.Insert;
+import com.jq.entity.*;
+import com.jq.vo.JQRoleReq;
+import com.jq.vo.JQRoleRes;
+import com.jq.vo.JQUserRes;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 @Mapper
 public interface JQResourceMapper
 {
-	JQUser findUserByName(String name);
+	JQUser findUserByName(String name, Integer id);
 	
 	int createUser(JQUser user);
 	
-	JQRole findRoleByName(String name);
+	JQRole findRoleByName(String name, Integer id);
 	
-	List<JQRole> findAllRoles();
+	List<JQRoleRes> findAllRoles(String name);
 	
 	List<JQRole> findRolesByUserId(int userId);
 	
 	int createRole(JQRole role);
+
+	int createRoleVo(JQRoleReq role);
 	
 	int assignRole(int userId, int roleId);
 	
@@ -40,10 +32,17 @@ public interface JQResourceMapper
 	List<JQPermission> findPermissionsByUserId(int userId);
 	
 	JQPermission findPermissionByName(String name);
+
+	List<JQPermission> findPermissionByRoleId(int roleId);
+
+	JQPermission findPermissionById(int id);
 	
 	int createPermission(JQPermission permission,int parentId);
-	
-	int assignPermission(int roleId, int permissonId);
+
+	//int createPermissionM(@Param("permission") JQPermission permission,@Param("parentId") int parentId);
+	//	int createPermissionM(@Param("int") int id,@Param("name") String name,@Param("url") String url,@Param("parentId") int parentId);
+
+	int assignPermission(int roleId, int permissionId);
 	
 	//List<JQProperty> getProperties();
 	//int createProperty(JQProperty property);	
@@ -65,5 +64,29 @@ public interface JQResourceMapper
 	int createUrl(JQUrl jqUrl);
 	
 	JQUrl findUrlByName(String name);
+	int updateUrl(JQUrl url);
 
+    int deleteRole(int id);
+
+    int deleteRolePermission(int id);
+
+	int updateRole(JQRoleReq role);
+
+	JQRoleRes findRoleById(int id);
+
+	List<JQRolePermission> findRolePermissionByRoleId(int id);
+
+	List<JQUserRes> findUsersBySearch(String userName, String nickName);
+
+	int deleteUser(int id);
+
+	int deleteUserRole(int id);
+
+	JQUser findUserById(int id);
+
+	int updateUser(JQUser user);
+
+	int updateUserPassword(int id, String password);
+
+	int updateUserStatus(int id, Integer status);
 }

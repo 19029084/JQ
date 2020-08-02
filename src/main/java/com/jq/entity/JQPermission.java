@@ -21,6 +21,10 @@ public class JQPermission
 	private String name;
 	//@Column(name="url")
 	private String url;
+
+	private int parentid;
+
+	private int urlId;
 	
 	public int getId()
 	{
@@ -32,18 +36,24 @@ public class JQPermission
 		this.id=id;	
 	}
 	
-	
-	//public String getCode()
-	//{
-	//	return code;
-	//}
+	public void setUrlId(int urlId)
+	{
+		this.urlId=urlId;
+	}
 
-	//public void setCode(String code)
-	//{
-	//	this.code = code;	
-	//}
-	
-	
+	public int getUrlId()
+	{
+		return this.urlId;
+	}
+
+	public int getParentid() {
+		return parentid;
+	}
+
+	public void setParentid(int parentid) {
+		this.parentid = parentid;
+	}
+
 	public String getName()
 	{
 		return name;
@@ -57,7 +67,7 @@ public class JQPermission
 	
 	public String getUrl()
 	{
-		return url;
+		return url==null?"xxx":url;
 	}
 	
 	public void setUrl(String url)

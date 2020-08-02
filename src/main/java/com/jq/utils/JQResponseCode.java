@@ -12,7 +12,11 @@ public enum JQResponseCode {
     /**
      * 所有无法识别的异常默认的返回状态码
      */
-    SERVICE_ERROR(50000, "服务器异常");
+    SERVICE_ERROR(50000, "服务器异常"),
+    /**
+     * 重复问题
+     */
+    NAME_DUPLICATE(10002, "名称重复");
     /**
      * 状态码
      */

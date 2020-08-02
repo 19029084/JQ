@@ -6,48 +6,72 @@ import com.jq.entity.JQPropertyType;
 import java.util.List;
 import java.util.ArrayList;
 
-public class JQProperty
+import java.util.Map;
+import java.util.HashMap;
+
+import com.jq.api.JQPropertyBase;
+
+import lombok.Data;
+
+@Data
+public class JQProperty extends JQObject
 {
 
 	public JQProperty()
 	{
 		propertyType = new JQPropertyType();
 		propertyType.setType("text");
+		base = new JQPropertyBase();
+	}
+	
+	public JQProperty(JQPropertyBase base)
+	{
+		propertyType = new JQPropertyType();
+		propertyType.setType("text");	
+		
+		this.base=base;			
 	}
 
 	public void setId(int id)
 	{
-		this.id=id;
+		this.base.setId(id);
 	}
 
 
 	public int getId()
 	{
-		return id;
+		return base.getId();
 	}
 
 
 	public void setName(String name)
 	{
-		this.name=name;
+		this.base.setName(name);
 	}
 
 
 	public String getName()
 	{
-		return name==null?reference:name;
+		return base.getName();
 	}
 	
 	public String getValue()
 	{
-		return this.value==null?"":value;		
+		return base.getValue()==null?"":base.getValue();		
 	}
 	
 	public void setValue(String value)
 	{
-		this.value=value;		
+		this.base.setValue(value);		
 	}
-	
+	public void setType(String type)
+	{
+		propertyType.setType(type);
+	}
+	public String getType()
+	{
+		return propertyType.getType();
+	}	
 	public void setPropertyType(JQPropertyType propertyType)
 	{
 		this.propertyType = propertyType;
@@ -59,9 +83,14 @@ public class JQProperty
 	}	
 	
 	
-	public void setReference(String reference)
+	public void setRef(String ref)
 	{
-		this.reference = reference;
+		this.ref=ref;
+	}
+	
+	public String getRef()
+	{
+		return this.ref;
 	}
 	
 	public void addOption(JQPropertyOption option)
@@ -84,16 +113,115 @@ public class JQProperty
 	{
 		return options;
 	}	
-
-	private int id;
-	private JQPropertyType propertyType;
-	private String name;
-	private String value;
 	
-	private String reference;
+	//public JQPropertyValue toBase()
+	//{
+	//	JQPropertyValue pv = new JQPropertyValue();
+	//	pv.setName(name);
+	//	pv.setValue(value);
+		
+	//	return pv;
+		
+	//}
+	
+	protected int findReference()
+	{
+		return 0;
+	}
+
+	public String getDescription()
+	{
+		return base.getDescription();
+	}
+	
+	
+	public String getStatus()
+	{
+		return base.getStatus();
+	}
+	
+	
+	public String getCode()
+	{
+		return base.getCode();
+	}
+	
+	
+		public String getSortKey()
+	{
+		return base.getSortKey();
+	}
+	
+	
+	
+	public void toBase(Map<String,Object> output, boolean explore)
+	{
+		output.put("name",base.getName());
+		output.put("value",base.getValue());
+		output.put("type",getType());
+		output.put("code",base.getCode());
+		output.put("sortKey",base.getSortKey());		
+		output.put("status",base.getStatus());
+		output.put("description",base.getDescription());
+		output.put("numOfReference",findReference());
+		
+		if(explore)
+		{
+			List< Map<String,Object> > optionList = new ArrayList< Map<String,Object> >();
+			List<JQPropertyOption> options = getOptions();
+			if(options != null)
+			{
+				for(int i=0;i<options.size();i++)
+				{
+					Map<String,Object> optionMap = new HashMap<String,Object>();
+					
+					JQPropertyOption op = options.get(i);
+					
+					op.toBase(optionMap,explore);
+					
+					optionList.add(optionMap);
+				}
+			}
+			output.put("numOfOption",optionList.size());
+			output.put("options",optionList);
+		}
+	
+	}
+	
+/*	public String getSortKey()
+	{
+		return this.sortKey;
+	}
+	
+	public String getCode()
+	{
+		return code;
+	}
+	
+	public String getDescription()
+	{
+		return description;
+	}
+	
+	public String getStatus()
+	{
+		return status;
+	}
+*/	
+	private JQPropertyType propertyType;
+	
+	private String ref;
 
 	private List<JQPropertyOption> options;
+	
+	private JQPropertyBase base;
+	
+	
+	
+	
+	
 
+	
 
 
 

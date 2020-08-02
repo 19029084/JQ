@@ -26,7 +26,7 @@ public interface JQPropertyMapper
 		
 	int updateProperty(JQProperty property);
 		
-	int deleteProperty(JQProperty property);
+	int deleteProperty(int id);
 	
 
 	
@@ -35,12 +35,16 @@ public interface JQPropertyMapper
 
 	
 		
-	List<JQPropertyOption> findProperyOptionsById(int pid);
+	List<JQPropertyOption> findProperyOptionsById(int propertyId);
 	
-	int assignPropertyOption(int pid,JQPropertyOption option);
+	JQPropertyOption findPropertyOptionByValue(int propertyId,int parentId, String value);
 	
-	int updatePropertyOption(String pid,JQPropertyOption option);
-	int deletePropertyOption(String pid,JQPropertyOption option);
+	int assignPropertyOption(int propertyId, int parentId, JQPropertyOption option);
+	
+	int updatePropertyOption(int propertyId,JQPropertyOption option);
+	//int deletePropertyOption(String pid,JQPropertyOption option);
+	
+	void deletePropertyOption(int propertyId,int optionId);
 	
 	
 	List<JQPropertyType> findAllProperyTypes();
@@ -48,7 +52,10 @@ public interface JQPropertyMapper
 		
 	int createPropertyType(JQPropertyType type);	
 	int updatePropertyType(JQPropertyType type);	
-	int deletePropertyType(JQPropertyType type);	
+	int deletePropertyType(JQPropertyType type);
+	
+	
+		
 
 	
 	

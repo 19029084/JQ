@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.jq.mapper.JQWidgetMapper">
+
+	<resultMap id="JQWidget" type="com.jq.entity.JQWidget">
+		<id property="id" column="widgetId"/>
+		<result property="name" column="name" />
+		<result property="value" column="value" />
+		<result property="propertyId" column="propertyId" />
+		<result property="widgeId" column="widgeId" />
+
+		<result property="configId" column="configId" />
+		<result property="dataSource" column="dataSource" />
+
+		<result property="visible" column="visible" />
+		<result property="searchable" column="searchable" />
+		<result property="shareable" column="shareable" />
+		<result property="required" column="required" />
+
+	</resultMap>
+
+	<select id="getWidgets" resultMap="JQWidget">
+		select * from Widget where Shareable = 1
+	</select>
+
+	<select id="getWidgetByName" resultMap="JQWidget">
+		select * from Widget where  name=#{name}
+	</select>
+	
+	
+	<insert id="assignProperty">
+		insert into WidgetProperty(WidgetId,PropertyId,Valid) 
+		select #{widgetId},#{propertyId},1
+		from dual
+		where not exists (select * from WidgetProperty 
+				   where WidgetId=#{widgetId} and PropertyId=#{propertyId})
+	</insert>
+
+
+</mapper>
+
+
+

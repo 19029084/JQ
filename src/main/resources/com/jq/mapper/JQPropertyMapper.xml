@@ -10,22 +10,23 @@
 
 	<resultMap id="JQProperty" type="com.jq.entity.JQProperty">
 		<id property="id" column="propertyID"/>
-		<result property="name" column="propertyName" />		
+		<result property="name" column="propertyName" />
+		<result property="value" column="propertyValue"/>		
 		<association property="propertyType" javaType="com.jq.entity.JQPropertyType">
 			<id property="id" column="propertyTypeID"/>
-			<result property="type" column="propertyType" />
+			<result property="type" column="propertyType" />			
 		</association>
 	</resultMap>
 
 	<select id="findAllProperties" resultMap="JQProperty">	
-		select p.id as propertyID, p.name as propertyName, t.type as propertyType, t.id as propertyTypeID 
+		select p.id as propertyID, p.name as propertyName, p.value as propertyValue, t.type as propertyType, t.id as propertyTypeID
 		from Property p, PropertyType t 
 		where p.valid=1 and p.type_id = t.id
 	</select>
 	
 	<select id="findPropertyByName" resultMap="JQProperty">
 	
-		select p.id as propertyID, p.name as propertyName, t.type as propertyType, t.id as propertyTypeID 
+		select p.id as propertyID, p.name as propertyName, p.value as propertyValue, t.type as propertyType, t.id as propertyTypeID 
 		from Property p, PropertyType t 
 		where Name=#{name} and p.type_id = t.id
 	
@@ -35,8 +36,8 @@
 		<selectKey resultType="int" keyProperty="id" order="AFTER">
 			SELECT LAST_INSERT_ID()		
 		</selectKey>
-		insert into Property(Name,type_id,Valid) 
-		select #{name},#{propertyType.id},1 from dual 
+		insert into Property(Name,Value,type_id,description,status,code,sortkey,Valid) 
+		select #{name},#{value}, #{propertyType.id},#{description},#{status},#{code},#{sortKey},1 from dual 
 		where not exists ( select * from Property where Name=#{name})
 	</insert>		
 	
@@ -112,23 +113,35 @@
 
 
 
-	<resultMap id="JQPropertyOption" type="com.jq.entity.JQPropertyOption">		
+	<resultMap id="JQPropertyOption" type="com.jq.entity.JQPropertyOption">
+		<id property="id" column="id" />			
 		<result property="value" column="value" />
-		<result property="propertyId" column="propertyId" />	
-		<result property="id" column="id" />	
+		<result property="propertyId" column="propertyId" />
+		<result property="parentId" column="parentId" />	
+		
 				
 	</resultMap>
 		
-	<select id="findProperyOptionsById" resultMap="JQPropertyOption">	
-		select id, value,PID as propertyId from PropertyOption where PID = #{pid} and valid=1
+	<select id="findPropertyOptionByValue" resultMap="JQPropertyOption">
+	
+		select * 
+		from PropertyOption 
+		where value=#{value} and PropertyId=#{propertyId} and ParentId=#{parentId}
+	
 	</select>
+
+	<select id="findProperyOptionsById" resultMap="JQPropertyOption">	
+		select id, value,propertyId,parentId from PropertyOption where propertyId = #{propertyId} and valid=1
+	</select>	
 	
-	
-	<insert id="assignPropertyOption">	
-		insert into PropertyOption(value,PID,Valid) 
-		select #{option.value},#{pid},1
+	<insert id="assignPropertyOption">
+		<selectKey resultType="int" keyProperty="option.id" order="AFTER">
+			SELECT LAST_INSERT_ID()		
+		</selectKey>			
+		insert into PropertyOption(value,PropertyId,ParentId,Valid) 
+		select #{option.value},#{propertyId},#{parentId},1
 		from dual
-		where not exists ( select * from PropertyOption where value=#{option.value} and PID=#{pid})
+		where not exists ( select * from PropertyOption where value=#{option.value} and PropertyId=#{propertyId} and ParentId=#{parentId})
 	</insert>
 
 	<update id="updatePropertyOption">
@@ -136,10 +149,11 @@
 		where PID= #{pid} and id=#{option.id}		
 	</update>
 	
+
 	<update id="deletePropertyOption">
 		update PropertyOption set Valid =0
-		where PID= #{pid} and id=#{option.id}	
-	</update>	
+		where propertyId= #{propertyId} and id=#{optionId}	
+	</update>
 
 	<resultMap id="JQPropertyType" type="com.jq.entity.JQPropertyType">		
 		<result property="type" column="type" />

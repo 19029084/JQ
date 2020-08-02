@@ -10,66 +10,239 @@
 
 	<resultMap id="JQModule" type="com.jq.entity.JQModule">
 		<id property="id" column="id"/>
-		<result property="pid" column="pid" />
+		<result property="parentId" column="pid" />
 		<result property="name" column="name" />
 		<result property="path" column="path" />
+		<result property="icon" column="icon" />
+		<result property="sortKey" column="sortkey"/>
+		<result property="status" column="status"/>
+		<result property="urlId" column="urlId"/>
 	</resultMap>
 
-	<select id="getModules" resultMap="JQModule">	
-		select m.id as id,m.name as name,u.url as path, m.parentid as pid 
+	<select id="getModules" resultMap="JQModule">
+		select DISTINCT m.id as id,m.name as name,l.name as path,m.icon as icon, m.parentid as pid,m.sortkey as sortkey,m.status as status, u.id as urlId
+		 from sys_user u
+		 join sys_user_role sur on u.id=sur.user_id
+		 join sys_role r on sur.role_id = r.id
+		 join sys_role_permission srp on srp.role_id=r.id
+		 join sys_permission p on p.id = srp.permission_id
+		 join sys_url l on p.url_id=l.id
+		 join Module m on l.id= m.URLID
+		where u.username=#{username}  and  m.parentid= #{pid} and m.Valid = 1
+		order by m.parentid, m.sortkey
+	</select>
+
+	<select id="findModuleByName" resultMap="JQModule">
+		select m.id as id,m.name as name,u.name as path,m.icon as icon, m.parentid as pid,m.sortkey as sortkey,m.status as status, u.id as urlId
 		from Module m left join sys_url u on (m.urlid=u.id)
-		where m.parentid= #{pid} and m.Valid = 1
+		where m.Valid = 1 and m.name=#{name}
 	</select>
 	
-	<select id="getModuleByName" resultMap="JQModule">
-		select m.id as id,m.name as name,u.url as path, m.parentid as pid
+	<select id="findModuleById" resultMap="JQModule">
+		select m.id as id,m.name as name,u.name as path,m.icon as icon, m.parentid as pid,m.sortkey as sortkey,m.status as status, u.id as urlId
 		from Module m left join sys_url u on (m.urlid=u.id)
-		where m.parentid= #{pid} and m.Valid = 1 and m.name=#{name}
+		where m.id= #{moduleId} and m.Valid = 1
 	</select>
-	
-	
-	<insert id="createModule" keyProperty="module.id" useGeneratedKeys="true" >
-		insert into Module(name,parentid,urlid,valid) 
-		select #{module.name},#{pid},#{urlId},1
+		
+	<insert id="createModule">
+		<selectKey resultType="int" keyProperty="module.id" order="AFTER">
+			SELECT LAST_INSERT_ID()		
+		</selectKey>		
+		insert into Module(name,parentid,urlid,icon,sortkey,status,valid)
+		select #{module.name},#{pid},#{urlId},#{module.icon},#{module.status},#{module.sortKey},1
 		from dual 
 		where not exists(select * from Module where name=#{module.name})
 	</insert>
 	
 	<update id="updateModule">
-		update Module set name=#{module.name},urlid=#{urlId} where parentid=#{pid} and id=#{module.id}
+		update Module 
+		set name=#{module.name}, icon = #{module.icon},sortkey=#{module.sortKey},status=#{module.status}, parentId=#{parentId},urlid=#{urlId}
+		where id=#{module.id}
 	</update>
 	
 	<update id="deleteModule">
-		update Module set Valid = 0 where parentid=#{pid} and id=#{module.id}
+		update Module set Valid = 0 where id=#{module.id}
 	</update>
+
+	<update id="deleteModuleById">
+		update Module set Valid = 0 where id=#{moduleId}
+	</update>
+	
 	
 	<resultMap id="JQModuleConfig" type="com.jq.entity.JQModuleConfig">
 		<id property="id" column="mcid"/>
 		<result property="moduleId" column="moduleId" />
 		<association property="jqConfig" javaType="com.jq.entity.JQConfig">
-			<id property="id" column="id"/>		
-			<result property="name" column="name" />
-			<result property="title" column="title" />
-			<result property="valid" column="valid" />
+			<id property="id" column="configId"/>		
+			<result property="name" column="configName" />
+			<result property="title" column="configTitle" />
+			<result property="valid" column="configValid" />
+			<result property="parentId" column="configParentId" />
+			
+			<collection property="columns" javaType="java.util.ArrayList" ofType="com.jq.entity.JQColumn">
+
+				<id property="id" column="cwid"/>
+				<result property="sortKey" column="sortKey" />
+				<!--result property="widgetId" column="widgetId" /-->	
+				
+				<collection property="widgets" javaType="java.util.ArrayList"  ofType="com.jq.entity.JQWidget">
+					<id property="id" column="widgetId"/>
+					<result property="name" column="widgetName"/>
+					<result property="value" column="propertyValue"/>
+					<result property="moduleId" column="widgetModule" />
+					<result property="configId" column="widgetConfig" />
+					<result property="widgetId" column="widgetWidget" />					
+					<result property="propertyId" column="widgetProperty" />
+					<result property="visiable" column="visiable" />
+					<result property="searchable" column="searchable" />				
+					<result property="shareable" column="shareable" />
+					<result property="required" column="required" />				
+					<result property="dataSource" column="dataSource" />
+					<!--result property="name" column="widgeName" />				
+					<result property="value" column="widgetValue" />
+					<result property="propertyId" column="propertyId" /-->
+					
+					<!--collection property="properties" javaType="java.util.ArrayList"  ofType="com.jq.entity.JQProperty" >
+						<id property="id" column="propertyId"/>
+						<result property="name" column="propertyName"/>
+						<result property="value" column="propertyValue"/>						
+						<association property="propertyType" javaType="com.jq.entity.JQPropertyType">			
+							<id property="id" column="propertyTypeId" />		
+							<result property="type" column="propertyTypeName" />
+						</association>			
+					</collection-->
+				</collection>
+			
+			</collection>
 		</association>
 		
 	</resultMap>	
 	
-	
-	
-	<select id="getModuleConfig" resultMap="JQModuleConfig">	
-		select mc.id as mcid, mc.moduleId as moduleId, c.id as id, c.name as name, c.title as tile,c.valid as valid
-		from ModuleConfig mc, Config c
-		where mc.moduleid= #{mid} and mc.valid = 1 and mc.configId = c.id
+	<!--select id="getModuleConfig" resultMap="JQModuleConfig">	
+		select mc.id as mcid, mc.moduleId as moduleId,
+		       c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid, c.parentId as configParentId
+		       cw.id as cwid,cw.sortKey as sortKey,cw.widgetId as widgetId, 
+		       w.name as widgetName,w.moduleID as widgetModule, w.configId as widgetConfig, w.widgetId as widgetWidget, w.propertyId as widgetProperty,
+		       w.visiable as visiable, w.searchable as searchable,w.shareable as shareable,w.required as required,w.dataSource as dataSource,
+		       
+		       p.id as propertyId,p.name as propertyName, p.value as propertyValue,
+		       pt.id as propertyTypeId, pt.type as propertyTypeName
+		from ModuleConfig mc 
+		left join Config c on mc.configId=c.id
+		left join ConfigWidget cw on c.id=cw.configId
+		left join Widget w on cw.widgetId = w.id
+		left join WidgetProperty wp on w.id=wp.widgetId
+		left join Property p on wp.propertyId=p.id
+		left join PropertyType pt on p.type_id = pt.id 
+		where mc.moduleid= #{mid} and mc.valid = 1
+		order by cw.sortKey
 	</select>
+
+
+	<select id="findModuleConfigByName" resultMap="JQModuleConfig">	
+		select mc.id as mcid, mc.moduleId as moduleId,
+		       c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid,
+		       cw.id as cwid,cw.sortKey as sortKey,cw.widgetId as widgetId, 
+		       w.name as widgetName,w.moduleID as widgetModule, w.configId as widgetConfig, w.widgetId as widgetWidget, w.propertyId as widgetProperty,
+		       w.visiable as visiable, w.searchable as searchable,w.shareable as shareable,w.required as required,w.dataSource as dataSource,
+		       p.id as propertyId,p.name as propertyName, p.value as propertyValue,
+		       pt.id as propertyTypeId, pt.type as propertyTypeName
+		from Module m  
+		left join ModuleConfig mc on m.id =mc.moduleId
+		left join Config c on mc.configId=c.id
+		left join ConfigWidget cw on c.id=cw.configId
+		left join Widget w on cw.widgetId = w.id
+		left join WidgetProperty wp on w.id=wp.widgetId
+		left join Property p on wp.propertyId=p.id
+		left join PropertyType pt on p.type_id = pt.id 
+		where m.name= #{module} and mc.valid = 1 and c.name=#{config}
+		order by cw.sortKey
+	</select>
+
+	<select id="findModuleConfigById" resultMap="JQModuleConfig">	
+		select mc.id as mcid, mc.moduleId as moduleId,
+		       c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid,
+		       cw.id as cwid,cw.sortKey as sortKey,cw.widgetId as widgetId, 
+		       w.name as widgetName,w.moduleID as widgetModule, w.configId as widgetConfig, w.widgetId as widgetWidget, w.propertyId as widgetProperty,
+		       w.visiable as visiable, w.searchable as searchable,w.shareable as shareable,w.required as required,w.dataSource as dataSource,
+		       p.id as propertyId,p.name as propertyName, p.value as propertyValue,
+		       pt.id as propertyTypeId, pt.type as propertyTypeName
+		from ModuleConfig mc 
+		left join Config c on mc.configId=c.id
+		left join ConfigWidget cw on c.id=cw.configId
+		left join Widget w on cw.widgetId = w.id
+		left join WidgetProperty wp on w.id=wp.widgetId
+		left join Property p on wp.propertyId=p.id
+		left join PropertyType pt on p.type_id = pt.id 
+		where mc.moduleid= #{mid} and mc.valid = 1 and c.id=#{configId}
+		order by cw.sortKey
+	</select-->
+
+
+
+	<select id="getModuleConfig" resultMap="JQModuleConfig">	
+		select mc.id as mcid, mc.moduleId as moduleId,
+		       c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid, c. parentId as configParentId,
+		       cw.id as cwid,cw.sortKey as sortKey,cw.widgetId as widgetId, 
+		       w.name as widgetName,w.moduleID as widgetModule, w.configId as widgetConfig, w.widgetId as widgetWidget, w.propertyId as widgetProperty,
+		       w.visiable as visiable, w.searchable as searchable,w.shareable as shareable,w.required as required,w.dataSource as dataSource
+
+		from ModuleConfig mc 
+		left join Config c on mc.configId=c.id
+		left join ConfigWidget cw on c.id=cw.configId
+		left join Widget w on cw.widgetId = w.id
+
+		where mc.moduleid= #{mid} and mc.valid = 1
+		order by cw.sortKey
+	</select>
+
+
+	<select id="findModuleConfigByName" resultMap="JQModuleConfig">	
+		select mc.id as mcid, mc.moduleId as moduleId,
+		       c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid,c. parentId as configParentId,
+		       cw.id as cwid,cw.sortKey as sortKey,cw.widgetId as widgetId, 
+		       w.name as widgetName,w.moduleID as widgetModule, w.configId as widgetConfig, w.widgetId as widgetWidget, w.propertyId as widgetProperty,
+		       w.visiable as visiable, w.searchable as searchable,w.shareable as shareable,w.required as required,w.dataSource as dataSource
+		from Module m  
+		left join ModuleConfig mc on m.id =mc.moduleId
+		left join Config c on mc.configId=c.id
+		left join ConfigWidget cw on c.id=cw.configId
+		left join Widget w on cw.widgetId = w.id
+		where m.name= #{module} and mc.valid = 1 and c.name=#{config}
+		order by cw.sortKey
+	</select>
+
+	<select id="findModuleConfigById" resultMap="JQModuleConfig">	
+		select mc.id as mcid, mc.moduleId as moduleId,
+		       c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid,c. parentId as configParentId,
+		       cw.id as cwid,cw.sortKey as sortKey,cw.widgetId as widgetId, 
+		       w.name as widgetName,w.moduleID as widgetModule, w.configId as widgetConfig, w.widgetId as widgetWidget, w.propertyId as widgetProperty,
+		       w.visiable as visiable, w.searchable as searchable,w.shareable as shareable,w.required as required,w.dataSource as dataSource
+		from ModuleConfig mc 
+		left join Config c on mc.configId=c.id
+		left join ConfigWidget cw on c.id=cw.configId
+		left join Widget w on cw.widgetId = w.id
+		where mc.moduleid= #{moduleId} and mc.valid = 1 and c.id=#{configId}
+		order by cw.sortKey
+	</select>
+
 	
-	<insert id="addModuleConfig">
+	<insert id="createModuleConfig">
+		<selectKey resultType="int" keyProperty="id" order="AFTER">
+			SELECT LAST_INSERT_ID()		
+		</selectKey>
 		insert into ModuleConfig(ModuleId,PropertyId,ConfigId,SortKey,Valid) 
-		select #{mid},#{propertyId},#{configId},#{sortKey},1
+		select #{moduleId},-1,#{configId},-1,1
 		from dual
 		where not exists (select * from ModuleConfig 
-				   where ModuleId = #{mid} and PropertyId=#{propertyId} and ConfigId=#{configId})
+				   where ModuleId = #{moduleId} and ConfigId=#{configId})
 	</insert>
+	
+	<update id="updateModuleConfig">
+		update ModuleConfig 
+		set configId=#{config.configId}
+		where id=#{config.id} and moduleId=#{moduleId}
+	</update>
 	
 	<update id="deleteModuleConfig">	
 		update ModuleConfig set valid=0 where ModuleId=#{mid} and ConfigId= #{config.configId}
@@ -87,71 +260,252 @@
 	
 	
 	
-	<resultMap id="JQModuleData" type="com.jq.entity.JQModuleData">		
-		<result property="parentId" column="parentId" />
-		<collection property="columns" javaType="java.util.ArrayList" ofType="com.jq.entity.JQColumn">
-			<id property="id" column="configWidgetId"/>
-			<result property="sortKey" column="sortKey"/>
-			<association property="property" javaType="com.jq.entity.JQWidget">
-				<id property="id" column="widgetId"/>
-				<result property="name" column="widgetName" />
-				<result property="value" column="widgetValue" />
-				<result property="propertyId" column="ProperyID" />
-				<result property="widgeId" column="refWidgetId" />
+	<resultMap id="JQModuleData" type="com.jq.entity.JQModuleData">
+			
+		<id property="id" column="rowId"/>
+		<result property="parentId" column="parentId"/>		
+		<result property="moduleId" column="moduleId" />
+		<result property="configId" column="configId"/>
+		
+		<association property="jqConfig" javaType="com.jq.entity.JQConfig">
+	
+			<id property="id" column="configId"/>		
+	
+			<result property="name" column="configName" />
+			<result property="title" column="configTitle" />
+			<result property="valid" column="configValid" />
+			<result property="parentId" column="configParentId" />
+			
+			<collection property="columns" javaType="java.util.ArrayList" ofType="com.jq.entity.JQColumn">
+				<id property="id" column="configWidgetId"/>
+				
+				<result property="sortKey" column="sortKey"/>
+				
+				<collection property="widgets" javaType="java.util.ArrayList"  ofType="com.jq.entity.JQWidget">
+				
+					<id property="id" column="widgetId"/>
+					
+					<id property="id" column="widgetId"/>
+					<result property="name" column="widgetName"/>
+					<result property="value" column="widgetValue"/>
+					<result property="moduleId" column="widgetModule" />
+					<result property="configId" column="widgetConfig" />
+					<result property="widgetId" column="widgetWidget" />					
+					<result property="propertyId" column="widgetProperty" />
+					<result property="visiable" column="visiable" />
+					<result property="searchable" column="searchable" />				
+					<result property="shareable" column="shareable" />
+					<result property="required" column="required" />				
+					<result property="dataSource" column="dataSource" />
+				
+					<!--result property="value" column="widgetValue" /-->
+				
+					<!--result property="name" column="widgetName" />
+					
+					<result property="propertyId" column="ProperyID" />
+					<result property="widgeId" column="refWidgetId" />
 
-				<result property="configId" column="refConfigId" />
-				<result property="dataSource" column="dataSource" />
+					<result property="configId" column="refConfigId" />
+					<result property="dataSource" column="dataSource" />
 
-				<result property="visible" column="visible" />
-				<result property="searchable" column="searchable" />
-				<result property="shareable" column="shareable" />
-				<result property="required" column="required" />
+					<result property="visible" column="visible" />
+					<result property="searchable" column="searchable" />
+					<result property="shareable" column="shareable" />
+					<result property="required" column="required" /-->
+					<!--collection property="properties" javaType="java.util.ArrayList"  ofType="com.jq.entity.JQProperty">
+						<id property="id" column="propertyId"/>
+						<result property="name" column="propertyName" />
+						<result property="value" column="value" />					
+					</collection-->
 
-
-			</association>
-	        </collection>	
+				</collection>
+				
+			</collection>	
+	        </association>
+	        
 	</resultMap>
 	
 	<select id="getModuleData" resultMap="JQModuleData">
-		select md.parentId as parentId, cw.sortKey as sortKey, cw.id as configWidgetId , w.id as widgetId, w.name as widgetName,w.value as widgetValue, w.propertyId as ProperyID, w.widgetId as refWidgetId, w.configId as refConfigId,w.dataSource as dataSource, w.visible as visible, w.searchable as searchable, w.required as required, w.shareable as shareable
-		from ModuleData md,ModuleConfig mc, ConfigWidget cw, Widget w
-		where mc.moduleid = #{mid} and mc.id = md.fieldId and mc.configId=#{configId} and cw.configId=mc.configId and cw.widgetId = w.id
-		order by md.parentId, cw.sortKey
+		select md.rowId as rowId,md.parentId as parentId,md.value as widgetValue,
+		       mc.id as mcid, mc.moduleId as moduleId,
+		       c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid,c. parentId as configParentId,
+		       cw.id as cwid,cw.sortKey as sortKey,
+		       cw.widgetId as widgetId,w.name as widgetName,w.moduleID as widgetModule, w.configId as widgetConfig, w.widgetId as widgetWidget, w.propertyId as widgetProperty,
+		       w.visiable as visiable, w.searchable as searchable,w.shareable as shareable,w.required as required,w.dataSource as dataSource
+
+		from ModuleConfig mc 
+		left join Config c on mc.configId=c.id
+		left join ConfigWidget cw on c.id=cw.configId
+		left join ${tableName} md on cw.id = md.fieldId
+		left join Widget w on cw.widgetId = w.id
+		where mc.moduleid= #{moduleId} and mc.valid = 1 and mc.configId=#{configId}
+		order by md.rowId,cw.sortKey
 	</select>
 	
+	<select id="getModuleDataByRowId" resultMap="JQModuleData">
+		select md.rowId as rowId,md.parentId as parentId,md.value as value,
+		       mc.id as mcid, mc.moduleId as moduleId,
+		       c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid,c. parentId as configParentId,
+		       cw.id as cwid,cw.sortKey as sortKey,
+		       cw.widgetId as widgetId,w.name as widgetName,w.moduleID as widgetModule, w.configId as widgetConfig, w.widgetId as widgetWidget, w.propertyId as widgetProperty,
+		       w.visiable as visiable, w.searchable as searchable,w.shareable as shareable,w.required as required,w.dataSource as dataSource
+		       
+		from ModuleConfig mc 
+		left join Config c on mc.configId=c.id
+		left join ConfigWidget cw on c.id=cw.configId
+		left join ${tableName} md on cw.id = md.fieldId
+		left join Widget w on cw.widgetId = w.id
+		where mc.moduleid= #{moduleId} and mc.valid = 1 and mc.configId=#{configId} and md.rowId=#{rowId}
+		order by md.rowId,cw.sortKey
+	</select>
+	
+	
+	
+	
+	<!--select id="getModuleData" resultMap="JQModuleData">
+		select md.rowId as rowId,md.parentId as parentId,md.value as value,
+		       mc.id as mcid, mc.moduleId as moduleId,
+		       c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid,
+		       cw.id as cwid,cw.sortKey as sortKey,cw.widgetId as widgetId,
+		       p.id as propertyId, p.name as propertyName
+		from ModuleConfig mc 
+		left join Config c on mc.configId=c.id
+		left join ConfigWidget cw on c.id=cw.configId
+		left join ${tableName} md on cw.id = md.fieldId
+		left join Property p on md.propertyId = p.id
+		where mc.moduleid= #{moduleId} and mc.valid = 1 and mc.configId=#{configId}
+		order by md.rowId,cw.sortKey
+	</select>
+	
+	<select id="getModuleDataByRowId" resultMap="JQModuleData">
+		select md.rowId as rowId,md.parentId as parentId,md.value as value,
+		       mc.id as mcid, mc.moduleId as moduleId,
+		       c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid,
+		       cw.id as cwid,cw.sortKey as sortKey,cw.widgetId as widgetId,
+		       p.id as propertyId, p.name as propertyName
+		from ModuleConfig mc 
+		left join Config c on mc.configId=c.id
+		left join ConfigWidget cw on c.id=cw.configId
+		left join ${tableName} md on cw.id = md.fieldId
+		left join Property p on md.propertyId = p.id
+		where mc.moduleid= #{moduleId} and mc.valid = 1 and mc.configId=#{configId} and md.rowId=#{rowId}
+		order by md.rowId,cw.sortKey
+	</select-->
+	
 	<insert id="addModuleData">
-		Insert into ModuleData(FieldID,ParentID,Data) Values (#{fieldId},#{parentId},#{value})
+		Insert into ${tableName} (FieldID,PropertyID,rowId,parentId,value) Values (#{fieldId},#{propertyId},#{rowId},#{parentId},#{value})
 	</insert>
 	
 	
 	<update id="updateModuleData">
 	
-		update ModuleData set Data=#{property.value} 
+		update ${tableName} set value =#{value} 
 		
-		where RID=#{rowId} and ModuleID=#{mid} and PropertyID = #{property.id}
+		where rowId=#{rowId} and fieldId=#{fieldId} and propertyId = #{widgetId}
 	
 	</update>
 	
 	
 	<delete id="deleteModuleData">
-		delete from ModuleData
-		where RID=#{rowId} and ModuleID=#{mid} and PropertyID = #{property.id}	
+		delete from ${tableName}
+		where rowId=#{rowId} and fieldId in ( select cw.id 
+							from ModuleConfig mc 
+							left join ConfigWidget cw on mc.configId=cw.configId
+							where mc.moduleId=#{moduleId} and mc.configId=#{configId}
+						     )
+			
 	</delete>
 	
 	<select id="getTotalQuantity" resultType="int">
-		select count(distinct md.parentId)
-		from ModuleConfig mc,ConfigProperty cp, ModuleData md
-		where mc.moduleId=#{mid} and mc.configId=#{configId} and mc.configId=cp.configId and cp.id=md.fieldId
+		select count(distinct md.rowId)
+		from ModuleConfig mc,ConfigWidget cw, ${tableName} md
+		where mc.moduleId=#{moduleId} and mc.configId=#{configId} and mc.configId=cw.configId and cw.id=md.fieldId
 	
 	</select>
 	
 	
+	<select id="queryRowIds" resultType="int">
+		select md.rowId as rowId
+		from ModuleConfig mc 
+		left join Config c on mc.configId=c.id
+		left join ConfigWidget cw on c.id=cw.configId
+		left join ${tableName} md on cw.id = md.fieldId
+		left join Widget w on cw.widgetId=w.id
+		where mc.moduleid= #{moduleId} and mc.valid = 1 and mc.configId=#{configId} and cw.widgetId=#{colomnId} and md.propertyId=#{widgetId} and md.value like '%${value}%'
+		<if test="rowIds !=null and rowIds.size()>0 ">
+			and md.rowId in 
+			<foreach  collection="rowIds" item="rowId" index="index" open="("  close=")" separator=",">
+				#{rowId}
+			</foreach>
+		</if>
 	
+	</select>	
+	
+		
+	<!--select id="queryRowIds" resultType="int">
+		select md.rowId as rowId
+		from ModuleConfig mc 
+		left join Config c on mc.configId=c.id
+		left join ConfigWidget cw on c.id=cw.configId
+		left join ${tableName} md on cw.id = md.fieldId
+		left join Property p on md.propertyId = p.id
+		where mc.moduleid= #{moduleId} and mc.valid = 1 and mc.configId=#{configId} and cw.widgetId=#{widgetId} and md.propertyId=#{propertyId} and md.value like '%${value}%'
+		<if test="rowIds !=null and rowIds.size()>0 ">
+			and md.rowId in 
+			<foreach  collection="rowIds" item="rowId" index="index" open="("  close=")" separator=",">
+				#{rowId}
+			</foreach>
+		</if>
+	
+	</select-->
 
 	
+	<select id="queryRowIdsByPropertyValue" resultType="int">
+		select md.rowId as rowId
+		from ModuleConfig mc 
+		left join Config c on mc.configId=c.id
+		left join ConfigWidget cw on c.id=cw.configId
+		left join ${tableName} md on cw.id = md.fieldId
+		left join Widget w on cw.widgetId = w.id
+		where mc.moduleid= #{moduleId} and mc.valid = 1 and mc.configId=#{configId} 		
+		<if test="propertyValue !=null">		
+			and w.name=#{propertyValue.name} 
+			and md.value like '%${propertyValue.value}%'
+		</if>
+		<if test="rowIds !=null and rowIds.size()>0 ">
+			and md.rowId in 
+			<foreach  collection="rowIds" item="rowId" index="index" open="("  close=")" separator=",">
+				#{rowId}
+			</foreach>
+		</if>
 	
+	</select>	
 	
+	<select id="existDataTable" parameterType="String" resultType="Integer">
+	
+		select count(*)
+		from information_schema.TABLES
+		where table_name=#{tableName}
+	
+	</select>
+	
+	<update id="dropDataTable">
+		DROP TABLE IF EXISTS ${tableName}
+	</update>
+	
+	<update id="createDataTable" parameterType="String">
 
+		CREATE TABLE ${tableName} (
+		  `ID` int(11) NOT NULL AUTO_INCREMENT,
+		  `FieldID` int(11) NOT NULL,
+		  `PropertyID` int(11) NOT NULL,
+		  `RowId` int(11) NOT NULL,
+		  `ParentId` int(11) NOT NULL,
+		  `Value` varchar(255) NOT NULL,
+		  PRIMARY KEY (`ID`)
+		) ENGINE=InnoDB AUTO_INCREMENT=1014 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+	</update>
 
 
 
