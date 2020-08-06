@@ -1,7 +1,235 @@
 
 
 <modules>
+	<module name="数据大屏" path="/">
 
+	</module> 
+	
+	
+	<module name="数据中心" path="/datacenter">
+	<module name="扶贫管理">
+		 <config>
+		 	<widget name="序号"  order="1">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+	 	
+		 	<widget name="所属城镇">
+		 		<property name="城镇" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}</option>
+		 		</property> 	
+		 	</widget>
+		 			 	
+		 	<widget name="所属行政村">
+		 		<property name="行政村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{行政村}.{行政村}</option>
+		 		</property> 	
+		 	
+		 	</widget>
+		 	
+		 	<widget name="所属自然村" type ="text">	
+		 		<property name="自然村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>
+		 			 		 	
+		 	<widget name="所属村民小组">
+		 		<property name="组别" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{组别}.{组别}</option>
+		 		</property>
+		 	
+		 	</widget>
+		 	
+		 	<widget name="人数" >
+		 		<property name="人数" type ="inputNumber" />
+		 	</widget>
+		 	
+		 	<widget name="所属村民小组"/>
+		 	<widget name="与户主关系">
+		 		<property name="与户主关系" type ="select">
+			 		<option>户主</option>
+			 		<option>长女</option>
+			 		<option>次女</option>			 		
+			 		<option>长子</option>
+			 		<option>次子</option>
+			 		<option>妻子</option>
+			 		<option>爸爸</option>			 		
+			 		<option>妈妈</option>
+			 		<option>爷爷</option>
+			 		<option>奶奶</option>
+			 	</property>		 	
+		 	</widget>
+		 	
+		 	<widget name="贫困户姓名">
+		 		<property name="姓名" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{姓名}.{姓名}</option>
+		 		</property>		 	
+		 	</widget>
+		 	
+		 	<widget name="民族"  order="1">
+		 		<property name="民族" type ="select">
+			 		<option>汉族</option>
+			 		<option>维吾尔族</option>
+			 		<option>满族</option>
+			 	</property>
+			</widget>
+		 	<widget name="文化程度">
+		 		<property name="文化程度" type ="select">
+			 		<option>半文盲</option>
+			 		<option>文盲</option>
+			 		<option>幼儿园</option>			 		
+			 		<option>小学</option>
+			 		<option>初中</option>
+			 		<option>高中</option>
+			 		<option>大专</option>			 		
+			 		<option>大学</option>
+			 		<option>硕士研究生</option>
+			 		<option>博士研究生</option>
+			 	</property>
+			</widget>		 	
+		 	<widget name="在校生状况">
+		 		<property name="在校生状况" type ="select">
+			 		<option>无</option>
+			 		<option>学龄前儿童</option>
+			 		<option>幼儿园</option>			 		
+			 		<option>小学</option>
+			 		<option>初中</option>
+			 		<option>高中</option>			 		
+			 		<option>大学</option>
+			 		<option>研究生</option>
+			 		<option>博士生</option>
+			 	</property>		 	
+		 	
+		 	</widget>
+		 	<widget name="健康状况">
+		 		<property name="健康状况" type ="select">
+			 		<option>健康</option>
+			 		<option>大病</option>
+			 		<option>长期慢性病</option>
+			 		<option>残疾</option>
+			 	</property>		 	
+		 	</widget>
+		 	<widget name="劳动技能">
+		 		<property name="劳动技能" type ="select">
+			 		<option>普通劳动力</option>
+			 		<option>丧失劳动力</option>
+			 		<option>弱劳动力</option>
+			 		<option>半劳动力</option>
+			 		<option>无劳动力</option>		 		
+			 	</property>
+			</widget>
+					 	
+		 	<widget name="务工状态" type ="text" order="1">
+		 		<property name="务工状态" type ="select">
+			 		<option>无</option>
+			 		<option>乡镇内务工</option>
+			 		<option>县外省内</option>
+			 		<option>省外务工</option>
+		 		</property>
+		 	</widget>
+		 	
+		 	<widget name="务工时间（月）" type ="dataPicker" order="1">
+			 	<property name="月" type ="select">
+			 		<option>1</option>
+			 		<option>2</option>
+			 		<option>3</option>
+			 		<option>4</option>
+			 		<option>5</option>
+			 		<option>6</option>
+			 		<option>7</option>
+			 		<option>8</option>
+			 		<option>9</option>
+			 		<option>10</option>
+			 		<option>11</option>
+			 		<option>12</option>
+		 		</property>
+		 	</widget>
+		 		 	
+		 	<widget name="参加大病医疗" type ="text">
+		 		<property name="参加大病医疗" type ="select">
+			 		<option>一般</option>
+			 		<option>良好</option>
+			 		<option>残疾</option>
+		 		</property>
+		 	</widget>		 	
+		 	<widget name="脱贫属性" >
+		 		<property name="脱贫属性" type ="select">
+			 		<option>未脱贫</option>
+			 		<option>已脱贫</option>
+		 		</property>		 	
+		 	
+		 	</widget>
+		 	
+		 	<widget name="脱贫年度">
+		 		<property name="年份" type ="select">
+			 		<option>2020</option>
+			 		<option>2019</option>
+			 		<option>2018</option>
+		 		</property>
+		 		
+		 	</widget>		 	
+		 	<widget name="致贫原因"/>
+		 	<widget name="危房户">
+		 		<property name="是否" type ="select">
+			 		<option>是</option>
+			 		<option>否</option>
+		 		</property>		 	
+		 	</widget>		 	
+		 	
+		 	<widget name="改房情况" >
+		 		<property name="有没有" type ="select">
+			 		<option>有</option>
+			 		<option>没有</option>
+		 		</property>
+		 	</widget> 		 	
+		 	
+		 	<widget name="改厕情况" >
+		 		<property name="有没有" type ="select">
+			 		<option>有</option>
+			 		<option>没有</option>
+		 		</property>
+		 	</widget> 		 	
+		 	
+		 	<widget name="是否解决安全饮用水" >
+		 		<property name="是否" type ="select">
+			 		<option>是</option>
+			 		<option>否</option>
+		 		</property>		 	
+		 	</widget>
+		 	
+		 	<widget name="改水情况">
+		 		<property name="有没有" type ="select">
+			 		<option>有</option>
+			 		<option>没有</option>
+		 		</property>
+		 	</widget> 		
+		 	
+		 	<widget name="人均纯收入" type ="text"/>
+		 	<widget name="联系电话" type ="text"/>
+		 	<widget name="首次识别时间" type ="date"/>
+		 	<widget name="贫困人员识别时间" type ="date"/>
+		 	<widget name="帮扶责任人" type ="text"/>
+		 	<widget name="简介" type ="textArea"/>	 
+
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+			<!--widget name="操作" type ="select" >
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>
+		 		
+	</module>
 		
 	<module name="名人管理">
 		
@@ -94,7 +322,1876 @@
 		
 	</module>
 		
+	<module name="公共设施管理">
+		
+		<config>
+			<widget name="序号">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+		 	
+		 			 	
+		 	<widget name="所属行政村">
+		 		<property name="行政村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{行政村}.{行政村}</option>
+		 		</property> 	
+		 	
+		 	</widget>
+		 	
+		 	<widget name="所属自然村">	
+		 		<property name="自然村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>
+		 	
+		 	<widget name="公共设施名称"/>
+			<widget name="地址"/>
+			<widget name="联系电话"/>
+			
 
+
+			<widget name="公共设施类型">
+				<property name="公共设施类型" type ="select">
+		 			<option>便民服务中心</option>
+		 			<option>儿童福利中心</option>
+		 			<option>垃圾站</option>
+		 			<option>增压泵房</option>
+		 			<option>广场</option>
+		 			<option>镇村联动点</option>
+		 			<option>中心村</option>
+		 			<option>居民小区</option>
+		 		</property>
+		 	</widget>
+
+			<widget name="照片">			
+				<property name="照片" type ="picture"/>
+			</widget>
+			<widget name="简介">
+				<property name="简介" type ="textArea"/>
+			</widget>
+		
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+		 	
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>
+		
+		</module>
+		
+		<module name="交通信息管理">
+		
+		
+		<config>
+			<widget name="序号">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+			
+		 	<widget name="所属城镇">
+		 		<property name="城镇" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}</option>
+		 		</property> 	
+		 	</widget>
+		 			 	
+		 	<widget name="所属行政村">
+		 		<property name="行政村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{行政村}.{行政村}</option>
+		 		</property> 	
+		 	
+		 	</widget>
+		 	
+		 	<widget name="所属自然村" type ="text">	
+		 		<property name="自然村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>
+			
+			<widget name="交通名称" />			
+			<widget name="长度">
+				<property name="长度" type ="text" />
+				<property name="公里" type ="text" value="公里"/>
+			</widget>			
+			<widget name="建设状态">
+				<property name="建设状态" type ="select" >
+					<option>建设中</option>
+		 			<option>已完成</option>
+		 			<option>待建设</option>
+		 		</property>
+			</widget>
+
+			<widget name="交通类型">
+				<property name="交通类型" type ="select" >
+					<option>省道</option>
+		 			<option>国道</option>
+		 			<option>县道</option>
+		 			<option>四好公路</option>
+		 			<option>高速</option>
+		 		</property>
+			</widget>
+						
+			<widget name="照片">			
+				<property name="照片" type ="picture"/>
+			</widget>
+			<widget name="简介">
+				<property name="简介" type ="textArea"/>
+			</widget>
+		
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>
+		
+		</module>
+		
+
+		
+		<module name="养老设施管理">
+		
+		
+		<config>
+			<widget name="序号">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+		 	
+		 	<widget name="所属城镇">
+		 		<property name="城镇" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}</option>
+		 		</property> 	
+		 	</widget>
+		 			 	
+		 	<widget name="所属行政村">
+		 		<property name="行政村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{行政村}.{行政村}</option>
+		 		</property> 	
+		 	
+		 	</widget>
+		 	
+		 	<widget name="所属自然村" type ="text">	
+		 		<property name="自然村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>
+		 		 	
+			<widget name="养老设施名称" type ="text"/>
+			<widget name="地址" type ="text"/>
+			<widget name="联系电话" type ="text"/>
+			
+			
+			<widget name="养老设施类型" type ="text">
+				<property name="养老设施类型" type ="select" >
+					<option>敬老院</option>
+		 			<option>养老院</option>
+		 		</property>
+		 	</widget>
+			
+			<widget name="照片">			
+				<property name="照片" type ="picture"/>
+			</widget>
+			<widget name="建设状态">
+				<property name="建设状态" type ="select" >
+					<option>建设中</option>
+		 			<option>已完成</option>
+		 			<option>待建设</option>
+		 		</property>
+			</widget>
+
+
+			<widget name="简介" type ="textArea"/>
+		
+		
+
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>
+		
+		</module>
+		
+		
+		<module name="卫生设施管理">
+				
+		<config>
+			<widget name="序号">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+		 	
+		 	<widget name="所属城镇">
+		 		<property name="城镇" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}</option>
+		 		</property> 	
+		 	</widget>
+		 			 	
+		 	<widget name="所属行政村">
+		 		<property name="行政村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{行政村}.{行政村}</option>
+		 		</property> 	
+		 	
+		 	</widget>
+		 	
+		 	<widget name="所属自然村" type ="text">	
+		 		<property name="自然村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>
+		 	
+		 	<widget name="卫生设施名称" type ="text"/>
+		 	<widget name="地址" type ="text"/>
+		 	<widget name="联系电话" type ="text"/>
+		 	
+		 	
+		 	
+			<widget name="医院类型">
+				<property name="医院类型" type ="select" >
+					<option>卫生室</option>
+		 			<option>卫生所</option>
+		 			<option>综合医院</option>
+		 			<option>专科医院</option>
+		 		</property>
+		 	</widget>
+			
+			<widget name="照片">			
+				<property name="照片" type ="picture"/>
+			</widget>
+			<widget name="建设状态">
+				<property name="建设状态" type ="select" >
+					<option>建设中</option>
+		 			<option>已完成</option>
+		 			<option>待建设</option>
+		 		</property>
+			</widget>
+			
+			<widget name="简介" type ="textArea"/>
+		
+		
+
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>
+		 
+		 <config id="200">
+			<widget name="成员" type ="text"/>
+			<widget name="村医类型" type ="text"/>
+			<widget name="联系电话" type ="text"/>
+			<widget name="就业情况" type ="text"/>
+			<widget name="学历" type ="text"/>
+			<widget name="工作性质" type ="text"/>
+			<widget name="操作" type ="text"/>		
+		</config>
+		 
+		
+		</module>
+		
+		
+		<module name="教育信息管理">
+		
+		<config>
+			<widget name="序号">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+		 	
+		 	<widget name="所属城镇">
+		 		<property name="城镇" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}</option>
+		 		</property> 	
+		 	</widget>
+		 			 	
+		 	<widget name="所属行政村">
+		 		<property name="行政村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{行政村}.{行政村}</option>
+		 		</property> 	
+		 	
+		 	</widget>
+		 	
+		 	<widget name="所属自然村" type ="text">	
+		 		<property name="自然村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>
+		 	
+			<widget name="学校名称" type ="text"/>
+			<widget name="地址" type ="text"/>
+			<widget name="容纳人数" type ="text"/>
+			<widget name="学校类型">
+				<property name="学校类型" type ="select" >
+		 			<option>大学</option>
+		 			<option>高中</option>
+		 			<option>中学</option>
+		 			<option>小学</option>
+		 			<option>幼儿园</option>
+		 		</property>
+			</widget>			
+			<widget name="照片">			
+				<property name="照片" type ="picture"/>
+			</widget>
+			<widget name="建设状态">
+				<property name="建设状态" type ="select" >
+					<option>建设中</option>
+		 			<option>已完成</option>
+		 			<option>待建设</option>
+		 		</property>
+			</widget>
+			
+			<widget name="简介" type ="textArea"/>
+		
+		
+
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>
+		</module>
+		
+		
+		<module name="文体设施管理">
+		<config>
+			<widget name="序号">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+		 	
+		 	<widget name="所属城镇">
+		 		<property name="城镇" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}</option>
+		 		</property> 	
+		 	</widget>
+		 			 	
+		 	<widget name="所属行政村">
+		 		<property name="行政村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{行政村}.{行政村}</option>
+		 		</property> 	
+		 	
+		 	</widget>
+		 	
+		 	<widget name="所属自然村" type ="text">	
+		 		<property name="自然村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>
+			<widget name="文体名称" type ="text"/>
+			<widget name="地址" type ="text"/>
+			<widget name="联系电话" type ="text"/>
+			
+			<widget name="文体类型">
+				<property name="文体类型" type ="select" >
+					<option>农家书屋</option>
+		 			<option>文化站</option>
+		 			<option>图书馆</option>
+		 			<option>宗祠</option>
+		 		</property>
+		 	</widget>			
+			<widget name="照片">			
+				<property name="照片" type ="picture"/>
+			</widget>
+			<widget name="建设状态">
+				<property name="建设状态" type ="select" >
+					<option>建设中</option>
+		 			<option>已完成</option>
+		 			<option>待建设</option>
+		 		</property>
+			</widget>
+			
+			<widget name="简介" type ="textArea"/>
+		
+		
+
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>
+		
+		</module>
+		
+		<module name="集体资产管理">
+		<config>
+			<widget name="序号">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+		 	
+		 	<widget name="所属城镇">
+		 		<property name="城镇" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}</option>
+		 		</property> 	
+		 	</widget>
+		 			 	
+		 	<widget name="所属行政村">
+		 		<property name="行政村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{行政村}.{行政村}</option>
+		 		</property> 	
+		 	
+		 	</widget>
+		 	
+		 	<widget name="所属自然村" type ="text">	
+		 		<property name="自然村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>
+		 	
+			<widget name="集体资产名称" type ="text"/>
+			
+			<widget name="集体资产类型">
+		 		<property name="资产类型" type ="select">
+			 		<option>产权</option>
+			 		<option>资产</option>
+		 		</property>		 	
+		 	</widget>			
+			
+			
+			
+
+			<!--widget name="资产成员数" type ="text"/-->
+
+			<widget name="资产照片">			
+				<property name="照片" type ="picture"/>
+			</widget>
+			
+			<widget name="是否登记注册">
+		 		<property name="是否" type ="select">
+			 		<option>是</option>
+			 		<option>否</option>
+		 		</property>		 	
+		 	</widget>
+		 							
+			<widget name="集体资产收入">
+				<property name="集体资产收入" type ="text"/>
+				<property name="万元" type ="text" value="万元"/>
+			</widget>			
+			<widget name="集体资产价值">
+				<property name="集体资产价值" type ="text"/>
+				<property name="万元" type ="text" value="万元"/>
+			</widget>			
+			<widget name="简介" type ="textArea"/>
+		
+		
+
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>
+		 
+		 
+		 		
+		<config id="200">
+		 	<widget name="资产成员" type ="text"/>
+			<widget name="联系电话" type ="text"/>
+			<widget name="就业情况" type ="text"/>
+			<widget name="学历" type ="text"/>
+			<widget name="工作性质" type ="text"/>
+			<widget name="工作类型" type ="text"/>
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>
+		 
+		 
+		 
+		 
+		</module>
+		
+		<module name="土地资源管理">
+		
+		<config>
+			<widget name="序号">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+		 	
+		 	<widget name="所属城镇">
+		 		<property name="城镇" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}</option>
+		 		</property> 	
+		 	</widget>
+		 			 	
+		 	<widget name="所属行政村">
+		 		<property name="行政村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{行政村}.{行政村}</option>
+		 		</property> 	
+		 	
+		 	</widget>
+		 	
+		 	<widget name="所属自然村" type ="text">	
+		 		<property name="自然村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>			
+		 	<widget name="资源名称" type ="text"/>
+			<widget name="面积">
+				<property name="面积" type ="text" />
+				<property name="亩" type ="text" value="亩"/>
+			</widget>
+
+			
+			
+			<widget name="资源状态" >
+				<property name="资源状态" type ="select" >
+					<option>无</option>
+		 			<option>已承包</option>
+		 			<option>已流转</option>
+		 		</property>
+			</widget>
+			<widget name="资源类型" >
+				<property name="资源类型" type ="select" >
+					<option>耕田</option>
+		 			<option>山</option>
+		 			<option>林</option>
+		 			<option>耕地</option>
+		 		</property>
+			</widget>			
+
+			<widget name="照片">			
+				<property name="照片" type ="picture"/>
+			</widget>
+			
+			<widget name="是否有收益">			
+		 		<property name="是否" type ="select">
+			 		<option>是</option>
+			 		<option>否</option>
+		 		</property>		 	
+		 	</widget>			
+			<widget name="土地承包合同">
+		 		<property name="有没有" type ="select">
+			 		<option>有</option>
+			 		<option>没有</option>
+		 		</property>
+		 	</widget>			
+			
+			
+			<widget name="简介" type ="textArea"/>
+		
+		
+
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>
+		
+		</module>
+		
+		<module name="农业设施管理">
+		<config>
+			<widget name="序号">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+		 	
+		 	<widget name="所属城镇">
+		 		<property name="城镇" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}</option>
+		 		</property> 	
+		 	</widget>
+		 			 	
+		 	<widget name="所属行政村">
+		 		<property name="行政村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{行政村}.{行政村}</option>
+		 		</property> 	
+		 	
+		 	</widget>
+		 	
+		 	<widget name="所属自然村" type ="text">	
+		 		<property name="自然村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>
+		 	
+		 	<widget name="农业设施名称" type ="text"/>
+			<widget name="设施类型">
+				<property name="设施类型" type ="select" >
+					<option>农场</option>
+		 			<option>林场</option>
+		 			<option>水库</option>
+		 			<option>水塘</option>
+		 			<option>沟渠</option>
+		 		</property>
+			</widget>			
+			<widget name="照片">			
+				<property name="照片" type ="picture"/>
+			</widget>
+			<widget name="建设状态">
+				<property name="建设状态" type ="select" >
+					<option>建设中</option>
+		 			<option>已完成</option>
+		 			<option>待建设</option>
+		 		</property>
+			</widget>
+			
+			<widget name="简介" type ="textArea"/>
+		
+		
+
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>		
+		
+		
+		</module>
+		
+		<module name="工业信息管理">
+		
+		<config>
+			<widget name="序号">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+		 	
+		 	<widget name="所属城镇">
+		 		<property name="城镇" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}</option>
+		 		</property> 	
+		 	</widget>
+		 			 	
+		 	<widget name="所属行政村">
+		 		<property name="行政村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{行政村}.{行政村}</option>
+		 		</property> 	
+		 	
+		 	</widget>
+		 	
+		 	<widget name="所属自然村" type ="text">	
+		 		<property name="自然村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>
+		 	
+		 	<widget name="工业名称" type ="text"/>
+		 	<widget name="地址" type ="text"/>
+			<widget name="联系电话" type ="text"/>
+		 	
+			<widget name="工业类型">
+				<property name="工业类型" type ="select" >
+					<option>窑厂</option>
+		 			<option>鞋厂</option>
+		 			<option>袜厂</option>
+		 		</property>
+			</widget>			
+			
+			
+			<widget name="效益">
+				<property name="效益" type ="select" >
+					<option>1亿及以上</option>
+		 			<option>5千万-1亿</option>
+		 			<option>3千万-5千万</option>
+		 			<option>0-3千万</option>		 			
+		 		</property>
+			</widget>						
+			<widget name="规模">
+				<property name="规模" type ="select" >
+					<option>特大型</option>
+		 			<option>大型</option>
+		 			<option>中型</option>
+		 			<option>小型</option>	
+		 			<option>微型</option>		 			
+		 		</property>
+			</widget>
+						
+			<widget name="照片">			
+				<property name="照片" type ="picture"/>
+			</widget>
+			
+			
+			<widget name="主要销往">
+				<property name="规模" type ="select" >
+					<option>本县</option>
+		 			<option>省内</option>
+		 			<option>省外</option>
+		 			<option>国外</option>	
+		 		</property>
+			</widget>			
+			
+			<widget name="年收入">
+				<property name="年" type ="select">
+					<option>2020</option>
+		 			<option>2019</option>
+		 			<option>2018</option>
+		 			<option>2017</option>	
+		 		</property>
+				<property name="收入" type ="text"/>
+				<property name="万元" type ="text" value="万元"/>
+			</widget>			
+
+
+			<widget name="简介" type ="textArea"/>
+		
+		
+
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>
+		
+		
+		</module>
+		
+		<module name="商贸信息管理">
+				
+		<config>
+			<widget name="序号">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+		 	
+		 	<widget name="所属城镇">
+		 		<property name="城镇" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}</option>
+		 		</property> 	
+		 	</widget>
+		 			 	
+		 	<widget name="所属行政村">
+		 		<property name="行政村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{行政村}.{行政村}</option>
+		 		</property> 	
+		 	
+		 	</widget>
+		 	
+		 	<widget name="所属自然村" type ="text">	
+		 		<property name="自然村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>
+			<widget name="商贸名称" type ="text"/>
+			<widget name="地址" type ="text"/>
+			<widget name="联系电话" type ="text"/>
+
+			<widget name="商贸类型" type ="text">
+				<property name="商贸类型" type ="select" >
+					<option>超市</option>
+		 			<option>农贸市场</option>
+		 			<option>集市</option>
+		 			<option>酒店</option>
+		 			<option>检测中心</option>
+		 			<option>驾校</option>
+		 			<option>加油站</option>
+		 			<option>液化气站</option>
+		 		</property>
+			</widget>			
+			<widget name="照片">			
+				<property name="照片" type ="picture"/>
+			</widget>
+			<widget name="建设状态">
+				<property name="建设状态" type ="select" >
+					<option>建设中</option>
+		 			<option>已完成</option>
+		 			<option>待建设</option>
+		 		</property>
+			</widget>
+			
+			<widget name="简介" type ="textArea"/>
+		
+		
+
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>
+		</module>
+		
+		<module name="旅游景点管理">
+		
+		<config>
+			<widget name="序号">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+		 	
+		 	<widget name="所属城镇">
+		 		<property name="城镇" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}</option>
+		 		</property> 	
+		 	</widget>
+		 			 	
+		 	<widget name="所属行政村">
+		 		<property name="行政村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{行政村}.{行政村}</option>
+		 		</property> 	
+		 	
+		 	</widget>
+		 	
+		 	<widget name="所属自然村" type ="text">	
+		 		<property name="自然村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>
+		 	<widget name="景点名称" type ="text"/>
+		 	<widget name="地址" type ="text"/>
+		 	<widget name="联系电话" type ="text"/>
+		 	
+			<widget name="景点类型" type ="text">
+				<property name="景点类型" type ="select" >
+					<option>自然旅游资源</option>
+		 			<option>人文旅游资源</option>
+		 		</property>
+			</widget>			
+			<widget name="照片">			
+				<property name="照片" type ="picture"/>
+			</widget>
+			<widget name="建设状态">
+				<property name="建设状态" type ="select" >
+					<option>建设中</option>
+		 			<option>已完成</option>
+		 			<option>待建设</option>
+		 		</property>
+			</widget>
+			
+			<widget name="简介" type ="textArea"/>
+		
+		
+
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>
+		</module>
+	
+	</module> 
+	
+	<module name="组织与人员">
+	
+		<module name="城镇管理">
+		
+		
+		<config>
+		
+			<widget name="序号">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+		 	
+		 	<widget name="城镇名称">
+		 		<property name="城镇" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}</option>
+		 		</property> 	
+		 	</widget>
+			<widget name="管辖面积（亩）" type ="text"/>
+			
+			<widget name="管辖人口" >
+				<property name="管辖人口" type ="text" value="count({{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}})">
+		 		</property> 
+			</widget>
+			
+			<widget name="管辖户数" >
+				<property name="管辖户数" type ="text" value="count({{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}})">
+		 		</property> 
+			</widget>
+
+			<widget name="办公室照片">			
+				<property name="办公室照片" type ="picture"/>
+			</widget>
+			<widget name="城镇规划">			
+				<property name="城镇规划" type ="picture"/>
+			</widget>
+			
+
+		
+			<widget name="简介" type ="textArea"/>
+		
+		
+
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+		 	
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>
+		
+		</module>
+		
+		
+		<module name="行政村管理">
+		<config>
+			<widget name="序号">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+		 	
+		 	<widget name="行政村名称">
+		 		<property name="行政村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{行政村}.{行政村}</option>
+		 		</property> 	
+		 	
+		 	</widget>
+		 	
+		 	<widget name="管辖面积（亩）" type ="text"/>
+		 	
+		 	<widget name="管辖人口" >
+				<property name="管辖人口" type ="text" value="count({{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}})">
+		 		</property> 
+			</widget>
+			
+			<widget name="管辖户数" >
+				<property name="管辖户数" type ="text" value="count({{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}})">
+		 		</property> 
+			</widget>
+		 	
+
+			<!--widget name="景点类型" type ="text"/-->
+
+			<widget name="村部照片">			
+				<property name="村部照片" type ="picture"/>
+			</widget>
+						
+		 	<widget name="所属城镇">
+		 		<property name="城镇" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}</option>
+		 		</property> 	
+		 	</widget>
+			
+
+
+			<widget name="简介" type ="textArea"/>
+
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+		 	
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+			
+		 </config>
+		</module>
+		<module name="自然村/村民小组管理">
+		 <config>
+			<widget name="序号">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+		 	
+		 	<widget name="自然村名称">	
+		 		<property name="自然村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>
+		 	
+			<widget name="村民小组名称" type ="text"/>
+
+
+
+		 	<widget name="管辖面积（亩）" type ="text"/>
+		 	
+		 	<widget name="管辖人口" >
+				<property name="管辖人口" type ="text" value="count({{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}})">
+		 		</property> 
+			</widget>
+			
+			<widget name="管辖户数" >
+				<property name="管辖户数" type ="text" value="count({{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}})">
+		 		</property> 
+			</widget>
+			
+			<widget name="村荣照片">			
+				<property name="村荣照片" type ="picture"/>
+			</widget>
+			
+			<widget name="村貌照片">			
+				<property name="村貌照片" type ="picture"/>
+			</widget>
+			
+		 	<widget name="所属城镇">
+		 		<property name="城镇" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}</option>
+		 		</property> 	
+		 	</widget>
+		 			 	
+		 	<widget name="所属行政村">
+		 		<property name="行政村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{行政村}.{行政村}</option>
+		 		</property> 	
+		 	
+		 	</widget>
+
+			<widget name="简介" type ="textArea"/>
+
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>
+				
+		</module>
+		<module name="干部管理">
+		<config>
+			<widget name="序号">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+		 	
+		 	<widget name="所属城镇">
+		 		<property name="城镇" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}</option>
+		 		</property> 	
+		 	</widget>
+		 			 	
+		 	<widget name="所属行政村">
+		 		<property name="行政村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{行政村}.{行政村}</option>
+		 		</property> 	
+		 	
+		 	</widget>
+		 	
+		 	<widget name="所属自然村" type ="text">	
+		 		<property name="自然村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>
+		 	
+			 <widget name="领导姓名" type ="text">	
+		 		<property name="姓名" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{姓名}.{姓名}</option>
+		 		</property>
+		 	</widget>	
+		 	
+		 	<widget name="干部照片">			
+				<property name="干部照片" type ="picture"/>
+			</widget> 	
+		 	
+		 	<widget name="所属村民小组" type ="text">	
+		 		<property name="村民小组" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>
+		 	
+		 	
+		 	<widget name="职位" >	
+		 		<property name="职位" type ="select">
+		 			<option>镇长</option>
+		 			<option>村长</option>		 			
+		 		</property>
+		 	</widget>
+			<widget name="党政职务" >
+				<property name="党政职务" type ="multi-select">
+		 			<option>党委书记</option>
+		 			<option>党委副书记</option>	
+		 			<option>村党组织书记</option>
+		 			<option>村委主任</option>	
+			 		<option>副主任</option>
+		 			<option>主任</option>	
+		 			<option>大学生村干部</option>
+		 			<option>村民小组长</option>	
+		 			<option>妇联主任</option>
+		 			<option>治保主任</option>	
+		 			<option>人口主任</option>
+		 			<option>民兵连长</option>		 			
+		 			<option>团支部书记</option>	
+		 			<option>村办经济组织负责人</option>
+		 			<option>驻村干部</option>			 				 			
+		 		</property>
+		 	</widget>
+		 	
+		 	
+		 	<widget name="所属机构">
+				<property name="机构" type ="multi-select">
+		 			<option>党政办公室</option>
+		 			<option>农村经济工作办公室</option>	
+		 			<option>社会事业办公室</option>
+		 			<option>财税办公室</option>	
+			 		<option>村镇建设办公室</option>
+		 			<option>农业技术推广服务中心</option>	
+		 			<option>企业发展服务中心</option>
+		 			<option>无</option>	
+		 			<option>镇村建设服务中心</option>
+		 			<option>农村经济经营管理服务中心</option>	
+		 			<option>人力资源和社会保障服务中心</option>
+		 			<option>人口与计划生育服务中心</option>		 			
+		 		</property>
+		 	</widget>
+		 	
+		 	
+		 		 	
+		 	<widget name="机构岗位">
+				<property name="机构岗位" type ="multi-select">
+		 			<option>主任</option>
+		 			<option>副主任</option>	
+		 			<option>科员</option>
+		 		</property>
+		 	</widget>
+			<widget name="联系电话" type ="text"/>
+		
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>
+		</module>
+		<module name="工会管理">
+		<config>
+			<widget name="序号">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+		 	
+		 	<widget name="所属城镇">
+		 		<property name="城镇" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}</option>
+		 		</property> 	
+		 	</widget>
+		 			 	
+		 	<widget name="所属行政村">
+		 		<property name="行政村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{行政村}.{行政村}</option>
+		 		</property> 	
+		 	
+		 	</widget>
+		 	
+		 	<widget name="所属自然村" type ="text">	
+		 		<property name="自然村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>
+			<widget name="工会名称" type ="text"/>
+
+		 	<widget name="工会类型">
+				<property name="工会类型" type ="multi-select">
+		 			<option>党政办公室</option>
+		 			<option>农村经济工作办公室</option>	
+		 			<option>社会事业办公室</option>
+		 			<option>财税办公室</option>	
+			 		<option>村镇建设办公室</option>
+		 			<option>农业技术推广服务中心</option>	
+		 			<option>企业发展服务中心</option>
+		 			<option>无</option>	
+		 			<option>镇村建设服务中心</option>
+		 			<option>农村经济经营管理服务中心</option>	
+		 			<option>人力资源和社会保障服务中心</option>
+		 			<option>人口与计划生育服务中心</option>		 			
+		 		</property>
+		 	</widget>			
+			<!--widget name="工会人数" type ="text"/-->
+
+			<widget name="工会照片">			
+				<property name="工会照片" type ="picture"/>
+			</widget>
+			
+			<widget name="简介" type ="textArea"/>
+
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+		 	
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>
+		 
+		<config id="200">
+			<widget name="成员" type ="text"/>
+			<widget name="工会任职" type ="text"/>
+			<widget name="联系电话" type ="text" />
+			<widget name="就业情况" type ="text" />
+
+			<widget name="学历" type ="text" />
+			<widget name="工作性质" type ="text"/>
+			<widget name="工作类型" type ="text"/>
+			
+			<!--widget name="操作" type ="select"/-->
+		</config>		 
+		 
+		 
+		 
+		</module>
+		 <module name="村民管理">
+		 <config>
+			<widget name="序号">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+		 	
+			<widget name="姓名" type ="text"/>
+			<widget name="身份证号" type ="text"/>
+			<widget name="性别">
+				<property name="性别" type ="select">
+		 			<option>男</option>
+		 			<option>女</option>
+		 		</property>
+		 	</widget>
+		 	<widget name="出生年月" type ="date"/>		 	
+
+		 	<widget name="所属城镇">
+		 		<property name="城镇" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}</option>
+		 		</property> 	
+		 	</widget>
+		 			 	
+		 	<widget name="所属行政村">
+		 		<property name="行政村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{行政村}.{行政村}</option>
+		 		</property> 	
+		 	
+		 	</widget>
+		 	
+		 	<widget name="所属自然村" type ="text">	
+		 		<property name="自然村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>
+		 	
+			 <widget name="所属村民小组" type ="text">	
+		 		<property name="村民小组" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>	 	
+			<widget name="人编号" type ="text"/>
+			<widget name="工作单位" type ="text"/>
+			<widget name="手机号" type ="text"/>
+			<widget name="工作类型">
+		 		<property name="工作类型" type ="select">
+		 			<option>国家机关</option>
+		 			<option>专业技术人员</option>
+		 			<option>办事人员和有关人员</option>
+		 			<option>商业，服务业人员</option>
+		 			<option>农，林，牧，鱼，水利业人员</option>
+		 			<option>生产，运输设备操作人员及有关人员</option>
+		 			<option>军人</option>
+		 			<option>其他</option>
+		 		</property>
+		 	</widget>
+		 	
+		 	<widget name="身份证正面照">			
+				<property name="身份证正面照" type ="picture"/>
+			</widget>	
+			
+			<widget name="身份证反面照">			
+				<property name="身份证反面照" type ="picture"/>
+			</widget>
+			
+			<widget name="养老保险情况">			
+				<property name="有没有" type ="select">
+		 			<option>有</option>
+		 			<option>没有</option>
+		 		</property>
+		 	</widget>	
+		 	
+		 	
+		 	<widget name="民族">
+				<property name="民族" type ="select">
+		 			<option>汉族</option>
+		 			<option>满族</option>
+		 		</property>
+		 	</widget>	
+
+		 	
+		 	<widget name="务工状况">
+				<property name="务工状况" type ="select">
+		 			<option>在岗</option>
+		 			<option>失业</option>
+		 			<option>退休</option>
+		 		</property>
+		 	</widget>
+		 	<widget name="务工时间" order="1000" type="text"/>
+		 	<widget name="月" order="1000" type="text"/>
+
+		 	<widget name="参军情况">
+				<property name="参军情况" type ="select">
+		 			<option>无</option>
+		 			<option>在役军人</option>
+		 			<option>退役军人</option>
+		 		</property>
+		 	</widget>			 	
+		 	
+		 	<widget name="文化程度">
+				<property name="文化程度" type ="select">
+		 			<option>本科</option>
+		 			<option>专科</option>
+		 			<option>中专</option>
+		 			<option>高中</option>
+		 			<option>小学</option>
+		 		</property>
+		 	</widget>		 			 				
+
+		 	<widget name="医疗保险情况">
+				<property name="有没有" type ="select">
+		 			<option>有</option>
+		 			<option>没有</option>
+		 		</property>
+		 	</widget>
+		 	
+		 	<widget name="在校生状况" >
+		 		<property name="有没有" type ="select">
+		 			<option>有</option>
+		 			<option>没有</option>
+		 		</property>
+		 		<property name="有没有" type ="select">
+		 			<option>有</option>
+		 			<option>没有</option>
+		 		</property>
+		 	</widget>
+			
+			<widget name="参加大病医疗">
+				<property name="有没有" type ="select">
+		 			<option>有</option>
+		 			<option>没有</option>
+		 		</property>
+		 	</widget>			
+			<widget name="参加低保情况">
+				<property name="有没有" type ="select">
+		 			<option>有</option>
+		 			<option>没有</option>
+		 		</property>
+		 	</widget>			
+
+			
+			<widget name="劳动技能">
+				<property name="劳动技能" type ="select">
+		 			<option>耕田</option>
+		 			<option>耕田</option>
+		 		</property>
+		 	</widget>
+		 	
+			<widget name="健康状况">
+				<property name="健康状况" type ="select">
+		 			<option>健康</option>
+		 		</property>
+		 	</widget>		
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>
+		</module>
+		<module name="家庭户管理">
+		  <config>
+			<widget name="序号">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+		 		 	
+			<widget name="户主">
+				<property name="姓名" type ="select">
+		 		</property>
+			<widget name="身份证号" type ="text"/>
+			<widget name="性别">
+				<property name="性别" type ="select">
+		 			<option>男</option>
+		 			<option>女</option>
+		 		</property>
+		 	</widget>
+		 	
+		 	<widget name="出生年月" type ="date"/>
+		 	
+		 	<widget name="所属城镇">
+		 		<property name="城镇" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}</option>
+		 		</property> 	
+		 	</widget>
+		 			 	
+		 	<widget name="所属行政村">
+		 		<property name="行政村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{行政村}.{行政村}</option>
+		 		</property> 	
+		 	
+		 	</widget>
+		 	
+		 	<widget name="所属自然村" type ="text">	
+		 		<property name="自然村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>
+		 	<widget name="所属村民小组" type ="text">	
+		 		<property name="村民小组" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>	
+		 	
+		 	<widget name="家庭户类型">
+		 		<property name="家庭户类型" type ="select">
+		 			<option>低保户</option>
+		 			<option>贫困户</option>
+		 			<option>一般户</option>
+		 			<option>五保户</option>
+		 			<option>分散供养户</option>
+		 			<option>残疾人</option>
+		 			<option>军属户</option>
+
+		 			<option>烈属户</option>
+		 			<option>公职人员</option>
+		 		</property>
+		 	</widget>
+		 		 				
+			<!--widget name="年龄" type ="text"/>
+			<widget name="家庭人数" type ="text"/>
+			<widget name="贫困户" type ="text"/>
+			<widget name="低保户" type ="text"/>
+			<widget name="残疾人" type ="text"/-->
+
+			
+			
+			
+			
+
+			
+			<widget name="自来水情况" type ="text"/>
+				<property name="自来水情况" type ="select">
+		 			<option>已开通</option>
+		 			<option>未开通</option>
+		 		</property>
+		 	</widget>
+			
+			<widget name="通电情况">
+				<property name="通电情况" type ="select">
+		 			<option>已开通</option>
+		 			<option>未开通</option>
+		 		</property>
+		 	</widget>
+			<widget name="户口类型">
+				<property name="户口类型" type ="select">
+		 			<option>农村户口</option>
+		 			<option>城镇户口</option>
+		 		</property>			
+			</widget>
+			<widget name="贫困户类型">
+				<property name="贫困户类型" type ="select">
+		 			<option>绝对贫困户</option>
+		 			<option>贫困户</option>
+		 			<option>无</option>
+		 		</property>			
+			</widget>			
+
+			<widget name="房屋照片">			
+				<property name="房屋照片" type ="picture"/>
+			</widget>
+			
+			<widget name="是否军人家属">
+				<property name="是否" type ="select">
+			 		<option>是</option>
+			 		<option>否</option>
+		 		</property>	
+		 	</widget>			
+			
+			<widget name="网络情况">
+				<property name="开通情况" type ="select">
+		 			<option>已开通</option>
+		 			<option>未开通</option>
+		 		</property>
+		 	</widget>
+		 	
+			<widget name="年收入">
+				<property name="年" type ="select">
+					<option>2020</option>
+		 			<option>2019</option>
+		 			<option>2018</option>
+		 			<option>2017</option>	
+		 		</property>
+				<property name="收入" type ="text"/>
+				<property name="万元" type ="text" value="万元"/>
+			</widget>
+			<widget name="房屋情况">
+				<property name="房屋情况" type ="select">
+		 			<option>0-100平米</option>
+		 			<option>100-200平米</option>
+		 		</property>
+		 	</widget>		
+			
+
+			<widget name="户编号"  type ="text"/>
+			
+			<widget name="人均纯收入" type ="text"/>
+
+
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>
+		 
+		 
+		 <config id="200">
+			<widget name="家庭成员" type ="text"/>
+			<widget name="身份证号" type ="text"/>
+			<widget name="与户主关系" type ="text"/>
+			<widget name="就业情况" type ="text"/>
+
+			<widget name="学历" type ="text"/>
+			<widget name="养老保险" type ="text"/>
+			<widget name="医疗保险" type ="text"/>
+			<widget name="联系电话" type ="text"/>
+			
+			<!--widget name="操作" type ="select"/-->
+
+		
+		</config>
+		</module>
+		<module name="党支部管理">
+		<config>
+			<widget name="序号">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+		 	
+		 	<widget name="所属城镇">
+		 		<property name="城镇" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}</option>
+		 		</property> 	
+		 	</widget>
+		 			 	
+		 	<widget name="所属行政村">
+		 		<property name="行政村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{行政村}.{行政村}</option>
+		 		</property> 	
+		 	
+		 	</widget>
+		 	
+		 	<widget name="所属自然村" type ="text">	
+		 		<property name="自然村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>
+			<widget name="党支部名称" type ="text"/>
+
+			
+			<widget name="地址" type ="text"/>
+			<widget name="联系电话" type ="text"/>
+
+			<widget name="简介" type ="textArea"/>
+
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>
+		</module>
+		<module name="党员管理">
+		<config>
+			<widget name="序号">
+		 		<property name="序号" type ="inputNumber"/>
+		 	</widget>
+		 	
+		 	<widget name="所属城镇">
+		 		<property name="城镇" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{城镇}.{城镇}</option>
+		 		</property> 	
+		 	</widget>
+		 			 	
+		 	<widget name="所属行政村">
+		 		<property name="行政村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{行政村}.{行政村}</option>
+		 		</property> 	
+		 	
+		 	</widget>
+		 	
+		 	<widget name="所属自然村" type ="text">	
+		 		<property name="自然村" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>
+			<widget name="党员名称" type ="text"/>
+			
+			<widget name="入党时间" type ="date"/>
+
+		 	<widget name="所属村民小组" type ="text">	
+		 		<property name="村民小组" type ="select">
+		 			<option>{人员基本信息}.{         村         组每户人员基本情况}.{自然村}.{自然村}</option>
+		 		</property>
+		 	</widget>
+		 	
+			<widget name="民族">
+				<property name="民族" type ="select">
+		 			<option>汉族</option>
+		 			<option>满族</option>
+		 		</property>
+		 	</widget>		 	
+		 				
+			<widget name="性别">
+				<property name="性别" type ="select">
+		 			<option>男</option>
+		 			<option>女</option>
+		 		</property>
+		 	</widget>
+
+			<!--widget name="入党年限" type ="text"/-->
+			<widget name="是否后备干部">
+				<property name="是否" type ="select">
+			 		<option>是</option>
+			 		<option>否</option>
+		 		</property>	
+		 	</widget>
+			
+			<widget name="所属党支部">
+				<property name="党支部" type ="select">
+			 		<option>均桥党支部</option>
+		 		</property>
+			</widget>
+
+			<widget name="所属党小组">
+				<property name="党小组" type ="select">
+			 		<option>均桥党小组</option>
+		 		</property>
+			</widget>
+		
+		 	<widget name="更新人">
+		 		<property name="更新人" type ="text" value="{username}"/>
+		 	</widget>
+			<widget name="更新时间" >
+				<property name="更新时间" type ="data" value="{now}"/>
+		 	</widget>
+			<widget name="状态">
+				<property name="状态" type ="select">
+			 		<option>启用</option>
+			 		<option>禁用</option>
+		 		</property>
+		 	</widget>
+			<!--widget name="操作" type ="select">
+				<option value="编辑"/>
+				<option value="禁用"/>
+				<option value="删除"/>
+			</widget-->
+		 </config>
+		</module>
+		
+		
+	</module>
 	
 	<module name="模板管理" path="/template">
 		<config name="模板配置">
@@ -344,5 +2441,1172 @@
 	
 	</module>
 	
-    
+    <module name='原始数据'>
+    	<module name='人员基本信息'>
+        	<config name='         村         组每户人员基本情况'>
+            	<widget name='序号' order='1' />
+            	
+            	<widget name='行政区域' order='2'>
+		    	<property name='行政村'  />
+		    	<property name='自然村'  />
+		    	<property name='组别'  />
+            	</widget>
+            	<widget name='在校生状况' order='2'>
+		    	<property name='学校'>
+			    		<option name="小学" value="小学">
+				    		<option name="均桥小学" value="均桥小学"/>
+				    		<option name="均桥初中" value="均桥初中"/>
+				    		<option name="均桥高中" value="均桥高中"/>   		
+			    		</option>
+		    		<option name="初中" value="初中"/>
+		    		<option name="高中" value="高中"/>
+		    	</property>
+            	</widget>
+
+            	<widget name='姓名' order='5' />
+            	<widget name='性别' order='6' />
+            	<widget name='学历（注明在读情况' order='7' />
+            	<widget name='与户主关系' order='8' />
+            	<widget name='身份证号码' order='9' />
+            	<widget name='城镇/农村户口' order='10' />
+            	<widget name='就业情况' order='11' />
+            	<widget name='参军情况（注明退役/现役）' order='12' />
+            	<widget name='是否低保户' order='13' />
+            	<widget name='是否贫困户' order='14' />
+            	<widget name='是否一般户' order='15' />
+            	<widget name='是否五保户' order='16' />
+            	<widget name='是否分散供养户' order='17' />
+            	<widget name='是否残疾人' order='18' />
+            	<widget name='是否军属户' order='19' />
+            	<widget name='是否烈属户' order='20' />
+            	<widget name='是否公职人员' order='21' />
+            	<widget name='是否参加养老保险' order='22' />
+            	<widget name='是否参加医疗保险' order='23' />
+            	<widget name='房屋情况（附照片）' order='24' />
+        	</config>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='在校生状况' order='2'>
+            		<property ref='学校' value="初中"/>
+            	</widget>
+            	<widget ref='姓名' value= '李木贵' order='5' />
+            	<widget ref='性别' value= '男' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '1户主' order='8' />
+            	<widget ref='身份证号码' value= '360429194907252316' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '徐加美' order='5' />
+            	<widget ref='性别' value= '男' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '儿媳' order='8' />
+            	<widget ref='身份证号码' value= '360429198307221223' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '陈凤兰' order='5' />
+            	<widget ref='性别' value= '女' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '妻' order='8' />
+            	<widget ref='身份证号码' value= '360429195511262328' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '李文慧' order='5' />
+            	<widget ref='性别' value= '女' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '孙女' order='8' />
+            	<widget ref='身份证号码' value= '360429200410161724' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '李文丹' order='5' />
+            	<widget ref='性别' value= '女' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '孙女' order='8' />
+            	<widget ref='身份证号码' value= '36042920061202172X' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '李梓豪' order='5' />
+            	<widget ref='性别' value= '男' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '孙子' order='8' />
+            	<widget ref='身份证号码' value= '360429201001071730' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '李宇星' order='5' />
+            	<widget ref='性别' value= '男' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '子' order='8' />
+            	<widget ref='身份证号码' value= '360429197507082315' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '李献禄' order='5' />
+            	<widget ref='性别' value= '男' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '1户主' order='8' />
+            	<widget ref='身份证号码' value= '360429197109132313' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '李文博' order='5' />
+            	<widget ref='性别' value= '男' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '次子' order='8' />
+            	<widget ref='身份证号码' value= '360429200902151733' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '江佑枝' order='5' />
+            	<widget ref='性别' value= '女' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '母亲' order='8' />
+            	<widget ref='身份证号码' value= '360429194407052326' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '柳平荣' order='5' />
+            	<widget ref='性别' value= '女' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '妻' order='8' />
+            	<widget ref='身份证号码' value= '360429197310242362' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '李文梁' order='5' />
+            	<widget ref='性别' value= '男' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '子' order='8' />
+            	<widget ref='身份证号码' value= '360429199712012315' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '李献寿' order='5' />
+            	<widget ref='性别' value= '男' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '1户主' order='8' />
+            	<widget ref='身份证号码' value= '360429197507142357' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '李永祥' order='5' />
+            	<widget ref='性别' value= '男' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '次子' order='8' />
+            	<widget ref='身份证号码' value= '360429201001121734' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '柳华英' order='5' />
+            	<widget ref='性别' value= '女' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '妻' order='8' />
+            	<widget ref='身份证号码' value= '360429198001291747' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '李恒良' order='5' />
+            	<widget ref='性别' value= '男' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '子' order='8' />
+            	<widget ref='身份证号码' value= '360429200212271738' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '李献付' order='5' />
+            	<widget ref='性别' value= '男' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '1户主' order='8' />
+            	<widget ref='身份证号码' value= '36042919630224235X' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '李勤' order='5' />
+            	<widget ref='性别' value= '女' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '女' order='8' />
+            	<widget ref='身份证号码' value= '360429200301122320' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '王小莲' order='5' />
+            	<widget ref='性别' value= '女' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '妻' order='8' />
+            	<widget ref='身份证号码' value= '36042919710319234X' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '李昂' order='5' />
+            	<widget ref='性别' value= '男' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '子' order='8' />
+            	<widget ref='身份证号码' value= '36042920011209173X' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '柳水及' order='5' />
+            	<widget ref='性别' value= '男' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '1户主' order='8' />
+            	<widget ref='身份证号码' value= '360429195404182349' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '杨贵支' order='5' />
+            	<widget ref='性别' value= '女' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '母亲' order='8' />
+            	<widget ref='身份证号码' value= '360429192808082324' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '李丹青' order='5' />
+            	<widget ref='性别' value= '男' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '1户主' order='8' />
+            	<widget ref='身份证号码' value= '360429197108102323' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '李晨钟' order='5' />
+            	<widget ref='性别' value= '男' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '子' order='8' />
+            	<widget ref='身份证号码' value= '360429199506262313' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '李中汉' order='5' />
+            	<widget ref='性别' value= '男' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '1户主' order='8' />
+            	<widget ref='身份证号码' value= '360429194512012334' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '沈金妹' order='5' />
+            	<widget ref='性别' value= '女' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '妻' order='8' />
+            	<widget ref='身份证号码' value= '360429194507192326' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '李艳付' order='5' />
+            	<widget ref='性别' value= '男' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '1户主' order='8' />
+            	<widget ref='身份证号码' value= '360429197008102318' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '李茜' order='5' />
+            	<widget ref='性别' value= '女' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '二女' order='8' />
+            	<widget ref='身份证号码' value= '360429200504201723' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '李楠' order='5' />
+            	<widget ref='性别' value= '女' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '女' order='8' />
+            	<widget ref='身份证号码' value= '360429199812212322' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '刘华娟' order='5' />
+            	<widget ref='性别' value= '女' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '妻' order='8' />
+            	<widget ref='身份证号码' value= '360429197512062327' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '柳金华' order='5' />
+            	<widget ref='性别' value= '男' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '1户主' order='8' />
+            	<widget ref='身份证号码' value= '360429197305122331' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '柳小钗' order='5' />
+            	<widget ref='性别' value= '女' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '女' order='8' />
+            	<widget ref='身份证号码' value= '360429199508242324' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '左雪荣' order='5' />
+            	<widget ref='性别' value= '女' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '妻' order='8' />
+            	<widget ref='身份证号码' value= '360429197311182365' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '柳银华' order='5' />
+            	<widget ref='性别' value= '男' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '1户主' order='8' />
+            	<widget ref='身份证号码' value= '360429197509132355' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '柳火生' order='5' />
+            	<widget ref='性别' value= '男' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '父亲' order='8' />
+            	<widget ref='身份证号码' value= '360429194710042315' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '张百花' order='5' />
+            	<widget ref='性别' value= '女' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '母亲' order='8' />
+            	<widget ref='身份证号码' value= '360429194909012324' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '柳滢萍' order='5' />
+            	<widget ref='性别' value= '女' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '女' order='8' />
+            	<widget ref='身份证号码' value= '360429199909182385' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '黄米' order='5' />
+            	<widget ref='性别' value= '女' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '妻' order='8' />
+            	<widget ref='身份证号码' value= '360429197803082328' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '柳一航' order='5' />
+            	<widget ref='性别' value= '男' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '子' order='8' />
+            	<widget ref='身份证号码' value= '360429200810211719' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+        	<data ref='         村         组每户人员基本情况' >
+            	<widget ref='序号' value= '' order='1' />
+            	<widget ref='行政区域' order='2' >
+            		<property ref='行政村' value= '文桥乡江桥村' />
+            		<property ref='自然村' value= '一组'  />
+            		<property ref='组别' value= '一组'  />
+            	</widget>
+            	<widget ref='姓名' value= '李园军' order='5' />
+            	<widget ref='性别' value= '男' order='6' />
+            	<widget ref='学历（注明在读情况' value= '' order='7' />
+            	<widget ref='与户主关系' value= '1户主' order='8' />
+            	<widget ref='身份证号码' value= '360429195508092313' order='9' />
+            	<widget ref='城镇/农村户口' value= '农村' order='10' />
+            	<widget ref='就业情况' value= '' order='11' />
+            	<widget ref='参军情况（注明退役/现役）' value= '否' order='12' />
+            	<widget ref='是否低保户' value= '否' order='13' />
+            	<widget ref='是否贫困户' value= '否' order='14' />
+            	<widget ref='是否一般户' value= '是' order='15' />
+            	<widget ref='是否五保户' value= '否' order='16' />
+            	<widget ref='是否分散供养户' value= '' order='17' />
+            	<widget ref='是否残疾人' value= '否' order='18' />
+            	<widget ref='是否军属户' value= '否' order='19' />
+            	<widget ref='是否烈属户' value= '否' order='20' />
+            	<widget ref='是否公职人员' value= '否' order='21' />
+            	<widget ref='是否参加养老保险' value= '否' order='22' />
+            	<widget ref='是否参加医疗保险' value= '否' order='23' />
+            	<widget ref='房屋情况（附照片）' value= '' order='24' />
+        	</data>
+		</module>
+	</module>
 </modules>
