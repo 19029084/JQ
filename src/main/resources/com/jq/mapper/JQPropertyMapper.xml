@@ -31,6 +31,15 @@
 		where Name=#{name} and p.type_id = t.id
 	
 	</select>
+
+	<select id="findPropertyById" resultMap="JQProperty">
+	
+		select p.id as propertyID, p.name as propertyName, p.value as propertyValue, t.type as propertyType, t.id as propertyTypeID 
+		from Property p, PropertyType t 
+		where p.id=#{propertyId} and p.type_id = t.id
+	
+	</select>	
+	
 	
 	<insert id = "createProperty" parameterType="com.jq.entity.JQProperty">	
 		<selectKey resultType="int" keyProperty="id" order="AFTER">
@@ -132,7 +141,14 @@
 
 	<select id="findProperyOptionsById" resultMap="JQPropertyOption">	
 		select id, value,propertyId,parentId from PropertyOption where propertyId = #{propertyId} and valid=1
-	</select>	
+	</select>
+	
+	
+	<select id="findPropertyOptionsByParentId" resultMap="JQPropertyOption">	
+		select id, value,propertyId,parentId from PropertyOption where parentId = #{parentId} and valid=1
+	</select>
+	
+		
 	
 	<insert id="assignPropertyOption">
 		<selectKey resultType="int" keyProperty="option.id" order="AFTER">

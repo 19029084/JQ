@@ -38,9 +38,12 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import com.jq.utils.JQUtils;
+
 @Service
 public class JQConfigService
 {
+	static List< JQConfig > g_data = new ArrayList< JQConfig >();
 	//@Resource
 	//IJQModuleDAO moduleDAO;
 
@@ -48,6 +51,9 @@ public class JQConfigService
 	JQConfigMapper jqConfigMapper;
 	//@Autowired
 	//JQPropertyMapper jqPropertyMapper;
+
+	@Resource
+	JQModuleService moduleService;
 	
 	@Resource
 	JQPropertyService propertyService;
@@ -58,6 +64,56 @@ public class JQConfigService
 	@Resource 
 	JQWidgetService widgetService;
 	
+	
+	public void refresh(int moduleId, int configId)
+	{
+		List< Map<String,String> > rows = new ArrayList< Map<String,String> >();
+		
+		for(int i=0;i<g_data.size();i++)
+		{
+			rows.add(new HashMap<String,String>());
+		}
+		
+		JQModuleConfig mc = moduleService.getModuleConfigById(moduleId,configId);
+		
+		List<JQWidget> cwidgets = mc.toWidgets();
+		
+		if(cwidgets.size()>0)
+		{
+			
+			for(int i=0;i<cwidgets.size();i++)
+			{
+				JQWidget cwidget = cwidgets.get(i);
+				switch(cwidget.getValue())
+				{
+					case "{config.id}":
+						for(int j=0; j<g_data.size();j++)
+						{
+							rows.get(j).put(cwidget.getName(),""+g_data.get(j).getId());
+						}
+						break;
+					case "{config.name}":
+						for(int j=0; j<g_data.size();j++)
+						{
+							rows.get(j).put(cwidget.getName(),g_data.get(j).getName());
+						}
+						break;			
+					case "{config.widgets}":
+						for(int j=0; j<g_data.size();j++)
+						{
+							rows.get(j).put(cwidget.getName(),""+g_data.get(j).getId());
+						}
+						break;					
+				}
+				//rows.get(i).put("rowId",g_data.get(j).getId());
+				
+			}
+		
+		}
+		
+		moduleService.addModuleData(moduleId,configId,rows);
+		g_data.clear();
+	}
 
 	public List<JQConfig> getConfigs()
 	{	
@@ -94,6 +150,9 @@ public class JQConfigService
 	
 	}
 	
+	
+	
+
 	public int createConfig(JQConfig config)
 	{
 		
@@ -103,6 +162,8 @@ public class JQConfigService
 		if(existConfig ==null)
 		{
 			jqConfigMapper.createConfig(config);
+			
+			g_data.add(config);
 		}
 		else
 		{
@@ -149,10 +210,118 @@ public class JQConfigService
 		
 	}
 	
+
+	public void updateConfig(JQConfig config)
+	{	
+	
+		jqConfigMapper.updateConfig(config);
+		
+		List<JQWidget> widgets = config.toWidgets();
+		
+		if(widgets != null)
+		{
+			jqConfigMapper.deleteConfigWidget(config.getId());
+			
+			for(int i=0;i<widgets.size();i++)
+			{
+				JQWidget widget = widgets.get(i);
+				
+				if(widget.getId()>0)
+				{			
+					jqConfigMapper.updateWidget(widget);
+				}
+				else
+				{
+					jqConfigMapper.createWidget(widget);
+				}
+
+				jqConfigMapper.assignWidget(config.getId(),widget.getId(), ""+i);//@todo
+				
+			}
+		}
+		
+		
+		/*JQConfig existConfig = jqConfigMapper.findConfigById(configId);
+		
+		List<Integer> moduleIds = moduleService.findModuleIdByConfigId(configId);
+		
+		HashMap<Integer,List<JQModuleData> > cache = new HashMap<>();
+		
+		for(int i=0;i<moduleIds.size();i++)
+		{
+			 
+			List<JQModuleData> data = moduleService.loadModuleData(moduleIds.get(i).intValue(),configId);
+			
+			cache.put(moduleIds.get(i),data);
+			
+			moduleService.deleteModuleConfig(moduleIds.get(i).intValue(),configId);
+		}
+		
+		deleteConfig(configId);		
+		
+		createConfig(config);
+		
+		for(int i=0;i<moduleIds.size();i++)
+		{
+			JQModuleConfig moduleConfig=new JQModuleConfig();
+			
+			moduleConfig.setConfigId(config.getId());
+			moduleConfig.setModuleId(moduleIds.get(i).intValue());
+			
+			moduleService.assignModuleConfig(moduleIds.get(i).intValue(),moduleConfig);
+			
+			List<JQModuleData> data = cache.get(moduleIds.get(i));
+			
+			List< Map<String,String> > updatedData = new ArrayList<>();
+			//@TODO  update sub data
+			for(int j=0;j<data.size();j++)
+			{
+				JQModuleData original = data.get(j);
+				
+				List<JQWidget> originalWidget = original.toWidgets();
+				
+				List<JQWidget> newWidget = config.toWidgets();
+				
+				HashMap<String, JQWidget> key2Widget = new HashMap<>();
+				
+				HashMap<String,String> values = new HashMap<>();
+				
+				for(int k=0;k<newWidget.size();k++)
+				{
+					key2Widget.put(newWidget.get(k).getName(),newWidget.get(k));
+				}
+				
+				for(int k=0;k<originalWidget.size();k++)
+				{
+					JQWidget sameWidget = key2Widget.get(originalWidget.get(k).getName());
+					
+					if(sameWidget!=null)
+					{
+						values.put(sameWidget.getName(),originalWidget.get(k).getValue());
+					}
+				}
+				
+				updatedData.add(values);
+			}
+			
+			moduleService.addModuleData(moduleIds.get(i).intValue(),configId,updatedData);
+			
+		}*/
+		
+		
+	}
+	
 	public void deleteConfig(int configId)
 	{
 		jqConfigMapper.deleteConfig(configId);
 	}
+	
+	public int numOfWidgets(int configId)
+	{
+		return jqConfigMapper.numOfWidgets(configId);
+	
+	}
+	
 	
 	public void createWidget(JQWidget widget,int parentId)
 	{	
@@ -170,8 +339,8 @@ public class JQConfigService
 			{
 				case 0:
 				
-					JQProperty property = widget.getProperty();
-			
+					JQProperty property = widget.reference();
+
 					if(property ==null)
 					{
 						widget.setDataSource(-1);
@@ -246,7 +415,7 @@ public class JQConfigService
 					System.out.println("ERROR DataSource:"+widget.getDataSource());		
 			
 			}			
-			
+
 			jqConfigMapper.createWidget(widget);
 			
 			/*List<JQProperty> properties = widget.getProperties();
@@ -275,7 +444,62 @@ public class JQConfigService
 	public JQWidget findWidgetByName(String name)
 	{
 		return jqConfigMapper.findWidgetByName(name);
-	}	
+	}
+	
+	public List<JQWidget> findWidgetByConfigId(int configId,boolean searchable,
+						                  boolean visible,
+						                  boolean shareable)
+	{
+		return jqConfigMapper.findWidgetByConfigId(configId,searchable,visible,shareable);
+	}
+	
+	
+		
+	public JQConfig toConfig(Map<String,String> data)	    
+	{
+
+
+		JQModuleConfig moduleConfig = moduleService.getConfigService();
+    	
+		List<JQWidget> widgets = moduleConfig.toWidgets();
+			
+		Map<String,String> reverseMap = new HashMap<String,String>();
+			
+		for(int j=0;j<widgets.size();j++)
+		{
+			JQWidget widget = widgets.get(j);
+		
+			String value = data.get(widget.getName());
+				
+			if(value!=null)
+			{
+				reverseMap.put(widget.getValue(),value);
+			}
+
+ 		}
+ 	
+    		JQConfig config = new JQConfig();
+    	
+    		for(Map.Entry<String,String> entry:data.entrySet()){
+	    		switch(entry.getKey())
+	    		{
+	    			case "{config.name}":
+	    				config.setName(entry.getValue());
+	    				break;
+	    			case "{config.id}":
+					config.setId(Integer.parseInt(entry.getValue()));
+	    				break;
+				default:
+					
+	    				
+	    		}
+    	
+    		}
+
+	   	return config;
+	    
+	    }	
+	
 
 /*
 	public int updateModules(List<JQModule> modules, String pid)

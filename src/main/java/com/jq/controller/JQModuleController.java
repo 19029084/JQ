@@ -14,7 +14,7 @@ import com.jq.entity.JQProperty;
 
 import com.jq.service.JQModuleService;
 import com.jq.service.JQConfigService;
-
+import com.jq.service.JQPropertyService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -80,6 +80,65 @@ JQModuleService m_service;
 
 @Resource
 JQConfigService m_config;
+
+@Resource
+JQPropertyService m_property;
+
+
+
+
+
+
+@GetMapping("/service/{serviceId:\\d+}")
+@ApiOperation("获取管理服务，1 是菜单管理模块，2 是模板管理模块，3 是字典管理模块， 4 是数据项管理模块")
+@ResponseBody
+public Object getService(@PathVariable int serviceId)
+{	
+	JQModuleConfig moduleConfig = null;
+
+	switch(serviceId)
+	{
+		case 1:
+			moduleConfig= m_service.getModuleService();
+			break;
+		
+		case 2:
+			moduleConfig= m_service.getConfigService();
+			break;		
+		case 3:
+			moduleConfig= m_service.getPropertyService();
+			break;		
+		case 4:
+			moduleConfig= m_service.getOptionService();
+			break;		
+		
+		default:	
+	
+	}
+	
+	HashMap<String,String> result = new HashMap<>();
+	
+	if(moduleConfig != null)
+	{
+		result.put("moduleId",""+moduleConfig.getModuleId());
+		result.put("configId",""+moduleConfig.getConfigId());
+	
+	}
+	else
+	{
+		result.put("moduleId","0");
+		result.put("configId","0");
+	}
+	
+	return result;
+	
+	
+	
+
+
+
+}
+
 
 
 @GetMapping("/modules")
@@ -281,10 +340,9 @@ public Object addModuleData(@PathVariable int moduleId,@PathVariable int configI
 	
 		for(int i=0;i<propertyValue.size();i++)
 		{
-			 
-			 
+
 			Map<String,String> row = propertyValue.get(i);
- 			 
+
  			JQModule module = m_service.toModule(row);
 			 	
 			List<JQModule> modules = new ArrayList<>();
@@ -302,7 +360,7 @@ public Object addModuleData(@PathVariable int moduleId,@PathVariable int configI
 	
 	if(moduleId == configModuleConfig.getModuleId() && configId == configModuleConfig.getConfigId())
 	{
-	
+
 	}
 	
 	
@@ -310,12 +368,48 @@ public Object addModuleData(@PathVariable int moduleId,@PathVariable int configI
 	if(moduleId == propertyModuleConfig.getModuleId() && configId == propertyModuleConfig.getConfigId())
 	{
 	
+		for(int i=0;i<propertyValue.size();i++)
+		{
+			 
+			 
+			Map<String,String> row = propertyValue.get(i);
+ 			 
+ 			/*JQProperty property = m_property.toProperty(row);
+			 	
+			List<JQModule> modules = new ArrayList<>();
+			 
+			modules.add(module);
+			 			 
+			m_service.createModules(modules,module.getParentId());
+			 	
+			row.put("rowId",""+module.getId());
+			row.put("parentId",""+module.getParentId());*/
+		}
+	
 	}
 	
 	
 		
 	if(moduleId == optionModuleConfig.getModuleId() && configId == optionModuleConfig.getConfigId())
 	{
+	
+			for(int i=0;i<propertyValue.size();i++)
+		{
+			 
+			 
+			Map<String,String> row = propertyValue.get(i);
+ 			 
+ 			/*JQModule module = m_property.toModule(row);
+			 	
+			List<JQModule> modules = new ArrayList<>();
+			 
+			modules.add(module);
+			 			 
+			m_service.createModules(modules,module.getParentId());
+			 	
+			row.put("rowId",""+module.getId());
+			row.put("parentId",""+module.getParentId());*/
+		}
 	
 	}
 	
@@ -408,7 +502,7 @@ public Object getModuleData(@PathVariable int moduleId,@PathVariable int configI
 	{
 		PageHelper.startPage(pageNum,pageSize*nWidget);
 		
-		data = m_service.getModuleData(moduleId,configId);
+		data = m_service.loadModuleData(moduleId,configId);
 		
 		PageInfo< JQModuleData > pageInfo= new PageInfo<>(data);
 		
@@ -498,13 +592,94 @@ public Object getModuleData(@PathVariable int moduleId,@PathVariable int configI
 })
 @ResponseBody
 
-public Object updateModuleData(@PathVariable int moduleId,@PathVariable int configId, @PathVariable int rowId,@RequestBody Map<String,String> data,
+public void updateModuleData(@PathVariable int moduleId,@PathVariable int configId, @PathVariable int rowId,@RequestBody Map<String,String> data,
                             @RequestParam(value="pageNum",defaultValue="1") Integer pageNum,
 			     @RequestParam(value="pageSize",defaultValue="10") Integer pageSize)
 {
+
+			JQModuleConfig moduleModuleConfig = m_service.getModuleService();
+						
+			if(moduleModuleConfig.getModuleId() == moduleId && moduleModuleConfig.getConfigId()==configId)
+			{
+				JQModule module = m_service.toModule(data);
+				
+				//module.setParentId(moduleModuleConfig.getParentId());
+				//module.setUrlId(moduleModuleConfig.getUrlId());
+				
+				JQModule existModule = m_service.getModuleById(rowId);
+				
+				if(existModule != null)
+				{
+					//module.setId(existModule.getId());
+					//module.setParentId(existModule.getParentId());
+					module.setUrlId(existModule.getUrlId());
+					
+					m_service.updateModule(module);
+
+					if(module.getModuleConfigs()!=null)
+					{
+					
+						JQModuleConfig mcConfig = module.getModuleConfigs().get(0);
+						
+						JQConfig newConfig = mcConfig.getJQConfig();
+						
+						JQConfig existConfig = m_config.findConfigByName(newConfig.getName());
+
+						if(existConfig != null)
+						{
+							List<JQModuleConfig> mcs = m_service.getModuleConfig(rowId);
+							
+							if(mcs !=null)
+							{
+								JQModuleConfig existModuleConfig = mcs.get(0);
+								mcConfig.setId(existModuleConfig.getId());
+								mcConfig.setModuleId(rowId);
+								mcConfig.setConfigId(existConfig.getId());
+								mcConfig.setJQConfig(existConfig);
+							
+								m_service.updateModuleConfig(rowId,mcConfig);
+							}
+						
+						}
+					}
+				}
+				
+				
+			}
+						
+			JQModuleConfig configModuleConfig = m_service.getConfigService();	
+			
+			if(configModuleConfig.getModuleId() == moduleId  && configModuleConfig.getConfigId()==configId)
+			{
+			
+				
+				JQConfig config = m_config.toConfig(data);
+				
+				if(config.getId()>0)
+				{
+					m_config.updateConfig(config);
+					
+					data.put("rowId",""+config.getId());					
+				}
+				
+				
+			}		
+			JQModuleConfig propertyModuleConfig = m_service.getPropertyService();
+			
+			if(propertyModuleConfig.getModuleId() == moduleId  && propertyModuleConfig.getConfigId()==configId)
+			{
+			
+			}
+			
+			JQModuleConfig optionModuleConfig = m_service.getOptionService();
+			if(optionModuleConfig.getModuleId() == moduleId  && optionModuleConfig.getConfigId()==configId)
+			{
+			
+			}
+
 	
 
-	return null;
+			m_service.updateModuleData(moduleId,configId,rowId,data);
 }
 
 
@@ -586,9 +761,9 @@ public void exportData(@PathVariable int moduleId,@PathVariable int configId,Htt
 @ResponseBody
 public void importData(@PathVariable int moduleId,@PathVariable int configId,MultipartFile file) throws ParseException
 {
-	//List< List<JQWidget> > data = m_service.readExcel(file);
+	List< Map<String,String> > data = m_service.readExcel(file);
 	
-	//m_service.addModuleData(moduleId,configId,data,0);	
+	m_service.addModuleData(moduleId,configId,data);	
 	
 }
 
@@ -601,6 +776,13 @@ public void deleteModules(@PathVariable int moduleId,@PathVariable int configId,
 	m_service.deleteModuleData(moduleId,configId,rowId);
 	
 	
+}
+@GetMapping("/modules/permissions/{moduleId:\\d+}/")
+@ApiOperation("获取菜单权限项")
+@ResponseBody
+public Object getModulePermissions(@PathVariable int moduleId)
+{
+	return m_service.getModulePermissions(moduleId);
 }
 
 /*

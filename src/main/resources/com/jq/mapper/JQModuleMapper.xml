@@ -72,6 +72,7 @@
 	<resultMap id="JQModuleConfig" type="com.jq.entity.JQModuleConfig">
 		<id property="id" column="mcid"/>
 		<result property="moduleId" column="moduleId" />
+		<result property="configId" column="configId" />
 		<association property="jqConfig" javaType="com.jq.entity.JQConfig">
 			<id property="id" column="configId"/>		
 			<result property="name" column="configName" />
@@ -93,13 +94,14 @@
 					<result property="configId" column="widgetConfig" />
 					<result property="widgetId" column="widgetWidget" />					
 					<result property="propertyId" column="widgetProperty" />
-					<result property="visiable" column="visiable" />
+					<result property="visible" column="visible" />
 					<result property="searchable" column="searchable" />				
 					<result property="shareable" column="shareable" />
 					<result property="required" column="required" />				
 					<result property="dataSource" column="dataSource" />
-					<!--result property="name" column="widgeName" />				
 					<result property="value" column="widgetValue" />
+					<!--result property="name" column="widgeName" />				
+					
 					<result property="propertyId" column="propertyId" /-->
 					
 					<!--collection property="properties" javaType="java.util.ArrayList"  ofType="com.jq.entity.JQProperty" >
@@ -185,7 +187,7 @@
 		       c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid, c. parentId as configParentId,
 		       cw.id as cwid,cw.sortKey as sortKey,cw.widgetId as widgetId, 
 		       w.name as widgetName,w.moduleID as widgetModule, w.configId as widgetConfig, w.widgetId as widgetWidget, w.propertyId as widgetProperty,
-		       w.visiable as visiable, w.searchable as searchable,w.shareable as shareable,w.required as required,w.dataSource as dataSource
+		       w.visible as visible, w.searchable as searchable,w.shareable as shareable,w.required as required,w.dataSource as dataSource,w.value as widgetValue
 
 		from ModuleConfig mc 
 		left join Config c on mc.configId=c.id
@@ -202,7 +204,7 @@
 		       c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid,c. parentId as configParentId,
 		       cw.id as cwid,cw.sortKey as sortKey,cw.widgetId as widgetId, 
 		       w.name as widgetName,w.moduleID as widgetModule, w.configId as widgetConfig, w.widgetId as widgetWidget, w.propertyId as widgetProperty,
-		       w.visiable as visiable, w.searchable as searchable,w.shareable as shareable,w.required as required,w.dataSource as dataSource
+		       w.visible as visible, w.searchable as searchable,w.shareable as shareable,w.required as required,w.dataSource as dataSource,w.value as widgetValue
 		from Module m  
 		left join ModuleConfig mc on m.id =mc.moduleId
 		left join Config c on mc.configId=c.id
@@ -217,7 +219,7 @@
 		       c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid,c. parentId as configParentId,
 		       cw.id as cwid,cw.sortKey as sortKey,cw.widgetId as widgetId, 
 		       w.name as widgetName,w.moduleID as widgetModule, w.configId as widgetConfig, w.widgetId as widgetWidget, w.propertyId as widgetProperty,
-		       w.visiable as visiable, w.searchable as searchable,w.shareable as shareable,w.required as required,w.dataSource as dataSource
+		       w.visible as visible, w.searchable as searchable,w.shareable as shareable,w.required as required,w.dataSource as dataSource,w.value as widgetValue
 		from ModuleConfig mc 
 		left join Config c on mc.configId=c.id
 		left join ConfigWidget cw on c.id=cw.configId
@@ -244,9 +246,20 @@
 		where id=#{config.id} and moduleId=#{moduleId}
 	</update>
 	
-	<update id="deleteModuleConfig">	
+	<!--update id="deleteModuleConfig">	
 		update ModuleConfig set valid=0 where ModuleId=#{mid} and ConfigId= #{config.configId}
-	</update>
+	</update-->
+	
+	<delete id="deleteModuleConfig">
+		delete from ModuleConfig where moduleId=#{moduleId} and configId= #{configId}
+	</delete>
+	
+	
+	<select id="findModuleIdByConfigId" resultType="int">
+		select moduleId 
+		from ModuleConfig
+		where configId=#{configId}
+	</select>
 	
 	<!--resultMap id="JQColumn" type="com.jq.mapper.JQColumn">
 		<id property="id" column="id"/>
@@ -263,18 +276,18 @@
 	<resultMap id="JQModuleData" type="com.jq.entity.JQModuleData">
 			
 		<id property="id" column="rowId"/>
-		<result property="parentId" column="parentId"/>		
+		<!--result property="parentId" column="parentId"/-->		
 		<result property="moduleId" column="moduleId" />
 		<result property="configId" column="configId"/>
 		
 		<association property="jqConfig" javaType="com.jq.entity.JQConfig">
 	
-			<id property="id" column="configId"/>		
+			<id property="id" column="rowId"/>		
 	
 			<result property="name" column="configName" />
 			<result property="title" column="configTitle" />
 			<result property="valid" column="configValid" />
-			<result property="parentId" column="configParentId" />
+			<result property="parentId" column="parentId" />
 			
 			<collection property="columns" javaType="java.util.ArrayList" ofType="com.jq.entity.JQColumn">
 				<id property="id" column="configWidgetId"/>
@@ -292,7 +305,7 @@
 					<result property="configId" column="widgetConfig" />
 					<result property="widgetId" column="widgetWidget" />					
 					<result property="propertyId" column="widgetProperty" />
-					<result property="visiable" column="visiable" />
+					<result property="visible" column="visible" />
 					<result property="searchable" column="searchable" />				
 					<result property="shareable" column="shareable" />
 					<result property="required" column="required" />				
@@ -331,14 +344,14 @@
 		       c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid,c. parentId as configParentId,
 		       cw.id as cwid,cw.sortKey as sortKey,
 		       cw.widgetId as widgetId,w.name as widgetName,w.moduleID as widgetModule, w.configId as widgetConfig, w.widgetId as widgetWidget, w.propertyId as widgetProperty,
-		       w.visiable as visiable, w.searchable as searchable,w.shareable as shareable,w.required as required,w.dataSource as dataSource
+		       w.visible as visible, w.searchable as searchable,w.shareable as shareable,w.required as required,w.dataSource as dataSource
 
 		from ModuleConfig mc 
 		left join Config c on mc.configId=c.id
 		left join ConfigWidget cw on c.id=cw.configId
 		left join ${tableName} md on cw.id = md.fieldId
 		left join Widget w on cw.widgetId = w.id
-		where mc.moduleid= #{moduleId} and mc.valid = 1 and mc.configId=#{configId}
+		where mc.moduleid= #{moduleId} and mc.valid = 1 and mc.configId=#{configId} and md.parentId=#{parentId}
 		order by md.rowId,cw.sortKey
 	</select>
 	
@@ -348,7 +361,7 @@
 		       c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid,c. parentId as configParentId,
 		       cw.id as cwid,cw.sortKey as sortKey,
 		       cw.widgetId as widgetId,w.name as widgetName,w.moduleID as widgetModule, w.configId as widgetConfig, w.widgetId as widgetWidget, w.propertyId as widgetProperty,
-		       w.visiable as visiable, w.searchable as searchable,w.shareable as shareable,w.required as required,w.dataSource as dataSource
+		       w.visible as visible, w.searchable as searchable,w.shareable as shareable,w.required as required,w.dataSource as dataSource
 		       
 		from ModuleConfig mc 
 		left join Config c on mc.configId=c.id
@@ -479,7 +492,10 @@
 			</foreach>
 		</if>
 	
-	</select>	
+	</select>
+	
+	
+		
 	
 	<select id="existDataTable" parameterType="String" resultType="Integer">
 	
@@ -488,7 +504,21 @@
 		where table_name=#{tableName}
 	
 	</select>
-	
+	<select id="getModulePermissions" resultType="java.util.Map">
+		SELECT DISTINCT
+			u.id,
+			u.username,
+			u.nickname
+		FROM
+			sys_user u
+				LEFT JOIN sys_user_role ur ON ur.user_id = u.id
+				LEFT JOIN sys_role_permission rp ON rp.role_id = ur.role_id
+				LEFT JOIN sys_permission p ON p.id = rp.permission_id
+				LEFT JOIN Module m ON m.URLID = p.url_id
+		WHERE
+			m.ID = ${moduleId}
+	</select>
+
 	<update id="dropDataTable">
 		DROP TABLE IF EXISTS ${tableName}
 	</update>

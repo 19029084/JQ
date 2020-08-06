@@ -67,6 +67,8 @@ public class JQModuleData extends JQModuleConfig
 	{
 		return false;
 	}
+	
+
 
 	
 	//private int parentId;

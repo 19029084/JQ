@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.ArrayList;
 
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.User;
@@ -62,6 +63,10 @@ import java.net.URLEncoder;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.stream.Collectors;
+
+import java.util.UUID;
+
+import java.util.Date;
 
 @Service
 public class JQModuleService
@@ -151,9 +156,21 @@ public class JQModuleService
 		return jqModuleMapper.findModuleByName(name);
 	}
 	
-	
+	public JQModule getModuleById(int id)
+	{
+		return jqModuleMapper.findModuleById(id);
+	}	
 
+	protected boolean isUuid(String uuid)
+	{
 	
+		try{
+			UUID.fromString(uuid).toString();
+		}catch(Exception e){
+			return false;
+		}
+		return true;
+	}
 	
 	public int createModules(List<JQModule> modules, int pid)
 	{
@@ -184,7 +201,34 @@ public class JQModuleService
 				
 				configService.createConfig(config);
 				
+				configs.get(j).setConfigId(config.getId());
 			}
+			
+			////////////////////////////////////////////////////////////////////////////////////
+			JQUrl url = module.getUrl();
+			
+			if(url !=null)
+			{
+				String strUrl = url.getName();
+				
+				if(isUuid(strUrl))
+				{
+					if(configs.size()>0)
+					{
+						url.setName("/p/"+module.getId()+"/"+configs.get(0).getConfigId());
+						
+					}
+					else
+					{
+						url.setName("");
+					}
+					resourceService.updateUrl(url);
+				
+				}
+			}
+
+
+
 			
 			assignModuleConfig(module.getId(),configs);
 			
@@ -263,8 +307,30 @@ public class JQModuleService
 		jqModuleMapper.updateModuleConfig(moduleId,moduleConfig);
 	
 	}
+	
+	
+	
+	public  List<JQModuleData> loadModuleData(int moduleId,int configId)
+	{
+		List<JQModuleData> moduleData = getModuleData(moduleId,configId,0);
+		
+		for(int i=0;i<moduleData.size();i++)
+		{
+			JQConfig md = moduleData.get(i).getJQConfig();
+			List<JQModuleData> subModuleData = getModuleData(moduleId,configId,md.getId());
+			//System.out.println("module:"+md.getId()+":"+md.getParentId()+":"+children.size());
+			for(int j=0;j< subModuleData.size();j++)
+			{
+				md.addChildren(subModuleData.get(j).getJQConfig());
+			}
+		
+		}
+		
+		return moduleData;
+	}
+	
 
-	public List<JQModuleData> getModuleData(int moduleId,int configId)
+	protected  List<JQModuleData> getModuleData(int moduleId,int configId,int parentId)
 	{
 		//Map<Integer,JQModuleData> table = new TreeMap<Integer,JQModuleData>();
 		
@@ -288,7 +354,61 @@ public class JQModuleService
 			if(jqModuleMapper.existDataTable(tableName)>0)
 			{
 			
-				rows = jqModuleMapper.getModuleData(tableName,moduleId,configId);
+				JQModuleConfig moduleConfig = jqModuleMapper.findModuleConfigById(moduleId, configId);
+				
+				List<JQWidget> configWidgets = moduleConfig.toWidgets();			
+			
+			
+				rows = jqModuleMapper.getModuleData(tableName,moduleId,configId,parentId);
+				
+				for(int i=0;i<rows.size();i++)
+				{
+					rows.get(i).setModuleId(moduleId);
+					rows.get(i).setConfigId(configId);
+					
+					List<JQWidget> dataWidgets = rows.get(i).toWidgets();
+					
+					for(int j=0;j<dataWidgets.size();j++)
+					{
+						int dataSource = dataWidgets.get(j).getDataSource();
+						switch(dataSource)
+						{
+							case 0:
+								
+								break;	
+							
+							case 1:
+								break;
+							case 2:
+							
+								break;
+							default:
+								JQWidget cwidget = configWidgets.get(j);
+								JQWidget dwidget = dataWidgets.get(j);
+								System.out.println("id: "+cwidget.getId()+":"+dwidget.getId());
+								System.out.println("v:"+cwidget.getValue());
+								if(cwidget.getId() == dwidget.getId())
+								{
+									switch(cwidget.getValue())
+									{
+										case "{config.widgets}":
+										int numOfWidgets = configService.numOfWidgets(Integer.parseInt(dwidget.getValue()));					
+										dwidget.setValue(""+numOfWidgets);						
+											break;
+										default:
+									}
+										
+							
+								}
+								else
+								{
+									System.out.println("Miss Matching!");
+								}
+							
+								
+						}
+					}
+				}
 			}
 			
 			return rows;
@@ -458,7 +578,6 @@ public class JQModuleService
 		return 0;
 	}	
 	public int addModuleData(int moduleId,int configId, List< Map<String,String> > data)
-	
 	{
 		String tableName = JQUtils.getModuleDataTable(moduleId,configId);
 		
@@ -498,7 +617,8 @@ public class JQModuleService
 						ArrayList<String> result = new ArrayList<String>();
 						result.add(String.valueOf(columns.get(j).getId()));
 						result.add(String.valueOf(w.getId()));
-						result.add(w.getValue());
+						List<String> wv = loadWidgetValue(w);
+						result.add(wv.get(0));
 						configWidget.put(w.getName(),result);						
 						
 						List<JQWidget> children = w.getChildren();
@@ -509,7 +629,8 @@ public class JQModuleService
 								//ArrayList<String> result = new ArrayList<String>();
 								result.add(String.valueOf(columns.get(j).getId()));
 								result.add(String.valueOf(children.get(n).getId()));
-								result.add(children.get(n).getValue());
+								List<String> cv = loadWidgetValue(children.get(n));
+								result.add(cv.get(0));
 								configWidget.put(children.get(n).getName(),result);
 							}
 						}
@@ -629,7 +750,8 @@ public class JQModuleService
 							ArrayList<String> result = new ArrayList<String>();
 							result.add(String.valueOf(columns.get(j).getId()));
 							result.add(String.valueOf(w.getId()));
-							result.add(w.getValue());
+							List<String> wv = loadWidgetValue(w);
+							result.add(wv.get(0));
 							configWidget.put(w.getName(),result);						
 							
 							List<JQWidget> children = w.getChildren();
@@ -640,7 +762,8 @@ public class JQModuleService
 									//ArrayList<String> result = new ArrayList<String>();
 									result.add(String.valueOf(columns.get(j).getId()));
 									result.add(String.valueOf(children.get(n).getId()));
-									result.add(children.get(n).getValue());
+									List<String> cv = loadWidgetValue(children.get(n));					
+									result.add(cv.get(0));
 									configWidget.put(children.get(n).getName(),result);
 								}
 							}
@@ -679,7 +802,7 @@ public class JQModuleService
 							if(pair != null)
 							{
 								
-								List<String> values = JQUtils.covertToData(widget.getValue());
+								List<String> values = loadWidgetValue(widget);
 									
 								if(values.size()>0)
 								{
@@ -702,7 +825,7 @@ public class JQModuleService
 									if(pair != null)
 									{
 								
-										List<String> values = JQUtils.covertToData(child.getValue());
+										List<String> values = loadWidgetValue(child);
 									
 										if(values.size()>0)
 										{
@@ -783,6 +906,111 @@ public class JQModuleService
 	
 	}
 	
+	
+	List<String> loadWidgetValue(JQWidget widget)
+	{
+
+		List<String> result = new ArrayList<>();
+		//if(true)
+		//{
+			String widgetValue = widget.getValue();
+			if(widgetValue != null && !("".equals(widgetValue)))
+			{
+			
+			
+				switch(widgetValue)
+				{
+					case "{username}":
+						User user=(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+						
+						String username=user.getUsername();
+						
+						result.add(username);
+					break;
+					
+					case "{now}":
+					
+						result.add( (new Date()).toString());
+									
+					break;	
+					
+					default :
+					
+						result.add(widgetValue);
+				}
+			}		
+		//}
+		else
+		
+		{
+		
+			switch(widget.getDataSource())
+			{
+				case 0:
+					int propertyId = widget.getPropertyId();
+					
+					if(propertyId >0)
+					{
+						JQProperty property = propertyService.findPropertyById(propertyId);
+						
+						String propertyValue =property.getValue();
+						
+						if(propertyValue !=null  && !("".equals(propertyValue)))
+						{
+							result.addAll(JQUtils.covertToData(propertyValue));
+						}
+						else
+						{
+							propertyService.loadPropertyOptions(property);
+							
+							List<JQPropertyOption> propertyOptions = property.getOptions();
+							
+							if(propertyOptions!= null)
+							{						
+								for(int i=0;i<propertyOptions.size();i++)
+								{
+									result.add(propertyOptions.get(i).getValue());
+								}
+							}
+						}
+						
+					}
+					break;
+				case 1:
+				
+					break;
+				case 2:
+				
+					break;
+					
+				case 100://count number of widgets in config
+					
+					break;
+				case 101://count refrence of config
+				
+					break;	
+					
+				default:
+						
+						
+						
+						
+				
+			
+			}
+		}
+
+		if(result.size()==0)
+		{
+			result.add("");
+		}
+		
+		System.out.println("WidgetValue:" +widget.getName()+":"+result.get(0));
+		
+		return result;	
+	
+	}
+	
 	public void updateModuleData(int moduleId, int configId, int rowId, Map<String,String> data)
 	{
 		
@@ -814,78 +1042,6 @@ public class JQModuleService
 			
 			}	
 		}
-		
-			JQModuleConfig moduleModuleConfig = getModuleService();
-						
-			if(moduleModuleConfig.getModuleId() == moduleId && moduleModuleConfig.getConfigId()==configId)
-			{
-				JQModule module = toModule(data);
-				
-				//module.setParentId(moduleModuleConfig.getParentId());
-				//module.setUrlId(moduleModuleConfig.getUrlId());
-				
-				JQModule existModule = getModuleByName(module.getName());
-				
-				if(existModule != null)
-				{
-					module.setId(existModule.getId());
-					module.setParentId(existModule.getId());
-					module.setUrlId(existModule.getId());
-					
-					updateModule(module);
-					
-					if(module.getModuleConfigs()!=null)
-					{
-					
-						JQModuleConfig mcConfig = module.getModuleConfigs().get(0);
-						
-						JQConfig newConfig = mcConfig.getJQConfig();
-						
-						
-						
-						JQConfig existConfig = configService.findConfigByName(newConfig.getName());
-						
-						if(existConfig != null)
-						{
-							JQModuleConfig existModuleConfig = existModule.getModuleConfigs().get(0);
-							mcConfig.setId(existModuleConfig.getId());
-							mcConfig.setModuleId(existModuleConfig.getModuleId());
-							mcConfig.setConfigId(existConfig.getId());
-							mcConfig.setJQConfig(existConfig);
-						
-							updateModuleConfig(existModule.getId(),mcConfig);
-						
-						}
-						
-					
-					}
-				}
-				
-				
-			}
-						
-			JQModuleConfig configModuleConfig = getConfigService();	
-			
-			if(configModuleConfig.getModuleId() == moduleId  && configModuleConfig.getConfigId()==configId)
-			{
-			
-			}		
-			JQModuleConfig propertyModuleConfig = getPropertyService();
-			
-			if(propertyModuleConfig.getModuleId() == moduleId  && propertyModuleConfig.getConfigId()==configId)
-			{
-			
-			}
-			
-			JQModuleConfig optionModuleConfig = getOptionService();
-			if(optionModuleConfig.getModuleId() == moduleId  && optionModuleConfig.getConfigId()==configId)
-			{
-			
-			}
-		
-		
-		
-		
 		
 	}
 	
@@ -1005,19 +1161,29 @@ public class JQModuleService
 	{
 		moduleConfig.setModuleId(moduleId);
 		
+		
 		jqModuleMapper.createModuleConfig(moduleConfig);
 		
 		return moduleConfig.getId();
 	}
 	
-	public int deleteModuleConfig(String mid,List<JQModuleConfig> configs)
+	public int deleteModuleConfig(int moduleId,List<JQModuleConfig> configs)
 	{
 		for(int i=0;i<configs.size();i++)
 		{
-			jqModuleMapper.deleteModuleConfig(mid,configs.get(i));
+			deleteModuleConfig(moduleId,configs.get(i).getId());
 		}	
 		return 0;
 	}
+	
+	
+	public int deleteModuleConfig(int moduleId,int configId)
+	{
+		jqModuleMapper.deleteModuleConfig(moduleId,configId);
+		
+		return 0;
+	}
+	
 	
 	public List<Integer> queryRowIds(int moduleId,int configId, JQPropertyValue propertyValue, List<Integer> rowIds)
 	{
@@ -1144,6 +1310,10 @@ public class JQModuleService
 				{
 						
 					JQModuleData data = jqModuleMapper.getModuleDataByRowId(tableName,moduleId,configId,rowIds.get(i));
+					
+					data.setModuleId(moduleId);
+					data.setConfigId(configId);
+					
 				
 					result.add(data);			
 						
@@ -1156,7 +1326,7 @@ public class JQModuleService
 	
 	
 	
-	public List<List<JQWidget>> readExcel(MultipartFile file)
+	public List< Map<String,String> > readExcel(MultipartFile file)
 	{
 	
 		String fileName = file.getOriginalFilename();
@@ -1165,7 +1335,7 @@ public class JQModuleService
 		 	return null;
 		}
 		
-		List< List<JQWidget> > dataList = new ArrayList<>();
+		List< Map<String,String> > dataList = new ArrayList<>();
 		
 		Workbook workbook = null;
 		try{
@@ -1192,7 +1362,7 @@ public class JQModuleService
 				
 				HashMap<Integer, String> header = new HashMap<>();
 				
-				for(int i=sheet.getFirstRowNum();i<sheet.getLastRowNum();i++)
+				for(int i=sheet.getFirstRowNum();i<=sheet.getLastRowNum();i++)
 				{
 					Row row=sheet.getRow(i);
 					
@@ -1217,41 +1387,19 @@ public class JQModuleService
 								continue;
 							}
 							
-							List<JQWidget> widgets = new ArrayList<JQWidget>();
+							Map<String,String> widgets = new HashMap<String,String>();
 							
-							boolean allBlank = true;
 							for(int j=row.getFirstCellNum();j<=row.getLastCellNum();j++)
 							{
 								Cell cell = row.getCell(j);
 								String cellValue = getCellValue(cell);
-								if(StringUtils.isNotBlank(cellValue))
+								if(StringUtils.isNotBlank(cellValue) && StringUtils.isNotBlank(header.get(j)))
 								{
-									allBlank=false;
+									widgets.put(header.get(j),cellValue);
 								}
-								
-								
-							
-								JQWidget widget = new JQWidget();
-								
-								//widget.setSortKey(j);
-								
-								widget.setName(header.get(j));
-
-								widget.setRef(header.get(j));
-
-								widget.setValue(cellValue);
-							
-
-							
-								widgets.add(widget);
-							
 							}
-							
-							if(!allBlank)
-							{
-								dataList.add(widgets);
-							}
-						
+							dataList.add(widgets);
+
 						}
 						catch(Exception e)
 						{
@@ -1346,7 +1494,9 @@ public class JQModuleService
     	}
     	
     	
-    	List<JQModuleData> moduleData = getModuleData(moduleId,configId);
+    	List<JQModuleData> moduleData = loadModuleData(moduleId,configId);//getModuleData(moduleId,configId,0);
+    	
+    	
     	if(CollectionUtils.isEmpty(moduleData)){
     		return;
 		}
@@ -1434,9 +1584,68 @@ public class JQModuleService
     
     public JQModule toModule(Map<String,String> data)
     {
-    	JQModule module = new JQModule();
+    
+    	JQModuleConfig moduleConfig = getModuleService();
+    	
+	List<JQWidget> widgets = moduleConfig.toWidgets();
+			
+	Map<String,String> reverseMap = new HashMap<String,String>();
+			
+	for(int j=0;j<widgets.size();j++)
+	{
+		JQWidget widget = widgets.get(j);
+		
+		String value = data.get(widget.getName());
+				
+		if(value!=null)
+		{
+			reverseMap.put(widget.getValue(),value);
+		}
+
+ 	}
  	
-   	String name = data.get("菜单名称");
+    	JQModule module = new JQModule();
+    	
+    	for(Map.Entry<String,String> entry:data.entrySet()){
+    		switch(entry.getKey())
+    		{
+    			case "{module.name}":
+    				module.setName(entry.getValue());
+    				break;
+    			case "{module.config}":
+    				String strConfig = entry.getValue();
+    							
+    			   	JQConfig config = new JQConfig();
+   		
+   				config.setName(strConfig);
+   	
+   				JQModuleConfig mc = new JQModuleConfig();
+   		
+   				mc.setJQConfig(config);
+
+		   		module.addConfig(mc);
+    				break;
+    			case "{module.URL}":
+    				module.setPath(entry.getValue());
+    				break;
+     			case "{module.icon}":
+    				module.setIcon(entry.getValue());
+    				break;   		
+     			case "{module.sortKey}":
+    				module.setSortKey(entry.getValue());
+    				break;
+    			case "{module.id}":
+    				module.setId(Integer.parseInt(entry.getValue()));
+    				break;
+    			case "{module.parentId}":
+    				module.setParentId(Integer.parseInt(entry.getValue()));
+    				break;
+    				
+    		}
+    	
+    	}
+ 	
+   	/*String name = data.get("{}");
    	
    	if(name != null)
    	{
@@ -1446,15 +1655,16 @@ public class JQModuleService
    	String configName = data.get("模板编号");
    	if(configName != null)
    	{
-   		JQConfig config = new JQConfig();
+    			   	JQConfig config = new JQConfig();
    		
-   		config.setName(configName);
+   				config.setName(configName);
    	
-   		JQModuleConfig moduleConfig = new JQModuleConfig();
+   				JQModuleConfig moduleConfig = new JQModuleConfig();
    		
-   		moduleConfig.setJQConfig(config);
+   				moduleConfig.setJQConfig(config);
+
+		   		module.addConfig(moduleConfig);
    		
-   		module.addConfig(moduleConfig);
    	}   	
    	String icon = data.get("图标");
    	if(icon != null)
@@ -1469,7 +1679,7 @@ public class JQModuleService
    	String url = data.get("URL");
     	if(url != null)
    	{
-   		module.setPath(url);
+   		
    	}  	
    	String status = data.get("可用性状态");
     	if(status != null)
@@ -1486,6 +1696,17 @@ public class JQModuleService
    	{
    		module.setParentId(0);
    	}  	
+
+   	String id = data.get("id");
+    	if(id != null)
+   	{
+   		module.setId(Integer.parseInt(id));
+   	} 
+   	else
+   	{
+   		module.setId(-1);
+   	} 
+   	*/
    	
    	return module;  	
    	
@@ -1493,10 +1714,52 @@ public class JQModuleService
     
     }
     
+    
+/*    public JQConfig toConfig(Map<String,String> data)
+    {
+    
+    	JQConfig config = new JQConfig();
+    	
+    	String name = data.get("name");
+    	
+    	if(name !=null)
+    	{
+    		config.setName(name);    	
+    	}
+    	
+        String parentId = data.get("parentId");
+    	if(parentId != null)
+   	{
+   		config.setParentId(Integer.parseInt(parentId));
+   	} 
+   	else
+   	{
+   		config.setParentId(0);
+   	}  	
 
+   	String id = data.get("id");
+    	if(id != null)
+   	{
+   		config.setId(Integer.parseInt(id));
+   	} 
+   	else
+   	{
+   		config.setId(-1);
+   	} 
+   	
+   	return config;
     
+    }*/
     
+    public List<Integer> findModuleIdByConfigId(int configId)
+    {
+    	return jqModuleMapper.findModuleIdByConfigId(configId);
+    }
     
+
+	public List<Map<String, String>> getModulePermissions(int moduleId) {
+		return jqModuleMapper.getModulePermissions(moduleId);
+	}
     
 }
     

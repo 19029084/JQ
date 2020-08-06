@@ -166,6 +166,26 @@ public class JQConfig extends JQObject
 		this.parentId = parentId;
 	}
 	
+	public List<JQWidget> toWidgets()
+	{
+	
+		List<JQWidget> result = new ArrayList<>();
+		
+		for(int i=0;i<columns.size();i++)
+		{
+			
+			JQColumn col = columns.get(i);
+			
+			List<JQWidget> widgets = col.getWidget();
+			
+			result.addAll(widgets);
+		
+		}
+		
+		return result;
+	
+	}
+	
 	private JQConfigBase base;
 	private String title;	
 	private int id;

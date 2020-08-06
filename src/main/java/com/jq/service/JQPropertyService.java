@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.Resource;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import java.util.ArrayList;
 
@@ -38,8 +39,16 @@ public class JQPropertyService
 		return jqPropertyMapper.findPropertyByName(name);
 	
 	}
+	
+	
+	public JQProperty findPropertyById(int propertyId)
+	{	
 
-	public List<JQProperty> getProperties()
+		return jqPropertyMapper.findPropertyById(propertyId);
+	
+	}
+
+	public List<JQProperty> loadProperties()
 	{
 		List<JQProperty> properties = jqPropertyMapper.findAllProperties();		
 		
@@ -145,6 +154,15 @@ public class JQPropertyService
 		
 		return 0;
 	
+	
+	}
+	
+	public JQProperty toProperty(Map<String,String> row)
+	{
+		JQProperty property = new JQProperty();
+		
+		
+		return property;
 	
 	}
 	
@@ -259,7 +277,26 @@ public class JQPropertyService
 		
 		return children;
 	}
+
+
+	public List<JQPropertyOption> loadPropertyOptions()
+	{
+		List<JQPropertyOption> propertyOptions = jqPropertyMapper.findPropertyOptionsByParentId(0);
+		
+		for(int i=0;i<propertyOptions.size();i++)
+		{
+			JQPropertyOption propertyOption = propertyOptions.get(i);
+			
+			List<JQPropertyOption> subPropertyOptions = jqPropertyMapper.findPropertyOptionsByParentId(propertyOption.getId());
+			
+			propertyOption.setChildren(subPropertyOptions);
+			
+		}
+		
+		return propertyOptions;
+	}
 	
+
 	
 	
 	

@@ -25,9 +25,9 @@ public class JQModule extends JQObject
 	
 	public JQModule(){
 	
-		subModules = new ArrayList();
-		dataList = new ArrayList();
-		configList= new ArrayList();
+		subModules = new ArrayList<>();
+		dataList = new ArrayList<>();
+		configList= new ArrayList<>();
 		base = new JQModuleBase();
 		url = new JQUrl(UUID.randomUUID().toString());
 		
@@ -37,9 +37,9 @@ public class JQModule extends JQObject
 
 	public JQModule(JQModuleBase base){
 	
-		subModules = new ArrayList();
-		dataList = new ArrayList();
-		configList= new ArrayList();
+		subModules = new ArrayList<>();
+		dataList = new ArrayList<>();
+		configList= new ArrayList<>();
 		url = new JQUrl(UUID.randomUUID().toString());
 		this.base = base;
 		
@@ -49,9 +49,9 @@ public class JQModule extends JQObject
 
 	JQModule(int id,String name)
 	{
-		subModules = new ArrayList();
-		dataList = new ArrayList();
-		configList= new ArrayList();
+		subModules = new ArrayList<>();
+		dataList = new ArrayList<>();
+		configList= new ArrayList<>();
 		url = new JQUrl(UUID.randomUUID().toString());
 		
 		base = new JQModuleBase();

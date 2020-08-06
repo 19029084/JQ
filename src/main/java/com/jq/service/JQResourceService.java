@@ -43,18 +43,18 @@ public class JQResourceService{
     
     public int createUrl(JQUrl jqUrl)   
     {
-	JQUrl url = findUrlByName(jqUrl.getName());
+	List<JQUrl> url = findUrlByName(jqUrl.getName());
 	
-	if(url == null)
+	if(url == null|| url.size()==0)
 	{		
     		int id = jqResourceMapper.createUrl(jqUrl);    		
     		return jqUrl.getId();
     	}
     	else 
     	{
-    		jqUrl.setId(jqUrl.getId());
+    		jqUrl.setId(url.get(0).getId());
     		
-	    	return url.getId();
+	    	return url.get(0).getId();
     	}
     }
     public int updateUrl(JQUrl jqUrl)
@@ -65,7 +65,7 @@ public class JQResourceService{
     	return 0;
     
     }
-    protected JQUrl findUrlByName(String name)
+    protected List<JQUrl> findUrlByName(String name)
     {
     	return jqResourceMapper.findUrlByName(name);
     }

@@ -80,6 +80,24 @@ public class JQUtils
 	
 	}
 	
+	public static void ConfigToWidget(JQConfig config, List< Map<String,String> > data)
+	{
+
+				Map<String,String> row = new HashMap<>();
+				
+				
+				row.put("模板编号",""+config.getId());
+				row.put("模板标题",config.getName());
+
+				row.put("rowId",""+config.getId());
+
+
+				data.add(row);	
+				
+				
+	
+	}
+	
 	public static String getModuleDataTable(int moduleId, int configId)
 	{
 		
@@ -443,6 +461,16 @@ public class JQUtils
 									System.out.println("UNKNOWN SOURCE:"+attribute.getText());
 							}						
 							break;
+						case "visible":
+							switch(attribute.getText())
+							{
+								case "true":
+									widget.setVisible(true);
+									break;
+								case "false":
+									widget.setVisible(false);
+									break;
+							}
 						
 										
 	 						default:

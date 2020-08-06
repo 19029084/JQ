@@ -352,7 +352,7 @@ CREATE TABLE `Widget` (
   `WidgetID` int(11) DEFAULT NULL,
   `PropertyID` int(11) DEFAULT NULL,
   `Required` tinyint(1) NOT NULL,
-  `Visiable` tinyint(1) NOT NULL,
+  `visible` tinyint(1) NOT NULL,
   `Searchable` tinyint(1) NOT NULL,
   `Shareable` tinyint(1) NOT NULL,
   `DataSource` int(11) NOT NULL,

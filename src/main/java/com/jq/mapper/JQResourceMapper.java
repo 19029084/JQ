@@ -63,7 +63,7 @@ public interface JQResourceMapper
 	
 	int createUrl(JQUrl jqUrl);
 	
-	JQUrl findUrlByName(String name);
+	List<JQUrl> findUrlByName(String name);
 	int updateUrl(JQUrl url);
 
     int deleteRole(int id);

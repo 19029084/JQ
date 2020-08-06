@@ -18,6 +18,8 @@ public class JQModuleConfig extends JQObject
 	 	//propertyMap = new TreeMap<Integer,JQProperty>();
 	 	//columns = new ArrayList<JQColumn>();
 	 	jqConfig = new JQConfig();
+	 	
+	 	//children= new ArrayList<JQModuleConfig>();
 		
 	}
 	
@@ -48,13 +50,13 @@ public class JQModuleConfig extends JQObject
 	
 	public void setConfigId(int configId)
 	{
-		//this.configId=configId;
-		this.jqConfig.setId(configId);
+		this.configId=configId;
+		//this.jqConfig.setId(configId);
 	}
 	
 	public int getConfigId()
 	{
-		return this.jqConfig.getId();	
+		return this.configId;	
 	}	
 
 	
@@ -65,7 +67,7 @@ public class JQModuleConfig extends JQObject
 	
 	public String toString()
 	{
-		return ""+configId;
+		return id+"_"+moduleId+"_"+configId;
 	}
 	
 	
@@ -87,7 +89,7 @@ public class JQModuleConfig extends JQObject
 	}
 	
 	
-	public void setParentId(int parentId)
+	/*public void setParentId(int parentId)
 	{
 	
 		this.parentId=parentId;
@@ -98,16 +100,43 @@ public class JQModuleConfig extends JQObject
 	{
 	
 		return parentId;
+	}*/
+	
+	
+	public List<JQWidget> toWidgets()
+	{
+		return jqConfig.toWidgets();
+	
+	
 	}
+	
+	/*public <T extends JQModuleConfig>  void addChildren(List<T> children)
+	{
+		this.children.addAll(children);
+	
+	}
+	
+	public void setChildren(List<JQModuleConfig> children)
+	{	
+		this.children =children;
+	}
+	
+	public List<JQModuleConfig> getChildren(List<JQModuleConfig> children)
+	{	
+		return children;
+	}*/
+	
+
+	
 	private int id;
-	private int parentId;
+	//private int parentId;
 	private int configId;
 	private int moduleId;
 	
 	
 	private JQConfig jqConfig;
 	
-	List<JQModuleConfig> children;
+	//List<JQModuleConfig> children;
 	
 
 	

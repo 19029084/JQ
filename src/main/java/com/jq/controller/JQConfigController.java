@@ -42,6 +42,8 @@ import com.jq.entity.JQModuleTable;
 
 import com.jq.utils.*;
 
+import com.jq.entity.JQWidget;
+
 
 @JQBaseResponse
 @RestController
@@ -50,6 +52,10 @@ import com.jq.utils.*;
 
 class JQConfigController
 {
+
+
+@Resource
+JQModuleService moduleService;
 
 @Resource
 JQConfigService m_service;
@@ -71,22 +77,48 @@ public Object getConfigs()
 @ResponseBody
 int createConfigs(@RequestBody List<JQConfig> configs)
 {
-	return m_service.createConfigs(configs);
+	 m_service.createConfigs(configs);
+	
+	 JQModuleConfig configModuleConfig = moduleService.getConfigService();
+	 
+	 m_service.refresh(configModuleConfig.getModuleId(),configModuleConfig.getConfigId());
+	 
+	 return 0;
 }
 
 
-@GetMapping("/configs/{cid:\\d+}")
+@GetMapping("/configs/{configId:\\d+}")
 @ApiOperation("Get one config Information")
 @ResponseBody
-public Object getConfig(@PathVariable int cid)
+public Object getConfig(@PathVariable int configId)
 {
 	
-	JQConfig config = m_service.loadConfig(cid);
+	JQConfig config = m_service.loadConfig(configId);
 	
 	return config;
 }
 
+@GetMapping("/configs/{configId:\\d+}/widgets")
+@ApiOperation("获取配置下控件信息")
+@ResponseBody
+public Object findWidgetByConfigId(@PathVariable int configId, boolean searchable,
+						                  boolean visible,
+						                  boolean shareable)
+{
+	
+	System.out.println("searchable"+searchable);
+	List<JQWidget> widgets = m_service.findWidgetByConfigId(configId,searchable,visible,shareable);
+	
+	return widgets;
+}
 
+@PostMapping("/configs/{configId:\\d+}/update")
+@ApiOperation("Create Configs")
+@ResponseBody
+public void  updateConfigs(@PathVariable int configId,@RequestBody JQConfig config)
+{
+	m_service.updateConfig(config);
+}
 
 /*
 @PutMapping("/modules")

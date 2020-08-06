@@ -29,7 +29,7 @@
 				<id property="id" column="wid"/>
 				<result property="widgetId" column="widgetId" />
 				<result property="configId" column="refConfigId" />
-				<result property="visiable" column="visiable" />
+				<result property="visible" column="visible" />
 				<result property="searchable" column="searchable" />				
 				<result property="shareable" column="shareable" />
 				<result property="required" column="required" />				
@@ -54,7 +54,7 @@
 	<select id="findAllConfigs" resultMap="JQConfig">	
 		select c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid, c. parentId as configParentId,
 		       cw.id as cwid,cw.sortKey as sortKey,
-		       w.id as wid, w.propertyId, w.widgetId as widgetId, w.configId as refConfigId, w.visiable, w.searchable,w.shareable,w.required, 
+		       w.id as wid, w.propertyId, w.widgetId as widgetId, w.configId as refConfigId, w.visible, w.searchable,w.shareable,w.required, 
 		       w.dataSource,w.name as widgeName, w.value as widgeValue,
 		       p.id as propertyId, p.name as propertyName,
 		       pt.id as propertyTypeId, pt.type as propertyTypeName		       
@@ -71,7 +71,7 @@
 	<select id="findConfigByName" resultMap="JQConfig">
 		select c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid,c. parentId as configParentId,
 		       cw.id as cwid,cw.sortKey as sortKey,
-		       w.id as wid, w.propertyId, w.widgetId as widgetId, w.configId as refConfigId, w.visiable, w.searchable,w.shareable,w.required, 
+		       w.id as wid, w.propertyId, w.widgetId as widgetId, w.configId as refConfigId, w.visible, w.searchable,w.shareable,w.required, 
 		       w.dataSource,w.name as widgeName, w.value as widgeValue,
 		       p.id as propertyId, p.name as propertyName,
 		       pt.id as propertyTypeId, pt.type as propertyTypeName
@@ -88,16 +88,13 @@
 	<select id="findConfigById" resultMap="JQConfig">
 		select c.id as configId, c.name as configName,c.title as configTitle, c.valid as configValid,c. parentId as configParentId,
 		       cw.id as cwid,cw.sortKey as sortKey,
-		       w.id as wid, w.propertyId, w.widgetId as widgetId, w.configId as refConfigId, w.visiable, w.searchable,w.shareable,w.required, 
-		       w.dataSource,w.name as widgeName, w.value as widgeValue,
-		       p.id as propertyId, p.name as propertyName,
-		       pt.id as propertyTypeId, pt.type as propertyTypeName
+		       w.id as wid, w.propertyId, w.widgetId as widgetId, w.configId as refConfigId, w.visible, w.searchable,w.shareable,w.required, 
+		       w.dataSource,w.name as widgeName, w.value as widgeValue
+
 		from Config c
 		left join ConfigWidget cw on c.id=cw.configId
 		left join Widget w on w.id = cw.widgetId
 
-		left join Property p on w.propertyId=p.id
-		left join PropertyType pt on p.type_id = pt.id
 		where c.id=#{configId}
 		order by cw.sortkey
 	</select>
@@ -163,19 +160,57 @@
 		from dual 
 		where not exists(select * from Config where name=#{name})
 	</insert>
+	
+	
+	<update id="updateConfig">
+		update Config set name=#{config.name} where id=#{config.id}
+	</update>	
+	
+	<update id="deleteConfig">
+		update Config set Valid = 0 where id=#{configId}
+	</update>
+	
+	
+	<select id="numOfWidgets" resultType="int">
+		select count(*) from ConfigWidget where configId=#{configId}
+	</select>
 
+	<select id="numOfReferences" resultType="int">
+		select count(*) from ModuleConfig where configId=#{configId}
+	</select>
+
+	
 	<select id="findWidgetByConfigId" resultType="com.jq.entity.JQWidget">
 		select w.* 
 		from ConfigWidget cw, Widget w
 		where cw.configId=#{configId} and w.id = cw.widgetId
-	</select>	
+		<if test="searchable">
+			and w.searchable =1 
+		</if>
+		<if test="visible">
+			and w.visible =1 
+		</if>
+		<if test="shareable">
+			and w.shareable =1 
+		</if>
+
+		
+	</select>
+	
+	<delete id="deleteConfigWidget">
+	
+		delete from ModuleConfig where configId=#{configId}
+	
+	</delete>
+	
+		
 	
 	<insert id="createWidget" parameterType="com.jq.entity.JQWidget" >
 		<selectKey resultType="int" keyProperty="id" order="AFTER">
 			SELECT LAST_INSERT_ID()		
 		</selectKey>	
-		insert into Widget(Name,PropertyId,WidgetId,ConfigId,DataSource,Required,Visiable,Searchable,Shareable,valid) 
-		select #{name},#{propertyId},#{widgetId},#{configId},#{required},#{dataSource},#{visiable},#{searchable},#{shareable},1
+		insert into Widget(Name,ModuleId,ConfigId,PropertyId,WidgetId,Required,DataSource,visible,Searchable,Shareable,Value,valid) 
+		select #{name},#{moduleId},#{configId},#{propertyId},#{widgetId},#{required},#{dataSource},#{visible},#{searchable},#{shareable},#{value},1
 		from dual 
 		where not exists(select * from Widget where name=#{name})
 	</insert>
@@ -194,11 +229,15 @@
 		from Widget w
 		where w.name=#{name}
 	</select>
+	
+	<update id="updateWidget">
+		update Widget set Name= #{name},ModuleId= #{moduleId},ConfigId=#{configId},PropertyId=#{propertyId},WidgetId=#{widgetId},Required=#{required},
+				DataSource=#{dataSource},visible=#{visible} ,Searchable=#{searchable},Shareable =#{shareable} 
+		where id=#{configId}
+	</update>	
 
 
-	<update id="deleteConfig">
-		update Config set Valid = 0 where id=#{configId}
-	</update>
+
 
 	<!--update id="updateModule">
 		update Module set name=#{module.name},urlid=#{urlId} where parentid=#{pid} and id=#{module.id}

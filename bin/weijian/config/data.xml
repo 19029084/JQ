@@ -99,15 +99,28 @@
 	<module name="模板管理" path="/template">
 		<config name="模板配置">
 			<!--widget name="菜单名称" order="1"/-->
-			<widget name="模板编号" order="2"/>
-			<widget name="模板标题" order="3"/>
-			<widget name="选项数量" order="4"/>
+			<widget name="模板编号" order="2" value="{config.id}"/>
+			<widget name="模板标题" order="3" value="{config.name}"/>
+			<widget name="选项数量" order="4" value="{config.widgets}"/>
 		 	<widget name="更新人">
 		 		<property name="更新人" type ="text" value="{username}"/>
 		 	</widget>
 			<widget name="更新时间" >
 				<property name="更新时间" type ="data" value="{now}"/>
 		 	</widget>
+		 	
+			<widget name="是否开启搜索条件" visible="false"/>
+			<widget name="是否可以导入" visible="false"/>
+			<widget name="是否可以导出" visible="false"/>		
+			<widget name="是否可以编辑" visible="false"/>
+			<widget name="是否可以删除" visible="false"/>			
+			<widget name="是否可以设置可用性状态" visible="false"/>
+			<widget name="是否可以新增数据" visible="false"/>			
+			<widget name="是否可以添加子项" visible="false"/>
+			<widget name="是否开启允许调用" visible="false"/>			
+		 	
+		 	
+		 	
 			<!--widget name="操作" order="7">
 				<property name="模板管理-操作">
 					<option value="权限项查看"/>
@@ -173,11 +186,11 @@
 	</module>
 	<module name="系统管理" >
 	
-		<module name="字典管理" path="/widget">
+		<module name="字典管理" path="/property">
 			<config name="字典配置">
-				<widget name="字典名称" order="1"/>
-				<widget name="编码" order="2"/>
-				<widget name="排序" order="3"/>	
+				<widget name="字典名称" value="{property.name}" order="1"/>
+				<widget name="编码" value="{property.id}" order="2"/>
+				<widget name="排序" value="{property.sortKey}" order="3"/>	
 				<widget name="数据值数量" order="4"/>	
 				<widget name="描述" order="5"/>	
 				<widget name="引用数量" order="6"/>	
@@ -253,12 +266,14 @@
 		</module>
 		<module name="菜单管理" path="/modules">
 			<config name="菜单配置">
-				<widget name="菜单名称" order="1"/>
-				<widget name="模板编号" order="2"/>
-				<widget name="图标" order="3"/>	
-				<widget name="排序" order="4"/>	
-				<widget name="URL" order="5"/>	
-				<widget name="可用性状态" order="6"/>
+				<widget name="菜单名称" value="{module.name}" order="1"/>
+				<widget name="模板编号" value= "{module.config}" order="2"/>
+				<widget name="图标" value="{module.icon}" order="3"/>	
+				<widget name="排序" value="{module.sortKey}" order="4"/>	
+				<widget name="URL" value="{module.URL}" order="5"/>
+				<widget name="id" value="{module.id}" visible="false" order="6"/>
+				<widget name="parentId" value="{module.parentId}" visible="false" order="7"/>	
+				<!--widget name="可用性状态" order="6"/>
 				<widget name="操作" order="7">
 					<property name="菜单管理-操作">
 						<option value="权限项查看"/>
@@ -266,7 +281,7 @@
 						<option value="编辑"/>
 						<option value="删除"/>
 					</property>
-				</widget>
+				</widget-->
 				
 				<config name="子菜单配置">
 						<widget name="子菜单名称" order="1"/>
@@ -274,7 +289,7 @@
 						<widget name="图标" order="3"/>	
 						<widget name="排序" order="4"/>	
 						<widget name="URL" order="5"/>	
-						<widget name="可用性状态" order="6"/>
+						<!--widget name="可用性状态" order="6"/-->
 						<!--widget name="操作" order="7">
 							<property name="菜单管理-操作">
 								<option value="权限项查看"/>

@@ -22,6 +22,8 @@ public interface JQPropertyMapper
 	
 	JQProperty findPropertyByName(String name);
 	
+	JQProperty findPropertyById(int propertyId);
+	
 	int createProperty(JQProperty property);
 		
 	int updateProperty(JQProperty property);
@@ -33,7 +35,7 @@ public interface JQPropertyMapper
 	//List<JQProperty> getPropertyByConfig(JQModuleConfig config);
 	//List<JQColumn> findColumnByConfigId(int configId);
 
-	
+	List<JQPropertyOption> findPropertyOptionsByParentId(int parentId);
 		
 	List<JQPropertyOption> findProperyOptionsById(int propertyId);
 	

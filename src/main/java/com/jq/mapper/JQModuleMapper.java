@@ -22,6 +22,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Mapper
@@ -38,6 +39,7 @@ public interface JQModuleMapper{
 	
 	JQModule findModuleById(int moduleId);
 	
+	List<Integer> findModuleIdByConfigId(int configId);
 	
 	
 	List<JQModuleConfig> getModuleConfig(int mid);
@@ -48,9 +50,9 @@ public interface JQModuleMapper{
 	//int addModuleConfig(String mid,JQModuleConfig config);
 	int createModuleConfig(JQModuleConfig moduleConfig);
 	int updateModuleConfig(int moduleId,JQModuleConfig config);
-	int deleteModuleConfig(String mid,JQModuleConfig config);
+	int deleteModuleConfig(int moduleId, int configId);
 	
-	List<JQModuleData> getModuleData(String tableName,int moduleId,int configId);
+	List<JQModuleData> getModuleData(String tableName,int moduleId,int configId,int parentId);
 	
 	int addModuleData(String tableName,int fieldId, int propertyId, int rowId, int parentId,String value);
 	
@@ -74,4 +76,6 @@ public interface JQModuleMapper{
 	int dropDataTable(@Param("tableName") String tableName);
 	
 	int createDataTable(@Param("tableName") String tableName);
+
+	List<Map<String, String>> getModulePermissions(int moduleId);
 }

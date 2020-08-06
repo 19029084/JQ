@@ -64,7 +64,7 @@ public class JQPropertyController
 		
 		List<HashMap<String,Object>> result = new ArrayList<HashMap<String,Object>>();
 		
-		List<JQProperty> properties= m_service.getProperties();
+		List<JQProperty> properties= m_service.loadProperties();
 		
 		for(int i=0;i<properties.size();i++)
 		{

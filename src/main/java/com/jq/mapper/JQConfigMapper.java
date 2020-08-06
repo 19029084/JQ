@@ -23,7 +23,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
-
+import com.jq.entity.JQWidget;
 
 @Mapper
 public interface JQConfigMapper{
@@ -35,8 +35,13 @@ public interface JQConfigMapper{
 	JQConfig findConfigByName(String name);
 	JQConfig findConfigById(int configId);
 	
+	int numOfWidgets(int configId);
+	int numOfReferences(int configId);
 	
-	List<JQWidget> findWidgetByConfigId(int configId);
+	
+	List<JQWidget> findWidgetByConfigId(int configId, boolean searchable,
+						           boolean visible,
+						           boolean shareable );
 	
 	JQWidget findWidgetByName(String name);
 	
@@ -46,6 +51,11 @@ public interface JQConfigMapper{
 	
 	void deleteConfig(int configId);
 	
+	void updateConfig(JQConfig config);
+	
+	void deleteConfigWidget(int configId);
+	
+	void updateWidget(JQWidget widget);
 	
 	
 	/*

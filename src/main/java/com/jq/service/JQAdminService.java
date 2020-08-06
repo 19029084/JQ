@@ -21,6 +21,12 @@ public class JQAdminService{
 @Resource 
 JQModuleService moduleService;
 
+@Resource 
+JQConfigService configService;
+
+@Resource 
+JQPropertyService propertyService;
+
 
 	public void resetData()
 	{
@@ -39,8 +45,8 @@ JQModuleService moduleService;
 			
 			List< Map<String,String> > moduleData = new ArrayList< >();
 			List< Map<String,String> > configData = new ArrayList< >();
-			List< Map<String,String> > propertyData = new ArrayList< >();
-			List< Map<String,String> > optionData = new ArrayList< >();
+			
+			
 			
 			JQModuleConfig moduleModuleConfig = moduleService.getModuleService();//moduleService.findModuleConfigByName("菜单管理","菜单配置");			
 			JQModuleConfig configModuleConfig = moduleService.getConfigService();//moduleService.findModuleConfigByName("模板管理","模板配置");			
@@ -57,52 +63,14 @@ JQModuleService moduleService;
 				
 				List<JQModuleConfig> moduleConfigs = module.getModuleConfigs();
 				
-				
+				System.out.println("module:"+module.getName());
 				if(moduleConfigs!=null)
 				{
 					for(int j=0;j<moduleConfigs.size();j++)
 					{
 						JQConfig config = moduleConfigs.get(j).getJQConfig();
 
-						ConfigToWidget(config,configData);
-						
-					
-						List<JQColumn> columns = config.getProperties();
-						
-						for(int k=0;k<columns.size();k++)
-						{
-						
-							List<JQWidget> widgets = columns.get(k).getWidget();
-							
-			
-							for(int m=0;m<widgets.size();m++)
-							{
-								JQWidget widget = widgets.get(m);
-								
-								JQProperty property= widget.getProperty();
-								
-								if(property !=null)
-								{
-								
-									PropertyToWidget(property,propertyData);
-									
-									List<JQPropertyOption> options = property.getOptions();
-									
-									if(options!=null)
-									{
-										for(int n=0;n<options.size();n++)
-										{
-										
-											OptionToWidget(options.get(n),optionData);
-										
-										}
-									}
-								}
-								
-								
-							}
-						
-						}
+						//ConfigToWidget(config,configData);
 					}	
 				
 				}
@@ -112,9 +80,46 @@ JQModuleService moduleService;
 			
 			}
 			
+			
+			
 			moduleService.addModuleData(moduleModuleConfig.getModuleId(),moduleModuleConfig.getConfigId(),moduleData);
-			moduleService.addModuleData(configModuleConfig.getModuleId(),configModuleConfig.getConfigId(),configData);
+			
+			//moduleService.addModuleData(configModuleConfig.getModuleId(),configModuleConfig.getConfigId(),configData);
+			configService.refresh(configModuleConfig.getModuleId(),configModuleConfig.getConfigId());
+			
+			
+			List<JQProperty> properties = propertyService.loadProperties();
+			
+			List< Map<String,String> > propertyData = new ArrayList<>();
+			
+			for(int i=0;i<properties.size();i++)
+			{
+				PropertyToWidget(properties.get(i),propertyData);
+			
+			}
+			
 			moduleService.addModuleData(propertyModuleConfig.getModuleId(),propertyModuleConfig.getConfigId(),propertyData);
+			
+			
+			
+			
+			List<JQPropertyOption> options = propertyService.loadPropertyOptions();
+			
+			List< Map<String,String> > optionData = new ArrayList< >();
+			
+			for(int i=0;i<options.size();i++)
+			{
+				OptionToWidget(options.get(i),optionData);
+				
+				List<JQPropertyOption> subOptions = options.get(i).getChildren();
+				
+				for(int j=0;j<subOptions.size();j++)
+				{
+					OptionToWidget(subOptions.get(i),optionData);
+				}
+			
+			}
+			
 			moduleService.addModuleData(optionModuleConfig.getModuleId(),optionModuleConfig.getConfigId(),optionData);
 			
 			
@@ -201,21 +206,10 @@ JQModuleService moduleService;
 				
 				row.put("模板编号",""+config.getId());
 				row.put("模板标题",config.getName());
+				
 
-				//row.put("parentId",""+config.getParentId());
 				row.put("rowId",""+config.getId());
-				
-				/*JQWidget w3 = new JQWidget();
-				
-				w3.setName("模板编号");
-				w3.setValue(""+config.getId());
-				
-				widgets.add(w3);
-				
-				JQWidget w1 = new JQWidget();				
-				w1.setName("模板标题");
-				w1.setValue(config.getName());
-				widgets.add(w1);*/
+
 
 				data.add(row);	
 				
@@ -229,13 +223,11 @@ JQModuleService moduleService;
 
 				Map<String,String> row = new HashMap<>();
 				row.put("字典名称",property.getName());
+				row.put("数据值数量",""+property.getId());
+				row.put("引用数量",""+property.getId());
 				//row.put("parentId",""+config.getParentId());
 				row.put("rowId",""+property.getId());
-				
-				///JQWidget w1 = new JQWidget();				
-				//w1.setName("模板标题");
-				//w1.setValue(config.getName());
-				//widgets.add(w1);
+				row.put("parentId","0");
 
 				data.add(row);	
 				
@@ -253,6 +245,7 @@ JQModuleService moduleService;
 				row.put("数据项名称",option.getValue());
 				//row.put("parentId",""+config.getParentId());
 				row.put("rowId",""+option.getId());
+				row.put("parentId",""+option.getParentId());
 
 				data.add(row);	
 				
